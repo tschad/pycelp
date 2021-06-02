@@ -1,13 +1,11 @@
 
-# pyCLE v2.0
-
+# pycelp
 
 ## Introduction
 
 Solving multi-level coronal polarization no coherence
 
-
-## Quickstart 
+## Quickstart
 
 conda create --name numba2 numba numpy scipy matplotlib mkl mkl-service
 
