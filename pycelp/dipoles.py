@@ -1,8 +1,12 @@
+"""
+This module provides functions necessary for calculating radiative rate
+coefficients for dipole transitions.
+"""
 
 from numba import njit,jit
 import numpy as np
 from pycelp.wigner import w6js,w3js,w9js
-import pycelp.util as util 
+import pycelp.util as util
 
 @njit(cache=True)
 def setup_Dipoles(lowlev,upplev,qnj,b_low2up,a_up2low,b_up2low,

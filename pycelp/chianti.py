@@ -1,3 +1,7 @@
+"""
+This module provides read routines necessary for interfacing with the Chianti
+database ascii files.
+"""
 
 import numpy as np
 import os
@@ -452,7 +456,7 @@ def abundRead(filename):
 
     chianti_dbase_root,chianti_version = getChiantiDir()
     filename = chianti_dbase_root + 'abundance' + os.path.sep + 'sun_photospheric_2009_asplund.abund'
-    print(' testing default file:',filename)
+    print(' using default abundances:',filename)
 
     data,reference = readFile(filename)
 
@@ -511,10 +515,7 @@ def ioneqRead(filename):
     return result
 
 def limit_levels(input,nlevels,type = None):
-    """
-
-    """
-
+    """ Limits the number of levels to be used by the calculations"""
     if (type == None):
         print('A type must be speficed for the limit levels routine')
         raise
@@ -581,5 +582,4 @@ def limit_levels(input,nlevels,type = None):
 
 
 if __name__ == "__main__":
-
-    print(' this is a module of chianti IO routines')
+    print(' This is a module of chianti IO routines')

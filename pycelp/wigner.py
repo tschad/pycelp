@@ -1,3 +1,6 @@
+"""
+This module provies functions to calculate Wigner 3j, 6j, and 9j symbols.
+"""
 
 from numba import njit
 import numpy as np

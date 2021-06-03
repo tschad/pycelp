@@ -1,3 +1,7 @@
+"""
+This module provides functions necessary for calculating radiative rate
+coefficients for non-dipole transitions.
+"""
 
 from numba import njit,jit
 import numpy as np

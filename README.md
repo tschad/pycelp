@@ -2,7 +2,7 @@
 [![github](https://img.shields.io/badge/GitHub-tschad%2FpyCELP-blue.svg?style=flat)](https://github.com/tschad/pycelp)
 [![ADS](https://img.shields.io/badge/NASA%20ADS-SoPh%2C%20V295%2C%207%2C%2098-red)](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract)
 
-A **py**thon package for **C**oronal **E**mission **L**ine **P**olarization calculations. 
+A **py**thon package for **C**oronal **E**mission **L**ine **P**olarization calculations.
 
 Lead Developer: T. Schad - National Solar Observatory
 
@@ -21,6 +21,7 @@ The original code developed by [Schad & Dima 2020](https://ui.adsabs.harvard.edu
 
 * python3, numpy, numba
 * (optional - for tests/examples) matplotlib, scipy
+* (optional - for updating docs) pdoc3
 * The [CHIANTI atomic database](http://www.chiantidatabase.org/chianti_download.html) is also required.  (Currelty tested with v9) pyCELP will automatically search for the Chianti atomic database path using the default environment variable XUVTOP.
 
 ## Install
@@ -90,3 +91,11 @@ Numba can be disabled through the use of an environmental variable (NUMBA_DISABL
 ## Numpy libraries for multiprocessing
 
 pyCELP uses numpy libraries which can have multithreaded modules.  If pyCELP is used in a multiprocessor application, threads need to be properly managed.
+
+## Updating documentation
+
+Code reference documentation is available at [tschad.github.io/pycle](https:://tschad.github.io/pycle).  These are created using pdoc3.  They are easily manually built and/or updated from the main project repo directory by using the following command.  
+
+```shell
+pdoc --html --force --output-dir docs pycelp
+```

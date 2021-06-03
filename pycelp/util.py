@@ -1,3 +1,6 @@
+"""
+This module provides main utility functions needed by pycelp.
+"""
 
 from numba import njit,jit
 import numpy as np
@@ -15,6 +18,7 @@ vCLV = np.asarray([0.33,1.6,0.85,0.90,0.57, 0.20, 0.03,-0.1,-0.16,-0.05,
                     -0.12,-0.07,-0.07])
 
 def vac2air(wvlamb):
+    """ Converts wavelengths from vacuum to air-equivalent """ 
     ww = (wvlamb < 2000.)
     convl = np.zeros_like(wvlamb)
     convl[ww] = wvlamb[ww]

@@ -1,10 +1,6 @@
-
-########################################################
 '''
-Ion class for pycelp
-
+This module contains the Ion class for pycelp. 
 '''
-########################################################
 
 import numpy as np
 from pycelp.chianti import *

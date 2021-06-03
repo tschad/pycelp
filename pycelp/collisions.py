@@ -1,3 +1,7 @@
+"""
+This module provides functions necessary for calculating collisional rate 
+coefficients.
+"""
 
 from numba import njit,jit
 import numpy as np
