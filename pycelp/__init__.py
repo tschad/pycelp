@@ -10,7 +10,7 @@ case. This approximation is useful in the case of forbidden line emission by
 visible and infrared lines, such as Fe XIII 1074.7 nm and Si X 3.9 um.
 See Schad & Dima 2020 for more details and specific references.
 
-.. include:: ./documentation.md
+.. include:: ./package_documentation.md
 """
 
 from .ion import Ion
