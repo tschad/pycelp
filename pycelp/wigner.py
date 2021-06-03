@@ -69,20 +69,6 @@ def w6js(j1,j2,j3,l1,l2,l3):
     originally from hazel maths.f90
     """
 
-    ##  Equation 2.36a -- TSCHAD 12 March 2021
-    #if (j3 == 0):
-    #    if (j1 != j2): return 0.0
-    #    if (l1 != l2): return 0.0
-    #    return (-1.)**(0.5*(j1+l2+l3)) / ((j1+1.)*(l1+1.))**0.5
-
-    ## Equation 2.36d
-    ## runs into issue for j1 = 0
-    #if (j3 == 2) and (j1 == j2) and (l1 == l2):
-    #    a = j1/2.
-    #    b = l1/2.
-    #    c = l3/2.
-    #    return (-1)**(a+b+c+1)*0.5*(a*(a+1) + b*(b+1) - c*(c+1)) / (a*(a+1)*(2*a+1)*b*(b+1)*(2*b+1))**0.5
-
     ia = j1 + j2
     if (ia < j3): return 0.0
     ib = j1 - j2
