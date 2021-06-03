@@ -1,4 +1,6 @@
 
+## Preface
+
 [![github](https://img.shields.io/badge/GitHub-tschad%2FpyCELP-blue.svg?style=flat)](https://github.com/tschad/pycelp)
 [![ADS](https://img.shields.io/badge/NASA%20ADS-SoPh%2C%20V295%2C%207%2C%2098-red)](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract)
 
@@ -8,7 +10,7 @@ Lead Developer: T. Schad - National Solar Observatory
 
 **DISCLAIMER: pycelp is still in the early stages of development. Contributors are welcome. **
 
-## Introduction
+## About the code 
 
 pyCELP is used to forward synthesize the polarized emission of ionized atoms formed in the solar corona.  It calculates the atomic density matrix elements for a single ion under coronal equilibrium conditions and excited by a prescribed radiation field and thermal collisions.  In its initial release, pyCELP solves a set of statistical equilibrium equations in the spherical statistical tensor respresentation for a multi-level atom for the no-coherence case.  This approximation is useful in the case of forbidden line emission by visible and infrared lines, such as Fe XIII 1074.7 nm and Si X 3.9 um.   See
 [Schad & Dima 2020](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract) for more details and specific references.
@@ -50,7 +52,7 @@ $ python setup.py develop
 
 Below is a minimal example of using the pycelp code from a python terminal.  For
 more extensive examples, see those provided in the examples subdirectory
-within the project repo. 
+within the project repo.
 
 ```shell
 (juplab) [schad@Schad-Mac pycelp]$ python
