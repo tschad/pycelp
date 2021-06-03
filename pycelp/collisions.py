@@ -1,8 +1,8 @@
 
 from numba import njit,jit
 import numpy as np
-from pycle.wigner import w6js,w3js,w9js
-import pycle.util as util
+from pycelp.wigner import w6js,w3js,w9js
+import pycelp.util as util
 
 @njit(cache=True)
 def getSecondDerivatives(bt_t,bt_u,n_t):

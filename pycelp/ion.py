@@ -1,17 +1,17 @@
 
 ########################################################
 '''
-Ion class for pycle v2
+Ion class for pycelp
 
 '''
 ########################################################
 
 import numpy as np
-from pycle.chianti import *
-from pycle.collisions import *
-from pycle.non_dipoles import *
-from pycle.dipoles import *
-import pycle.util as util
+from pycelp.chianti import *
+from pycelp.collisions import *
+from pycelp.non_dipoles import *
+from pycelp.dipoles import *
+import pycelp.util as util
 
 class Ion:
     """ Class that defines a single ion """
@@ -170,7 +170,7 @@ class Ion:
         self.Dmat_spon  = Dmat_spon
 
     def __repr__(self):
-         return f"""pyCLE Ion class
+         return f"""pyCELP Ion class
     ---------------------
     Ion Name: {self.ion_name}
     Number of energy levels included: {self.nlevels}

@@ -1,7 +1,7 @@
 
 from numba import njit,jit
 import numpy as np
-import pycle.wigner as wigner
+import pycelp.wigner as wigner
 
 ## ALLEN -- lambdaCLV in Angstrom
 ## better to keep it as a global variable since NUMBA will know its immutable?
