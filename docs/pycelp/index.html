@@ -40,7 +40,8 @@ See
 pyCELP is a completely new implementation coded entirely in Python.
 It takes advantage of specific algorithm changes, numba jit compilers, and efficient numpy linear algebra packages to provide excellent speed performance that in most cases exceeds the earlier code.
 More information pertaining to numba is below.</p>
-<h2 id="dependencies">Dependencies</h2>
+<h2 id="install">Install</h2>
+<h3 id="dependencies">Dependencies</h3>
 <ul>
 <li>python3, numpy, numba</li>
 <li>(optional - for tests/examples) matplotlib, scipy</li>
@@ -48,7 +49,6 @@ More information pertaining to numba is below.</p>
 <li>The <a href="http://www.chiantidatabase.org/chianti_download.html">CHIANTI atomic database</a> is also required.
 (Currelty tested with v9) pyCELP will automatically search for the Chianti atomic database path using the default environment variable XUVTOP.</li>
 </ul>
-<h2 id="install">Install</h2>
 <h3 id="conda-environment">Conda environment</h3>
 <p>It is recommended to install pycelp within a conda environment.
 For the best performance, it is recommended to use a version of numpy with an optimal linear algebra library, e.g. MKL for intel compilers (<a href="https://numpy.org/install/#numpy-packages--accelerated-linear-algebra-libraries">https://numpy.org/install/#numpy-packages--accelerated-linear-algebra-libraries</a>).</p>
@@ -112,6 +112,15 @@ They are easily manually built and/or updated from the main project repo directo
 </p>
 <pre><code class="language-shell">pdoc --html --force --output-dir docs pycelp
 </code></pre>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>pyCELP evolved from work initially using the CLE code developed by Phil Judge
+and Roberto Casini at the High Altitude Observatory.
+While pyCELP is now a
+completely independent implementation, we express our gratitude for all we
+learned by using CLE.
+pyCELP has been developed based on the excellent
+treatise on spectral line polarization by Egidio Landi Degl’innocenti and Marco
+Landolfi available <a href="https://link.springer.com/book/10.1007/1-4020-2415-0">here</a>.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -857,8 +866,8 @@ input &ndash; wv_air == air wavelength in Angstrom</p></div>
 <div class="toc">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#dependencies">Dependencies</a></li>
 <li><a href="#install">Install</a><ul>
+<li><a href="#dependencies">Dependencies</a></li>
 <li><a href="#conda-environment">Conda environment</a></li>
 <li><a href="#downloadclone-repo">Download/clone repo</a></li>
 </ul>
@@ -867,6 +876,7 @@ input &ndash; wv_air == air wavelength in Angstrom</p></div>
 <li><a href="#numba-implementation-and-options">Numba implementation and options</a></li>
 <li><a href="#numpy-libraries-for-multiprocessing">Numpy libraries for multiprocessing</a></li>
 <li><a href="#updating-documentation">Updating documentation</a></li>
+<li><a href="#acknowledgements">Acknowledgements</a></li>
 </ul>
 </div>
 <ul id="index">
