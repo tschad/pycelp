@@ -30,7 +30,7 @@ coefficients.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">&#34;&#34;&#34;
-This module provides functions necessary for calculating collisional rate 
+This module provides functions necessary for calculating collisional rate
 coefficients.
 &#34;&#34;&#34;
 
@@ -172,7 +172,7 @@ def setup_ecoll(lowlev,upplev,ettype,qnj,see_index,see_lev,see_k,see_dk):
         ktot += int(min(2*Jl+1,2*Ju+1))   ## because only ku to kl can exist for the min value
 
     ktot = ktot*4
-    print(&#39; how to decide ktot here  where I also add the relaxation&#39;)
+    #print(&#39; how to decide ktot here  where I also add the relaxation&#39;)
 
     ciK = np.zeros(ktot) ## ci
     ciK_indx = np.zeros((3,ktot),dtype = np.int32) ## tindx_low,tindx_upp,transindx
@@ -554,7 +554,7 @@ def setup_ecoll(lowlev,upplev,ettype,qnj,see_index,see_lev,see_k,see_dk):
         ktot += int(min(2*Jl+1,2*Ju+1))   ## because only ku to kl can exist for the min value
 
     ktot = ktot*4
-    print(&#39; how to decide ktot here  where I also add the relaxation&#39;)
+    #print(&#39; how to decide ktot here  where I also add the relaxation&#39;)
 
     ciK = np.zeros(ktot) ## ci
     ciK_indx = np.zeros((3,ktot),dtype = np.int32) ## tindx_low,tindx_upp,transindx

@@ -1,5 +1,5 @@
 """
-This module provides functions necessary for calculating collisional rate 
+This module provides functions necessary for calculating collisional rate
 coefficients.
 """
 
@@ -141,7 +141,7 @@ def setup_ecoll(lowlev,upplev,ettype,qnj,see_index,see_lev,see_k,see_dk):
         ktot += int(min(2*Jl+1,2*Ju+1))   ## because only ku to kl can exist for the min value
 
     ktot = ktot*4
-    print(' how to decide ktot here  where I also add the relaxation')
+    #print(' how to decide ktot here  where I also add the relaxation')
 
     ciK = np.zeros(ktot) ## ci
     ciK_indx = np.zeros((3,ktot),dtype = np.int32) ## tindx_low,tindx_upp,transindx

@@ -46,7 +46,11 @@ $ cd pycelp
 $ python setup.py develop  
 ```
 
-## Example
+## Examples
+
+Below is a minimal example of using the pycelp code from a python terminal.  For
+more extensive examples, see those provided in the examples subdirectory
+within the project repo. 
 
 ```shell
 (juplab) [schad@Schad-Mac pycelp]$ python
@@ -59,17 +63,16 @@ Type "help", "copyright", "credits" or "license" for more information.
  reading:  /usr/local/ssw/packages/chianti/dbase/fe/fe_13/fe_13.wgfa
  reading:  /usr/local/ssw/packages/chianti/dbase/fe/fe_13/fe_13.scups
  reading:  /usr/local/ssw/packages/chianti/dbase/fe/fe_13/fe_13.psplups
- testing default file: /usr/local/ssw/packages/chianti/dbase/abundance/sun_photospheric_2009_asplund.abund
+ using default abundances: /usr/local/ssw/packages/chianti/dbase/abundance/sun_photospheric_2009_asplund.abund
  reading:  /usr/local/ssw/packages/chianti/dbase/abundance/sun_photospheric_2009_asplund.abund
  testing default file: /usr/local/ssw/packages/chianti/dbase/ioneq/chianti.ioneq
  reading:  /usr/local/ssw/packages/chianti/dbase/ioneq/chianti.ioneq
  setting up electron collision rate factors
- how to decide ktot here  where I also add the relaxation
  setting up proton  collision rate factors
- how to decide ktot here  where I also add the relaxation
  setting up non-dipole radiative rate factors
  getting non-dipole rate factors
  setting up dipole radiative rate factors
+>>>
 >>> fe13
 pyCELP Ion class
     ---------------------

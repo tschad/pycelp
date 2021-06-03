@@ -62,7 +62,11 @@ $ conda install python numpy scipy numba matplotlib
 $ cd pycelp
 $ python setup.py develop  
 </code></pre>
-<h2 id="example">Example</h2>
+<h2 id="examples">Examples</h2>
+<p>Below is a minimal example of using the pycelp code from a python terminal.
+For
+more extensive examples, see those provided in the examples subdirectory
+within the project repo. </p>
 <pre><code class="language-shell">(juplab) [schad@Schad-Mac pycelp]$ python
 Python 3.9.4 (default, Apr  9 2021, 09:32:38)
 [Clang 10.0.0 ] :: Anaconda, Inc. on darwin
@@ -73,17 +77,16 @@ Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;licen
  reading:  /usr/local/ssw/packages/chianti/dbase/fe/fe_13/fe_13.wgfa
  reading:  /usr/local/ssw/packages/chianti/dbase/fe/fe_13/fe_13.scups
  reading:  /usr/local/ssw/packages/chianti/dbase/fe/fe_13/fe_13.psplups
- testing default file: /usr/local/ssw/packages/chianti/dbase/abundance/sun_photospheric_2009_asplund.abund
+ using default abundances: /usr/local/ssw/packages/chianti/dbase/abundance/sun_photospheric_2009_asplund.abund
  reading:  /usr/local/ssw/packages/chianti/dbase/abundance/sun_photospheric_2009_asplund.abund
  testing default file: /usr/local/ssw/packages/chianti/dbase/ioneq/chianti.ioneq
  reading:  /usr/local/ssw/packages/chianti/dbase/ioneq/chianti.ioneq
  setting up electron collision rate factors
- how to decide ktot here  where I also add the relaxation
  setting up proton  collision rate factors
- how to decide ktot here  where I also add the relaxation
  setting up non-dipole radiative rate factors
  getting non-dipole rate factors
  setting up dipole radiative rate factors
+&gt;&gt;&gt;
 &gt;&gt;&gt; fe13
 pyCELP Ion class
     ---------------------
@@ -872,7 +875,7 @@ input &ndash; wv_air == air wavelength in Angstrom</p></div>
 <li><a href="#downloadclone-repo">Download/clone repo</a></li>
 </ul>
 </li>
-<li><a href="#example">Example</a></li>
+<li><a href="#examples">Examples</a></li>
 <li><a href="#numba-implementation-and-options">Numba implementation and options</a></li>
 <li><a href="#numpy-libraries-for-multiprocessing">Numpy libraries for multiprocessing</a></li>
 <li><a href="#updating-documentation">Updating documentation</a></li>
