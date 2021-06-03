@@ -7,7 +7,7 @@
 
 A **py**thon package for **C**oronal **E**mission **L**ine **P**olarization calculations. 
 
-Developed by T. Schad - National Solar Observatory 
+Lead Developer: T. Schad - National Solar Observatory 
 
 **DISCLAIMER: pycelp is still in the early stages of development. Contributors are welcome. **
 
