@@ -7,16 +7,16 @@ plt.ion()
 from cycler import cycler
 mpl.rcParams['axes.prop_cycle'] = cycler(color='rkbgym')
 
-import pycle
+import pycelp
 
 ##########################
-## DO PYCLE CALCULATIONS
+## DO pycelp CALCULATIONS
 
-fe14 = pycle.Ion('fe_14',nlevels = 100)
-fe13 = pycle.Ion('fe_13',nlevels = 100)
-fe11 = pycle.Ion('fe_11',nlevels = 100)
-si10 = pycle.Ion('si_10',nlevels = 100)
-si9 = pycle.Ion('si_9')
+fe14 = pycelp.Ion('fe_14',nlevels = 100)
+fe13 = pycelp.Ion('fe_13',nlevels = 100)
+fe11 = pycelp.Ion('fe_11',nlevels = 100)
+si10 = pycelp.Ion('si_10',nlevels = 100)
+si9 = pycelp.Ion('si_9')
 models = fe14,fe11,fe13,fe13,si10,si9
 
 wvls = 5303,7892,10746,10798,14301,39343

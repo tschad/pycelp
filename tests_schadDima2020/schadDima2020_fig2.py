@@ -7,7 +7,7 @@ plt.ion()
 from cycler import cycler
 mpl.rcParams['axes.prop_cycle'] = cycler(color='rkbgym')
 
-import pycle
+import pycelp
 
 ##########################
 ## LOAD UP CHIANTI VERSION 9 DATA
@@ -25,16 +25,16 @@ rht = idls['rht']
 ch_int[:,0] = 1.e-35
 
 ##########################
-## DO PYCLE CALCULATIONS
+## DO PYCELP CALCULATIONS
 
-fe14 = pycle.Ion('fe_14',nlevels = 300) # -- issue with scups read for now !
-fe13 = pycle.Ion('fe_13',nlevels = 300)
-fe11 = pycle.Ion('fe_11',nlevels = 300)
-si10 = pycle.Ion('si_10')
-si9 = pycle.Ion('si_9')
+fe14 = pycelp.Ion('fe_14',nlevels = 300) # -- issue with scups read for now !
+fe13 = pycelp.Ion('fe_13',nlevels = 300)
+fe11 = pycelp.Ion('fe_11',nlevels = 300)
+si10 = pycelp.Ion('si_10')
+si9 = pycelp.Ion('si_9')
 
 temps = 10.**logt
-pycle_int = np.zeros((6,len(temps)))
+pycelp_int = np.zeros((6,len(temps)))
 edens = idls['dens']
 rphot = rht-1.
 thetab = np.rad2deg(np.arccos(1./np.sqrt(3.)))  ## Van Vleck
@@ -57,12 +57,12 @@ for n,t in enumerate(temps):
     fe13.calc(edens,t,rphot,thetab,include_limbdark = False,include_protons = True)
     si10.calc(edens,t,rphot,thetab,include_limbdark = False,include_protons = True)
     si9.calc(edens,t,rphot,thetab,include_limbdark = False,include_protons = True)
-    pycle_int[0,n] = fe14.calc_Iemiss(5303)
-    pycle_int[1,n] = fe11.calc_Iemiss(7892)
-    pycle_int[2,n] = fe13.calc_Iemiss(10746)
-    pycle_int[3,n] = fe13.calc_Iemiss(10798)
-    pycle_int[4,n] = si10.calc_Iemiss(14301)
-    pycle_int[5,n] = si9.calc_Iemiss(39343)
+    pycelp_int[0,n] = fe14.calc_Iemiss(5303)
+    pycelp_int[1,n] = fe11.calc_Iemiss(7892)
+    pycelp_int[2,n] = fe13.calc_Iemiss(10746)
+    pycelp_int[3,n] = fe13.calc_Iemiss(10798)
+    pycelp_int[4,n] = si10.calc_Iemiss(14301)
+    pycelp_int[5,n] = si9.calc_Iemiss(39343)
 
 ########
 ## PLOT DATA FOR COMPARISON
@@ -81,7 +81,7 @@ sr2arcsec = (180./np.pi)**2.*3600.**2.
 for zz in range(0,len(wvl)):
     ax.plot((10.**logt)/1.e6,ch_int[zz,:]/sr2arcsec,label = labs[zz])
 for n in range(6):
-    ax.plot(temps/1e6,pycle_int[n,:]/edens/(0.85*edens),'s',markersize = 3,fillstyle = 'none')
+    ax.plot(temps/1e6,pycelp_int[n,:]/edens/(0.85*edens),'s',markersize = 3,fillstyle = 'none')
 
 ax.set_xlim(0.5,3.5)
 ax.set_yscale('log')
@@ -90,7 +90,7 @@ ax.set_ylabel(r'photons cm$^{+3}$ s$^{-1}$ arcsec$^{-2}$')
 ax.set_xlabel('Temperature [MK]')
 ax.text(0.02,0.9,r'N$_{e}$ = $10^{8.5}$ [cm$^{-3}$]; Photospheric Abundances',transform = ax.transAxes)
 ax.text(0.02,0.82,r'Height = 0.1 R$_\odot$ (Limb Darkening Disabled)',transform = ax.transAxes)
-ax.text(0.02,0.74,r'$\theta_{B} = 54.74^{\circ}$ (pyCLE)',transform = ax.transAxes)
-ax.set_title('Contribution Functions: Chianti (solid) and pyCLE (symbols)')
+ax.text(0.02,0.74,r'$\theta_{B} = 54.74^{\circ}$ (pyCELP)',transform = ax.transAxes)
+ax.set_title('Contribution Functions: Chianti (solid) and pyCELP (symbols)')
 ax.legend(fontsize = 8)
 fig.tight_layout()

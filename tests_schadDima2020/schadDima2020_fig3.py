@@ -8,7 +8,7 @@ plt.ion()
 from cycler import cycler
 mpl.rcParams['axes.prop_cycle'] = cycler(color='rkbgym')
 
-import pycle
+import pycelp
 
 ##########################
 ## LOAD UP CHIANTI VERSION 9 DATA
@@ -27,15 +27,15 @@ ch_int = ch_int / sr2arcsec
 
 
 ##########################
-## DO PYCLE CALCULATIONS
+## DO pycelp CALCULATIONS
 
 py_int = np.zeros_like(ch_int)
 
-fe14 = pycle.Ion('fe_14',nlevels = 27)
-fe13 = pycle.Ion('fe_13',nlevels = 27)
-fe11 = pycle.Ion('fe_11',nlevels = 27)
-si10 = pycle.Ion('si_10',nlevels = 27)
-si9 = pycle.Ion('si_9',nlevels = 27)
+fe14 = pycelp.Ion('fe_14',nlevels = 27)
+fe13 = pycelp.Ion('fe_13',nlevels = 27)
+fe11 = pycelp.Ion('fe_11',nlevels = 27)
+si10 = pycelp.Ion('si_10',nlevels = 27)
+si9 = pycelp.Ion('si_9',nlevels = 27)
 
 models = fe14,fe11,fe13,fe13,si10,si9
 wvls = 5303,7892,10746,10798,14301,39343
@@ -53,11 +53,11 @@ for n in range(6):
         py_int[n,lev27,d,1]  = models[n].calc_Iemiss(wvls[n]) / dens0 / 0.85 / dens0
 
 
-fe14 = pycle.Ion('fe_14',nlevels = 100)
-fe13 = pycle.Ion('fe_13',nlevels = 100)
-fe11 = pycle.Ion('fe_11',nlevels = 100)
-si10 = pycle.Ion('si_10',nlevels = 100)
-si9 = pycle.Ion('si_9')
+fe14 = pycelp.Ion('fe_14',nlevels = 100)
+fe13 = pycelp.Ion('fe_13',nlevels = 100)
+fe11 = pycelp.Ion('fe_11',nlevels = 100)
+si10 = pycelp.Ion('si_10',nlevels = 100)
+si9 = pycelp.Ion('si_9')
 
 models = fe14,fe11,fe13,fe13,si10,si9
 lev100 = 1
@@ -90,7 +90,7 @@ for n in range(6):
     if n != 5: ax[n].plot(dens,ch_int[n,1,:,1]/ch_int[n,2,:,0],color = 'green',linestyle = 'dashed',lw = lw0)
     ax[n].plot(dens,ch_int[n,0,:,1]/ch_int[n,2,:,0],color = 'blue',linestyle = 'dashed',lw = lw0)
 
-    ## PYCLE
+    ## pycelp
     ax[n].plot(dens,py_int[n,0,:,0]/ch_int[n,2,:,0],'s',color = 'blue',fillstyle = 'none',markersize = 1)
     ax[n].plot(dens,py_int[n,0,:,1]/ch_int[n,2,:,0],'x',color = 'blue',fillstyle = 'none',markersize = 1)
     if n != 5: ax[n].plot(dens,py_int[n,1,:,0]/ch_int[n,2,:,0],'s',color = 'green',fillstyle = 'none',markersize = 1)
@@ -108,7 +108,7 @@ for n in range(6):
        r"$\theta_{B} = 54.74^{\circ}$" "\n"
        r"Height: 0.5 R$\odot$" "\n"
        "Solid: Chianti" "\n"
-       "Symbols: PYCLE" "\n"
+       "Symbols: PYCELP" "\n"
        "Dashed: Chianti no protons",   fontsize = 8,
        bbox=dict(facecolor='white', alpha=0.7))
     ax[n].legend(loc = 'lower right',title = '# levels')
