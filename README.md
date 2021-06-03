@@ -17,14 +17,15 @@ A read-only Enhanced PDF version of Schad & Dima 2020 is available via this [lin
 
 The original code developed by [Schad & Dima 2020](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract) (previously referred to as pyCLE) was a Fortran based code wrapped in python.  pyCELP is a completely new implementation coded entirely in Python.  It takes advantage of specific algorithm changes, numba jit compilers, and efficient numpy linear algebra packages to provide excellent speed performance that in most cases exceeds the earlier code.  More information pertaining to numba is below.
 
-## Dependencies
+## Install
+
+### Dependencies
 
 * python3, numpy, numba
 * (optional - for tests/examples) matplotlib, scipy
 * (optional - for updating docs) pdoc3
 * The [CHIANTI atomic database](http://www.chiantidatabase.org/chianti_download.html) is also required.  (Currelty tested with v9) pyCELP will automatically search for the Chianti atomic database path using the default environment variable XUVTOP.
 
-## Install
 
 ### Conda environment
 
@@ -99,3 +100,12 @@ Code reference documentation is available at [tschad.github.io/pycle](https:://t
 ```shell
 pdoc --html --force --output-dir docs pycelp
 ```
+
+## Acknowledgements
+
+pyCELP evolved from work initially using the CLE code developed by Phil Judge
+and Roberto Casini at the High Altitude Observatory.  While pyCELP is now a
+completely independent implementation, we express our gratitude for all we
+learned by using CLE.  pyCELP has been developed based on the excellent
+treatise on spectral line polarization by Egidio Landi Degl’innocenti and Marco
+Landolfi available [here](https://link.springer.com/book/10.1007/1-4020-2415-0).
