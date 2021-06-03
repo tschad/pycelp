@@ -1,0 +1,1366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>pycelp.chianti API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pycelp.chianti</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import numpy as np
+import os
+import re
+
+#__all__ = [&#39;getChiantiDir&#39;,&#39;getIonZ&#39;]
+
+def getChiantiDir():
+    try:
+        chianti_dbase_root = os.environ[&#39;XUVTOP&#39;]
+    except:
+        raise NameError(&#39;Environmental variable for Chianti Database not defined&#39;)
+    ## FOR A DEBUG MODE: print(&#39;Chianti database location: &#39;,chianti_dbase_root)
+    with open(os.path.join(chianti_dbase_root, &#39;VERSION&#39;), &#39;r&#39;) as f:
+        lines = f.readlines()
+        chianti_version = lines[0].strip()
+    ## print(&#39;Chianti version: &#39;,chianti_version)
+    return chianti_dbase_root,chianti_version
+
+def getIonZ(ion_name):
+    &#39;&#39;&#39;
+    Get Atomic Number of the Element given an ion name, e.g. &#39;fe_13&#39;
+    &#39;&#39;&#39;
+    element, ion = ion_name.split(&#39;_&#39;)
+    zlabl=np.array([&#39;H&#39;,&#39;He&#39;,&#39;Li&#39;,&#39;Be&#39;,&#39;B&#39;,&#39;C&#39;,&#39;N&#39;,&#39;O&#39;,&#39;F&#39;,&#39;Ne&#39;,&#39;Na&#39;,
+       &#39;Mg&#39;,&#39;Al&#39;,&#39;Si&#39;,&#39;P&#39;,&#39;S&#39;,&#39;Cl&#39;,&#39;Ar&#39;,&#39;K&#39;,&#39;Ca&#39;,&#39;Sc&#39;,&#39;Ti&#39;,&#39;V&#39;,&#39;Cr&#39;,
+       &#39;Mn&#39;,&#39;Fe&#39;,&#39;Co&#39;,&#39;Ni&#39;,&#39;Cu&#39;,&#39;Zn&#39;])
+    zlabl_upp = np.char.upper(zlabl)
+    wion = np.where(element.upper() == zlabl_upp)[0]
+    ionz = wion[0] + 1
+    return ionz
+
+def getAtomicWeight(element):
+    &#34;&#34;&#34;
+    Get atomic weight of element
+    &#34;&#34;&#34;
+    elem = np.array([&#39;h&#39;,&#39;he&#39;,&#39;li&#39;,&#39;be&#39;,&#39;b&#39;,&#39;c&#39;,&#39;n&#39;,&#39;o&#39;,&#39;f&#39;,
+        &#39;ne&#39;,&#39;na&#39;,&#39;mg&#39;,&#39;al&#39;,&#39;si&#39;,&#39;p&#39;,&#39;s&#39;,&#39;cl&#39;,&#39;ar&#39;,&#39;k&#39;,
+        &#39;ca&#39;,&#39;sc&#39;,&#39;ti&#39;,&#39;v&#39;,&#39;cr&#39;,&#39;mn&#39;,&#39;fe&#39;])
+    wgts = np.array([1.008,4.0026,6.94,9.012,10.81,12.011,14.007,
+        15.999,18.998,20.1797,22.9897,24.305,26.9815,
+        28.085,30.97376,32.06,35.45,39.948,39.0983,
+        40.078,44.955,47.867,50.94,51.996,54.938,55.845])
+    wem = np.where(elem == element)
+    return wgts[wem[0]][0]
+
+def readFile(filename):
+    print(&#39; reading: &#39;,filename)
+    with open(filename, &#39;r&#39;) as f:
+        lines = f.readlines()
+
+    for i,line in enumerate(lines):
+        if line.strip() == &#39;-1&#39; or r&#39;%file&#39; in line:  # sometimes the first -1 is missing
+            i_start = i if r&#39;%file&#39; in line else i+1
+            data = lines[0:i]
+            footer = lines[i_start:len(lines)]
+            break
+
+    reference = [ln.strip() for ln in footer]
+    return data,reference
+
+def convertConfig(conf):
+    &#34;&#34;&#34;
+    Translated from convert_config.pro in Chianti IDL version
+    &#34;&#34;&#34;
+    conf = conf.strip()  ## remove leading and trailing spaces
+    conf = conf.replace(&#39;.&#39;,&#39; &#39;)  ## replace &#39;.&#39; with spaces
+    conf = conf.replace(&#39;(&#39;,&#39; (&#39;)  ## insert a space where parentheses are
+    conf = conf.replace(&#39;)&#39;,&#39;) &#39;)
+    index1 = [i for i in range(len(conf)) if conf.startswith(&#39;(&#39;, i)]
+    index2 = [i for i in range(len(conf)) if conf.startswith(&#39;)&#39;, i)]
+    assert len(index1) == len(index2), &#39; Number of open and closed parentheses must match&#39;
+
+    if len(index1) == 0:
+        conf = conf.lower()  ## if there are no parentheses, then lowercase everything
+        conf_latex = conf  ## bring along a copy of the latex version as well
+    else:
+        ## split string into components
+        indx = [None] * (len(index1)*2+2)
+        indx[0] = 0
+        indx[1:-1:2] = index1
+        index2n = [i+1 for i in index2]  ## add one to the index2 to include closing parenthesis
+        indx[2:-1:2] = index2n
+        indx[-1] = len(conf)
+        nparts = len(indx)-1
+        parts = [None] * nparts
+        for n in range(nparts):
+            parts[n] = conf[indx[n]:indx[n+1]]
+        ## create list to hold LATEX version
+        parts_latex = [None] * nparts
+        ## make everything outside of parenthesis lowercase
+        for n in range(0,nparts,2):
+            parts[n] = parts[n].lower()
+            parts_latex[n] = parts[n].lower()
+        ## inside the parthensis if first character after the &#39;(&#39; is an integer
+        ## then proceee and uppercase what is inside
+        for n in range(1,nparts,2):
+            if parts[n][1].isnumeric():
+                parts[n] = parts[n].upper()
+                parts_latex[n] = parts[n][0] + &#39;$^&#39; + parts[n][1] + &#39;$&#39; + parts[n][2:]
+            else:
+                parts[n] = parts[n]
+                parts_latex[n] = parts[n]
+        ## print parts
+        conf = &#39;&#39;
+        conf_latex = &#39;&#39;
+        for n in range(nparts):
+            conf += parts[n]
+            conf_latex += parts_latex[n]
+
+    ##
+    spdf   = [&#39;s&#39;, &#39;p&#39;, &#39;d&#39;, &#39;f&#39;, &#39;g&#39;,&#39;h&#39;,&#39;i&#39;,&#39;k&#39;]
+    n_spdf = len(spdf)
+    parity = 0
+    for p in range(n_spdf):
+        index1 = [i for i in range(len(conf)) if conf.startswith(spdf[p], i)]
+        index2 = [i for i in range(len(conf_latex)) if conf.startswith(spdf[p], i)]
+        for ii,indx in enumerate(index1):
+            s1,s2,s3 = &#39;&#39;,&#39;&#39;,&#39;&#39;
+            if (indx+1)&lt;len(conf): s1 = conf[indx+1]
+            if (indx+2)&lt;len(conf): s2 = conf[indx+2]
+            if (indx+3)&lt;len(conf): s3 = conf[indx+3]
+            s1n,s2n,s3n = False,False,False
+            if s1.isnumeric(): s1n = True
+            if s2.isnumeric(): s2n = True
+            if s3.isnumeric(): s3n = True
+            if s1n and (s2 == &#39; &#39; or s2 == &#39;&#39;):  ## E.g., &#39;3s2 &#39; or &#39;3s2&#39;
+                occup_str, occup,j,jlatex = s1, np.int(s1), indx+2, index2[ii]+2
+            elif not s1n:  ## E.g., &#39;3s &#39;
+                occup_str, occup,j,jlatex = &#39;&#39;,1,indx+1, index2[ii]+1
+            elif s1n and s2n and (s3 == &#39; &#39; or s3 == &#39;&#39;): # E.g., &#39;3d10 4s&#39;
+                occup_str, occup,j,jlatex = s1+s2, np.int(s1+s2), indx+3, index2[ii]+3
+            elif s1n and s2n and s3n: # E.g., &#39;3d104s&#39;
+                occup_str, occup,j,jlatex = s1+s2, np.int(s1+s2), indx+2, index2[ii]+2
+            elif s1n and s2n and not s3n: # E.g., &#39;3s22p&#39;
+                occup_str, occup,j,jlatex = s1,np.int(s1),indx+2, index2[ii]+2
+            elif s1n and not s2n and (s2 != &#39; &#39;): # E.g., &#39;3s2p&#39;
+                occup_str, occup,j,jlatex = &#39;&#39;,1,indx+1, index2[ii]+1
+            else: # E.g., &#39;4s&#39;
+                occup_str, occup,j,jlatex = &#39;&#39;,1,indx+1, index2[ii]+1
+
+            if (p%2): parity = parity + occup   ## non odd orbitals do not contribute to parity
+            if occup == 1: occup_str = &#39;&#39;
+            if occup_str != &#39;&#39;:
+                add_str = &#39;$^{&#39; + occup_str + &#39;}$&#39;
+                conf_latex = conf_latex[0:index2[ii]+1] + add_str + conf_latex[jlatex:]
+                add_str = occup_str
+                conf = conf[0:indx+1] + add_str + conf[j:]
+
+    if (parity%2):
+        parity = 1
+    else:
+        parity = 0
+
+    return conf,conf_latex,parity
+
+def elvlcRead(ion_name):
+    &#39;&#39;&#39;
+    ion_name, e.g.  &#39;fe_13&#39;
+    &#39;&#39;&#39;
+    chianti_dbase_root,chianti_version = getChiantiDir()
+    element, ion = ion_name.split(&#39;_&#39;)
+    ionZ = getIonZ(ion_name)
+    filename = chianti_dbase_root + element + os.path.sep + ion_name + os.path.sep + ion_name + &#39;.elvlc&#39;
+    data,reference = readFile(filename)
+
+    nlvl = len(data)
+
+    ## setup data variables
+    index  = [None] * nlvl   ## level index
+    conf   = [None] * nlvl   ## configuration
+    label  = [None] * nlvl   ## level label
+    mult   = [None] * nlvl   ## multiplicity, 2s+1
+    l_sym  = [None] * nlvl   ## orbital angular momentum
+    j      = [None] * nlvl   ## total angular momentum
+    obs_energy = [None] * nlvl   ## observed energy
+    theory_energy = [None] * nlvl   ## theoretical energy
+
+    elvlcFormat = &#39;(I7,A30,A5,I5,A5,F5.1,F15.3,F15.3)&#39;
+    widFormat = [0,7,30,5,5,5,5,15,15]
+    widC = np.cumsum(widFormat)
+
+    for i,ln in enumerate(data):
+        chunks = [ln[widC[j]:widC[j+1]] for j in range(len(widC)-1)]
+        index[i] = np.int(chunks[0])
+        conf[i]  = np.str(chunks[1]).strip()
+        label[i] = np.str(chunks[2]).strip()
+        mult[i]  = np.int(chunks[3])
+        l_sym[i] = np.str(chunks[4]).strip()
+        j[i]     =  np.float(chunks[5])
+        obs_energy[i] = np.float(chunks[6])
+        theory_energy[i] = np.float(chunks[7])
+
+    ## best energy
+    energy = [None] * nlvl
+    for i in range(nlvl):
+        energy[i] = obs_energy[i]
+        if obs_energy[i] == -1: energy[i] = theory_energy[i]
+
+    conf_index = [None] * nlvl
+    conf_latex = [None] * nlvl
+    parity = [None] * nlvl
+    parity_str = [None] * nlvl
+
+    uconf, uconf_rindx = np.unique(conf,return_inverse=True)
+    cfg_indx = 1
+    par_str = [&#39;e&#39;,&#39;o&#39;]
+    for i in range(nlvl):
+        if conf_index[i] == None:
+            uconf_i = uconf[uconf_rindx[i]]
+            wi = [k for k,s in enumerate(conf) if uconf_i in s]
+            c1,clatex,par = convertConfig(uconf_i)
+            for ww in wi:
+                conf_index[ww] = cfg_indx
+                conf_latex[ww] = clatex
+                parity[ww] = par
+                parity_str[ww] = par_str[par]
+            cfg_indx += 1
+
+    spd = [&#39;S&#39;,&#39;P&#39;,&#39;D&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;I&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;Q&#39;,&#39;R&#39;,&#39;T&#39;,&#39;U&#39;,&#39;V&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;]
+
+    ## get orbital angular momentum quantum number (l)
+    l = [None] * nlvl
+    for i in range(len(spd)):
+        wi = [k for k,lsym in enumerate(l_sym) if lsym == spd[i]]
+        for ww in wi: l[ww] = i
+
+    ## spin quantum number
+    s = (np.asarray(mult,dtype=np.float)-1.)/2.
+    ## degeneracy
+    weight = 2.*np.asarray(j) + 1.
+
+    term = [None] * nlvl
+    term_latex = [None] * nlvl
+    j_str = [None] * nlvl
+    level = [None] * nlvl
+    level_latex = [None] * nlvl
+    full_level = [None] * nlvl
+    full_level_latex = [None] * nlvl
+    for i in range(nlvl):
+        term[i] = str(mult[i]) + l_sym[i]
+        term_latex[i] = &#39;$^&#39; + str(mult[i]) + &#39;$&#39; + l_sym[i]
+        if (np.int(j[i]) == j[i]):
+            j_str[i] = str(np.int(j[i]))
+        else:
+            j_str[i] = str(np.int(j[i]*2)) + &#39;/2&#39;
+        level[i] = term[i] + j_str[i]
+        level_latex[i] = term_latex[i] + &#39;$_{&#39; + j_str[i] + &#39;}$&#39;
+        full_level[i] = conf[i] + &#39; &#39; + level[i]
+        full_level_latex[i] = conf_latex[i] + &#39; &#39; + level_latex[i]
+
+    result =   {&#34;ion_name&#34;: ion_name,
+                &#34;ion_z&#34;:ionZ,
+                &#34;ion_n&#34;:ion,
+                &#34;filename&#34;:filename,
+                &#34;version&#34;:chianti_version,
+                &#34;reference&#34;:reference,
+                &#34;index&#34;:np.array(index),
+                &#34;conf&#34;:np.array(conf),
+                &#34;conf_latex&#34;:np.array(conf_latex),
+                &#34;conf_index&#34;:np.array(conf_index),
+                &#34;term&#34;:np.array(term),
+                &#34;term_latex&#34;:np.array(term_latex),
+                &#34;level&#34;:np.array(level),
+                &#34;level_latex&#34;:np.array(level_latex),
+                &#34;full_level&#34;:np.array(full_level),
+                &#34;full_level_latex&#34;:np.array(full_level_latex),
+                &#34;label&#34;:np.array(label),
+                &#34;mult&#34;:np.array(mult),
+                &#34;s&#34;:np.array(s),
+                &#34;l&#34;:np.array(l),
+                &#34;l_sym&#34;:np.array(l_sym),
+                &#34;j&#34;:np.array(j),
+                &#34;j_str&#34;:np.array(j_str),
+                &#34;parity&#34;:np.array(parity),
+                &#34;parity_str&#34;:np.array(parity_str),
+                &#34;weight&#34;:np.array(weight),
+                &#34;obs_energy&#34;:np.array(obs_energy),
+                &#34;theory_energy&#34;:np.array(theory_energy),
+                &#34;energy&#34;:np.array(energy),
+                &#34;energy_units&#34;: &#39;cm^-1&#39;}
+
+    return result
+
+def wgfaRead(ion_name):
+    &#34;&#34;&#34;&#34;
+    Reads the wgfa file for a given ion from the chianti database.
+    Assumes $XUVTOP is defined as environmental variable
+
+    Parameters
+    ----------
+    ion_name : `str`
+        Name of ion, e.g. &#39;fe_13&#39;
+    &#34;&#34;&#34;
+    chianti_dbase_root,chianti_version = getChiantiDir()
+    element, ion = ion_name.split(&#39;_&#39;)
+    filename = chianti_dbase_root + element + os.path.sep + ion_name + os.path.sep + ion_name + &#39;.wgfa&#39;
+    data,reference = readFile(filename)
+
+    n = len(data)
+    lower_level_index = np.zeros(n,dtype = np.int)  ## lower level index
+    upper_level_index = np.zeros(n,dtype = np.int)  ## upper level index
+    wavelength  = np.zeros(n,dtype = np.float)  ## transition wavelength
+    gf = np.zeros(n,dtype = np.float)  ## oscillator strength
+    A_einstein = np.zeros(n,dtype = np.float)  ## radiative decay rate
+
+    wgfaFormat = &#39;(2i5,f15.3,2e15.3)&#39;
+    for i,ln in enumerate(data):
+        lower_level_index[i] = np.int(ln[0:5])
+        upper_level_index[i] = np.int(ln[5:10])
+        wavelength[i] = np.float(ln[10:25])
+        gf[i] = np.float(ln[25:40])
+        A_einstein[i] = np.float(ln[40:55])
+
+    result = {&#34;lower_level_index&#34;:np.array(lower_level_index),
+              &#34;upper_level_index&#34;:np.array(upper_level_index),
+              &#34;wavelength&#34;:np.array(wavelength),
+              &#34;gf&#34;:np.array(gf),
+              &#34;A_einstein&#34;:np.array(A_einstein),
+              &#34;filename&#34;:filename,
+              &#34;version&#34;:chianti_version,
+              &#34;reference&#34;:reference}
+
+    return result
+
+def scupsRead(ion_name):
+    &#34;&#34;&#34;
+    Reads scups files
+    &#34;&#34;&#34;
+    chianti_dbase_root,chianti_version = getChiantiDir()
+    element, ion = ion_name.split(&#39;_&#39;)
+    filename = chianti_dbase_root + element + os.path.sep + ion_name + os.path.sep + ion_name + &#39;.scups&#39;
+    data,reference = readFile(filename)
+
+    n = len(data)//3   ## data for each transition spread over three lines
+
+    lower_level_index = []
+    upper_level_index = []
+    delta_energy = []
+    gf = []
+    high_t_limit = []
+    n_t = []
+    bt_type = []
+    bt_c = []
+    bt_t = []
+    bt_upsilon = []
+
+    ## fortran formating for line 1 of 3
+    scupsFormat = &#39;(I7,I7,E12.3,E12.3,E12.3,I5,I3,E12.3)&#39;
+    ## I believe the I3 format is incorrect
+    widFormat = [0,7,7,12,12,12,5,5,12]
+    widC = np.cumsum(widFormat)
+
+    for i in range(n):
+        ln1 = data[i*3+0]
+        ln2 = data[i*3+1]
+        ln3 = data[i*3+2]
+        chunks = [ln1[widC[j]:widC[j+1]] for j in range(len(widC)-1)]
+        lower_level_index.append(np.int(chunks[0]))
+        upper_level_index.append(np.int(chunks[1]))
+        delta_energy.append(np.float(chunks[2]))
+        gf.append(np.float(chunks[3]))
+        high_t_limit.append(np.float(chunks[4]))
+        n_t.append(np.int(chunks[5]))
+        bt_type.append(np.int(chunks[6]))
+        bt_c.append(np.float(chunks[7]))
+        bt_t.append(np.array(ln2.split(),dtype = np.float))
+        bt_upsilon.append(np.array(ln3.split(),dtype = np.float))
+
+    ntrans = len(bt_t)
+    nt_max = np.max(n_t)
+    bt_t_arr = np.zeros((ntrans,nt_max))
+    bt_u_arr = np.zeros((ntrans,nt_max))
+    for n in range(ntrans):
+        bt_t_arr[n,0:n_t[n]] = bt_t[n]
+        bt_u_arr[n,0:n_t[n]] = bt_upsilon[n]
+
+    result = {&#34;lower_level_index&#34;:np.array(lower_level_index),
+            &#34;upper_level_index&#34;:np.array(upper_level_index),
+            &#34;delta_energy&#34;:np.array(delta_energy),
+            &#34;gf&#34;:np.array(gf),
+            &#34;high_t_limit&#34;:np.array(high_t_limit),
+            &#34;n_t&#34;:np.array(n_t),
+            &#34;bt_type&#34;:np.array(bt_type),
+            &#34;bt_c&#34;:np.array(bt_c),
+            &#34;bt_t&#34;:bt_t_arr,
+            &#34;bt_upsilon&#34;:bt_u_arr,
+            &#34;filename&#34;:filename,
+            &#34;version&#34;:chianti_version,
+            &#34;reference&#34;:reference}
+
+    return result
+
+def splupsRead(ion_name):
+    &#34;&#34;&#34;
+    Reads splups proton rate files
+    &#34;&#34;&#34;
+    chianti_dbase_root,chianti_version = getChiantiDir()
+    element, ion = ion_name.split(&#39;_&#39;)
+    filename = chianti_dbase_root + element + os.path.sep + ion_name + os.path.sep + ion_name + &#39;.psplups&#39;
+    data,reference = readFile(filename)
+
+    n = len(data)
+
+    lower_level_index = []
+    upper_level_index = []
+    t_type = []
+    gf = []
+    delta_energy = []
+    bt_c = []
+    nspl = []
+    bt_t = []
+    bt_upsilon = []
+
+    for i in range(n):
+        ln = data[i]
+        ## figure out number of spline points by subtracting
+        ## length of first 6 elements from line and divide by
+        ## length of spline value
+        npts = int((len(ln) -3*3-3*10)/10)
+        widFormat = [0,3,3,3,10,10,10]
+        for ss in range(npts): widFormat.append(10)
+        widC = np.cumsum(widFormat)
+        chunks = [ln[widC[j]:widC[j+1]] for j in range(len(widC)-1)]
+        lower_level_index.append(int(chunks[0]))
+        upper_level_index.append(int(chunks[1]))
+        t_type.append(int(chunks[2]))
+        gf.append(np.float(chunks[3]))
+        delta_energy.append(np.float(chunks[4]))
+        bt_c.append(np.float(chunks[5]))
+        nspl.append(npts)
+        bt_t.append(np.linspace(0,1,npts))
+        bt_upsilon.append(np.array(chunks[6:],dtype=np.float))
+
+    result = {&#34;lower_level_index&#34;:np.array(lower_level_index),
+            &#34;upper_level_index&#34;:np.array(upper_level_index),
+            &#34;bt_type&#34;:np.array(t_type),
+            &#34;gf&#34;:np.array(gf),
+            &#34;delta_energy&#34;:np.array(delta_energy),
+            &#34;bt_c&#34;:np.array(bt_c),
+            &#34;n_t&#34;:np.array(nspl),
+            &#34;bt_t&#34;:np.array(bt_t),
+            &#34;bt_upsilon&#34;:np.array(bt_upsilon),
+            &#34;filename&#34;:filename,
+            &#34;version&#34;:chianti_version,
+            &#34;reference&#34;:reference}
+
+    return result
+
+
+def abundRead(filename):
+
+    chianti_dbase_root,chianti_version = getChiantiDir()
+    filename = chianti_dbase_root + &#39;abundance&#39; + os.path.sep + &#39;sun_photospheric_2009_asplund.abund&#39;
+    print(&#39; testing default file:&#39;,filename)
+
+    data,reference = readFile(filename)
+
+    n = len(data)
+    abund_z   = np.zeros(n,dtype=np.int)
+    abund_val = np.zeros(n,dtype=np.float)
+
+    for i,ln in enumerate(data):
+        lns = ln.split()
+        abund_z[i] = np.int(lns[0])
+        abund_val[i] = np.float(lns[1])
+
+    result = {&#34;abund_z&#34;:abund_z,
+        &#34;abund_val&#34;:abund_val,
+        &#34;filename&#34;:filename,
+        &#34;version&#34;:chianti_version,
+        &#34;reference&#34;:reference}
+
+    return result
+
+
+def ioneqRead(filename):
+    &#34;&#34;&#34;
+    Reads an ioneq file
+    ionization equilibrium values less then minIoneq are returns as zeros
+    Returns
+    -------
+    {&#39;temp&#39;,&#39;ionfrac&#39;,&#39;filename&#39;,&#39;version&#39;,&#39;reference&#39;} : `dict`
+        Ionization equilibrium values and the reference to the literature
+    &#34;&#34;&#34;
+    chianti_dbase_root,chianti_version = getChiantiDir()
+    filename = chianti_dbase_root + &#39;ioneq&#39; + os.path.sep + &#39;chianti.ioneq&#39;
+    print(&#39; testing default file:&#39;,filename)
+    data,reference = readFile(filename)
+
+    n = len(data)
+    nt = np.int(data[0].split()[0])  ## number of temperatures
+    nz = np.int(data[0].split()[1])  ## number of elements
+
+    ## get temperatures
+    t = np.asarray(data[1].split()).astype(np.float)
+
+    ioneq = np.zeros((nt,nz,nz+1))
+
+    for i,ln in enumerate(data[2:]):
+        lns = ln.split()
+        z1,ion1 = np.int(lns[0]),np.int(lns[1])
+        ioneq[:,z1-1,ion1-1] = np.asarray(lns[2:]).astype(np.float)
+
+    result = {&#34;temp&#34;:t,
+            &#34;ionfrac&#34;:ioneq,
+            &#34;filename&#34;:filename,
+            &#34;version&#34;:chianti_version,
+            &#34;reference&#34;:reference}
+
+    return result
+
+def limit_levels(input,nlevels,type = None):
+    &#34;&#34;&#34;
+
+    &#34;&#34;&#34;
+
+    if (type == None):
+        print(&#39;A type must be speficed for the limit levels routine&#39;)
+        raise
+
+    if (type == &#39;elvl&#39;):
+
+        nlev_input = len(input[&#39;index&#39;])
+        if (nlev_input &lt; nlevels):
+            print(&#39; --- Number of requested levels exceeds those in database&#39;)
+            print(&#39; --- Using all levels&#39;)
+            return input
+
+        keys = &#39;index&#39;,&#39;conf&#39;,&#39;conf_latex&#39;,&#39;conf_index&#39;,&#39;term&#39;,&#39;term_latex&#39;, \
+        &#39;level&#39;,&#39;level_latex&#39;,&#39;full_level&#39;,&#39;full_level_latex&#39;,&#39;label&#39;,&#39;mult&#39;, \
+        &#39;s&#39;,&#39;l&#39;,&#39;l_sym&#39;,&#39;j&#39;,&#39;j_str&#39;,&#39;parity&#39;,&#39;parity_str&#39;,&#39;weight&#39;, \
+        &#39;obs_energy&#39;,&#39;theory_energy&#39;,&#39;energy&#39;
+
+        for k in keys:
+            input[k] = input[k][0:nlevels]
+
+        return input
+
+    if (type == &#39;wgfa&#39;):
+
+        lowlev = input[&#39;lower_level_index&#39;]
+        upplev = input[&#39;upper_level_index&#39;]
+        wg = (lowlev &lt; nlevels+1) * (upplev &lt; nlevels+1)
+
+        keys = &#39;lower_level_index&#39;,&#39;upper_level_index&#39;,&#39;wavelength&#39;, \
+        &#39;gf&#39;,&#39;A_einstein&#39;
+
+        for k in keys:
+            input[k] = input[k][wg]
+
+        return input
+
+    if (type == &#39;scups&#39;):
+
+        lowlev = input[&#39;lower_level_index&#39;]
+        upplev = input[&#39;upper_level_index&#39;]
+        wg = (lowlev &lt; nlevels+1) * (upplev &lt; nlevels+1)
+
+        keys = &#39;lower_level_index&#39;,&#39;upper_level_index&#39;,&#39;delta_energy&#39;, \
+        &#39;gf&#39;,&#39;high_t_limit&#39;,&#39;n_t&#39;,&#39;bt_type&#39;,&#39;bt_c&#39;,&#39;bt_t&#39;,&#39;bt_upsilon&#39;
+
+        for k in keys:
+            input[k] = input[k][wg]
+
+        return input
+
+    if (type == &#39;splups&#39;):
+
+        lowlev = input[&#39;lower_level_index&#39;]
+        upplev = input[&#39;upper_level_index&#39;]
+        wg = (lowlev &lt; nlevels+1) * (upplev &lt; nlevels+1)
+
+        keys = &#39;lower_level_index&#39;,&#39;upper_level_index&#39;,&#39;bt_type&#39;, \
+        &#39;gf&#39;,&#39;delta_energy&#39;,&#39;bt_c&#39;,&#39;n_t&#39;,&#39;bt_t&#39;,&#39;bt_upsilon&#39;
+
+        for k in keys:
+            input[k] = input[k][wg]
+
+        return input
+
+
+if __name__ == &#34;__main__&#34;:
+
+    print(&#39; this is a module of chianti IO routines&#39;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="pycelp.chianti.abundRead"><code class="name flex">
+<span>def <span class="ident">abundRead</span></span>(<span>filename)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def abundRead(filename):
+
+    chianti_dbase_root,chianti_version = getChiantiDir()
+    filename = chianti_dbase_root + &#39;abundance&#39; + os.path.sep + &#39;sun_photospheric_2009_asplund.abund&#39;
+    print(&#39; testing default file:&#39;,filename)
+
+    data,reference = readFile(filename)
+
+    n = len(data)
+    abund_z   = np.zeros(n,dtype=np.int)
+    abund_val = np.zeros(n,dtype=np.float)
+
+    for i,ln in enumerate(data):
+        lns = ln.split()
+        abund_z[i] = np.int(lns[0])
+        abund_val[i] = np.float(lns[1])
+
+    result = {&#34;abund_z&#34;:abund_z,
+        &#34;abund_val&#34;:abund_val,
+        &#34;filename&#34;:filename,
+        &#34;version&#34;:chianti_version,
+        &#34;reference&#34;:reference}
+
+    return result</code></pre>
+</details>
+</dd>
+<dt id="pycelp.chianti.convertConfig"><code class="name flex">
+<span>def <span class="ident">convertConfig</span></span>(<span>conf)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Translated from convert_config.pro in Chianti IDL version</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def convertConfig(conf):
+    &#34;&#34;&#34;
+    Translated from convert_config.pro in Chianti IDL version
+    &#34;&#34;&#34;
+    conf = conf.strip()  ## remove leading and trailing spaces
+    conf = conf.replace(&#39;.&#39;,&#39; &#39;)  ## replace &#39;.&#39; with spaces
+    conf = conf.replace(&#39;(&#39;,&#39; (&#39;)  ## insert a space where parentheses are
+    conf = conf.replace(&#39;)&#39;,&#39;) &#39;)
+    index1 = [i for i in range(len(conf)) if conf.startswith(&#39;(&#39;, i)]
+    index2 = [i for i in range(len(conf)) if conf.startswith(&#39;)&#39;, i)]
+    assert len(index1) == len(index2), &#39; Number of open and closed parentheses must match&#39;
+
+    if len(index1) == 0:
+        conf = conf.lower()  ## if there are no parentheses, then lowercase everything
+        conf_latex = conf  ## bring along a copy of the latex version as well
+    else:
+        ## split string into components
+        indx = [None] * (len(index1)*2+2)
+        indx[0] = 0
+        indx[1:-1:2] = index1
+        index2n = [i+1 for i in index2]  ## add one to the index2 to include closing parenthesis
+        indx[2:-1:2] = index2n
+        indx[-1] = len(conf)
+        nparts = len(indx)-1
+        parts = [None] * nparts
+        for n in range(nparts):
+            parts[n] = conf[indx[n]:indx[n+1]]
+        ## create list to hold LATEX version
+        parts_latex = [None] * nparts
+        ## make everything outside of parenthesis lowercase
+        for n in range(0,nparts,2):
+            parts[n] = parts[n].lower()
+            parts_latex[n] = parts[n].lower()
+        ## inside the parthensis if first character after the &#39;(&#39; is an integer
+        ## then proceee and uppercase what is inside
+        for n in range(1,nparts,2):
+            if parts[n][1].isnumeric():
+                parts[n] = parts[n].upper()
+                parts_latex[n] = parts[n][0] + &#39;$^&#39; + parts[n][1] + &#39;$&#39; + parts[n][2:]
+            else:
+                parts[n] = parts[n]
+                parts_latex[n] = parts[n]
+        ## print parts
+        conf = &#39;&#39;
+        conf_latex = &#39;&#39;
+        for n in range(nparts):
+            conf += parts[n]
+            conf_latex += parts_latex[n]
+
+    ##
+    spdf   = [&#39;s&#39;, &#39;p&#39;, &#39;d&#39;, &#39;f&#39;, &#39;g&#39;,&#39;h&#39;,&#39;i&#39;,&#39;k&#39;]
+    n_spdf = len(spdf)
+    parity = 0
+    for p in range(n_spdf):
+        index1 = [i for i in range(len(conf)) if conf.startswith(spdf[p], i)]
+        index2 = [i for i in range(len(conf_latex)) if conf.startswith(spdf[p], i)]
+        for ii,indx in enumerate(index1):
+            s1,s2,s3 = &#39;&#39;,&#39;&#39;,&#39;&#39;
+            if (indx+1)&lt;len(conf): s1 = conf[indx+1]
+            if (indx+2)&lt;len(conf): s2 = conf[indx+2]
+            if (indx+3)&lt;len(conf): s3 = conf[indx+3]
+            s1n,s2n,s3n = False,False,False
+            if s1.isnumeric(): s1n = True
+            if s2.isnumeric(): s2n = True
+            if s3.isnumeric(): s3n = True
+            if s1n and (s2 == &#39; &#39; or s2 == &#39;&#39;):  ## E.g., &#39;3s2 &#39; or &#39;3s2&#39;
+                occup_str, occup,j,jlatex = s1, np.int(s1), indx+2, index2[ii]+2
+            elif not s1n:  ## E.g., &#39;3s &#39;
+                occup_str, occup,j,jlatex = &#39;&#39;,1,indx+1, index2[ii]+1
+            elif s1n and s2n and (s3 == &#39; &#39; or s3 == &#39;&#39;): # E.g., &#39;3d10 4s&#39;
+                occup_str, occup,j,jlatex = s1+s2, np.int(s1+s2), indx+3, index2[ii]+3
+            elif s1n and s2n and s3n: # E.g., &#39;3d104s&#39;
+                occup_str, occup,j,jlatex = s1+s2, np.int(s1+s2), indx+2, index2[ii]+2
+            elif s1n and s2n and not s3n: # E.g., &#39;3s22p&#39;
+                occup_str, occup,j,jlatex = s1,np.int(s1),indx+2, index2[ii]+2
+            elif s1n and not s2n and (s2 != &#39; &#39;): # E.g., &#39;3s2p&#39;
+                occup_str, occup,j,jlatex = &#39;&#39;,1,indx+1, index2[ii]+1
+            else: # E.g., &#39;4s&#39;
+                occup_str, occup,j,jlatex = &#39;&#39;,1,indx+1, index2[ii]+1
+
+            if (p%2): parity = parity + occup   ## non odd orbitals do not contribute to parity
+            if occup == 1: occup_str = &#39;&#39;
+            if occup_str != &#39;&#39;:
+                add_str = &#39;$^{&#39; + occup_str + &#39;}$&#39;
+                conf_latex = conf_latex[0:index2[ii]+1] + add_str + conf_latex[jlatex:]
+                add_str = occup_str
+                conf = conf[0:indx+1] + add_str + conf[j:]
+
+    if (parity%2):
+        parity = 1
+    else:
+        parity = 0
+
+    return conf,conf_latex,parity</code></pre>
+</details>
+</dd>
+<dt id="pycelp.chianti.elvlcRead"><code class="name flex">
+<span>def <span class="ident">elvlcRead</span></span>(<span>ion_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>ion_name, e.g.
+'fe_13'</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def elvlcRead(ion_name):
+    &#39;&#39;&#39;
+    ion_name, e.g.  &#39;fe_13&#39;
+    &#39;&#39;&#39;
+    chianti_dbase_root,chianti_version = getChiantiDir()
+    element, ion = ion_name.split(&#39;_&#39;)
+    ionZ = getIonZ(ion_name)
+    filename = chianti_dbase_root + element + os.path.sep + ion_name + os.path.sep + ion_name + &#39;.elvlc&#39;
+    data,reference = readFile(filename)
+
+    nlvl = len(data)
+
+    ## setup data variables
+    index  = [None] * nlvl   ## level index
+    conf   = [None] * nlvl   ## configuration
+    label  = [None] * nlvl   ## level label
+    mult   = [None] * nlvl   ## multiplicity, 2s+1
+    l_sym  = [None] * nlvl   ## orbital angular momentum
+    j      = [None] * nlvl   ## total angular momentum
+    obs_energy = [None] * nlvl   ## observed energy
+    theory_energy = [None] * nlvl   ## theoretical energy
+
+    elvlcFormat = &#39;(I7,A30,A5,I5,A5,F5.1,F15.3,F15.3)&#39;
+    widFormat = [0,7,30,5,5,5,5,15,15]
+    widC = np.cumsum(widFormat)
+
+    for i,ln in enumerate(data):
+        chunks = [ln[widC[j]:widC[j+1]] for j in range(len(widC)-1)]
+        index[i] = np.int(chunks[0])
+        conf[i]  = np.str(chunks[1]).strip()
+        label[i] = np.str(chunks[2]).strip()
+        mult[i]  = np.int(chunks[3])
+        l_sym[i] = np.str(chunks[4]).strip()
+        j[i]     =  np.float(chunks[5])
+        obs_energy[i] = np.float(chunks[6])
+        theory_energy[i] = np.float(chunks[7])
+
+    ## best energy
+    energy = [None] * nlvl
+    for i in range(nlvl):
+        energy[i] = obs_energy[i]
+        if obs_energy[i] == -1: energy[i] = theory_energy[i]
+
+    conf_index = [None] * nlvl
+    conf_latex = [None] * nlvl
+    parity = [None] * nlvl
+    parity_str = [None] * nlvl
+
+    uconf, uconf_rindx = np.unique(conf,return_inverse=True)
+    cfg_indx = 1
+    par_str = [&#39;e&#39;,&#39;o&#39;]
+    for i in range(nlvl):
+        if conf_index[i] == None:
+            uconf_i = uconf[uconf_rindx[i]]
+            wi = [k for k,s in enumerate(conf) if uconf_i in s]
+            c1,clatex,par = convertConfig(uconf_i)
+            for ww in wi:
+                conf_index[ww] = cfg_indx
+                conf_latex[ww] = clatex
+                parity[ww] = par
+                parity_str[ww] = par_str[par]
+            cfg_indx += 1
+
+    spd = [&#39;S&#39;,&#39;P&#39;,&#39;D&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;I&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;Q&#39;,&#39;R&#39;,&#39;T&#39;,&#39;U&#39;,&#39;V&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;]
+
+    ## get orbital angular momentum quantum number (l)
+    l = [None] * nlvl
+    for i in range(len(spd)):
+        wi = [k for k,lsym in enumerate(l_sym) if lsym == spd[i]]
+        for ww in wi: l[ww] = i
+
+    ## spin quantum number
+    s = (np.asarray(mult,dtype=np.float)-1.)/2.
+    ## degeneracy
+    weight = 2.*np.asarray(j) + 1.
+
+    term = [None] * nlvl
+    term_latex = [None] * nlvl
+    j_str = [None] * nlvl
+    level = [None] * nlvl
+    level_latex = [None] * nlvl
+    full_level = [None] * nlvl
+    full_level_latex = [None] * nlvl
+    for i in range(nlvl):
+        term[i] = str(mult[i]) + l_sym[i]
+        term_latex[i] = &#39;$^&#39; + str(mult[i]) + &#39;$&#39; + l_sym[i]
+        if (np.int(j[i]) == j[i]):
+            j_str[i] = str(np.int(j[i]))
+        else:
+            j_str[i] = str(np.int(j[i]*2)) + &#39;/2&#39;
+        level[i] = term[i] + j_str[i]
+        level_latex[i] = term_latex[i] + &#39;$_{&#39; + j_str[i] + &#39;}$&#39;
+        full_level[i] = conf[i] + &#39; &#39; + level[i]
+        full_level_latex[i] = conf_latex[i] + &#39; &#39; + level_latex[i]
+
+    result =   {&#34;ion_name&#34;: ion_name,
+                &#34;ion_z&#34;:ionZ,
+                &#34;ion_n&#34;:ion,
+                &#34;filename&#34;:filename,
+                &#34;version&#34;:chianti_version,
+                &#34;reference&#34;:reference,
+                &#34;index&#34;:np.array(index),
+                &#34;conf&#34;:np.array(conf),
+                &#34;conf_latex&#34;:np.array(conf_latex),
+                &#34;conf_index&#34;:np.array(conf_index),
+                &#34;term&#34;:np.array(term),
+                &#34;term_latex&#34;:np.array(term_latex),
+                &#34;level&#34;:np.array(level),
+                &#34;level_latex&#34;:np.array(level_latex),
+                &#34;full_level&#34;:np.array(full_level),
+                &#34;full_level_latex&#34;:np.array(full_level_latex),
+                &#34;label&#34;:np.array(label),
+                &#34;mult&#34;:np.array(mult),
+                &#34;s&#34;:np.array(s),
+                &#34;l&#34;:np.array(l),
+                &#34;l_sym&#34;:np.array(l_sym),
+                &#34;j&#34;:np.array(j),
+                &#34;j_str&#34;:np.array(j_str),
+                &#34;parity&#34;:np.array(parity),
+                &#34;parity_str&#34;:np.array(parity_str),
+                &#34;weight&#34;:np.array(weight),
+                &#34;obs_energy&#34;:np.array(obs_energy),
+                &#34;theory_energy&#34;:np.array(theory_energy),
+                &#34;energy&#34;:np.array(energy),
+                &#34;energy_units&#34;: &#39;cm^-1&#39;}
+
+    return result</code></pre>
+</details>
+</dd>
+<dt id="pycelp.chianti.getAtomicWeight"><code class="name flex">
+<span>def <span class="ident">getAtomicWeight</span></span>(<span>element)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get atomic weight of element</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getAtomicWeight(element):
+    &#34;&#34;&#34;
+    Get atomic weight of element
+    &#34;&#34;&#34;
+    elem = np.array([&#39;h&#39;,&#39;he&#39;,&#39;li&#39;,&#39;be&#39;,&#39;b&#39;,&#39;c&#39;,&#39;n&#39;,&#39;o&#39;,&#39;f&#39;,
+        &#39;ne&#39;,&#39;na&#39;,&#39;mg&#39;,&#39;al&#39;,&#39;si&#39;,&#39;p&#39;,&#39;s&#39;,&#39;cl&#39;,&#39;ar&#39;,&#39;k&#39;,
+        &#39;ca&#39;,&#39;sc&#39;,&#39;ti&#39;,&#39;v&#39;,&#39;cr&#39;,&#39;mn&#39;,&#39;fe&#39;])
+    wgts = np.array([1.008,4.0026,6.94,9.012,10.81,12.011,14.007,
+        15.999,18.998,20.1797,22.9897,24.305,26.9815,
+        28.085,30.97376,32.06,35.45,39.948,39.0983,
+        40.078,44.955,47.867,50.94,51.996,54.938,55.845])
+    wem = np.where(elem == element)
+    return wgts[wem[0]][0]</code></pre>
+</details>
+</dd>
+<dt id="pycelp.chianti.getChiantiDir"><code class="name flex">
+<span>def <span class="ident">getChiantiDir</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getChiantiDir():
+    try:
+        chianti_dbase_root = os.environ[&#39;XUVTOP&#39;]
+    except:
+        raise NameError(&#39;Environmental variable for Chianti Database not defined&#39;)
+    ## FOR A DEBUG MODE: print(&#39;Chianti database location: &#39;,chianti_dbase_root)
+    with open(os.path.join(chianti_dbase_root, &#39;VERSION&#39;), &#39;r&#39;) as f:
+        lines = f.readlines()
+        chianti_version = lines[0].strip()
+    ## print(&#39;Chianti version: &#39;,chianti_version)
+    return chianti_dbase_root,chianti_version</code></pre>
+</details>
+</dd>
+<dt id="pycelp.chianti.getIonZ"><code class="name flex">
+<span>def <span class="ident">getIonZ</span></span>(<span>ion_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get Atomic Number of the Element given an ion name, e.g. 'fe_13'</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getIonZ(ion_name):
+    &#39;&#39;&#39;
+    Get Atomic Number of the Element given an ion name, e.g. &#39;fe_13&#39;
+    &#39;&#39;&#39;
+    element, ion = ion_name.split(&#39;_&#39;)
+    zlabl=np.array([&#39;H&#39;,&#39;He&#39;,&#39;Li&#39;,&#39;Be&#39;,&#39;B&#39;,&#39;C&#39;,&#39;N&#39;,&#39;O&#39;,&#39;F&#39;,&#39;Ne&#39;,&#39;Na&#39;,
+       &#39;Mg&#39;,&#39;Al&#39;,&#39;Si&#39;,&#39;P&#39;,&#39;S&#39;,&#39;Cl&#39;,&#39;Ar&#39;,&#39;K&#39;,&#39;Ca&#39;,&#39;Sc&#39;,&#39;Ti&#39;,&#39;V&#39;,&#39;Cr&#39;,
+       &#39;Mn&#39;,&#39;Fe&#39;,&#39;Co&#39;,&#39;Ni&#39;,&#39;Cu&#39;,&#39;Zn&#39;])
+    zlabl_upp = np.char.upper(zlabl)
+    wion = np.where(element.upper() == zlabl_upp)[0]
+    ionz = wion[0] + 1
+    return ionz</code></pre>
+</details>
+</dd>
+<dt id="pycelp.chianti.ioneqRead"><code class="name flex">
+<span>def <span class="ident">ioneqRead</span></span>(<span>filename)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reads an ioneq file
+ionization equilibrium values less then minIoneq are returns as zeros
+Returns</p>
+<hr>
+<p>{'temp','ionfrac','filename','version','reference'} : <code>dict</code>
+Ionization equilibrium values and the reference to the literature</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ioneqRead(filename):
+    &#34;&#34;&#34;
+    Reads an ioneq file
+    ionization equilibrium values less then minIoneq are returns as zeros
+    Returns
+    -------
+    {&#39;temp&#39;,&#39;ionfrac&#39;,&#39;filename&#39;,&#39;version&#39;,&#39;reference&#39;} : `dict`
+        Ionization equilibrium values and the reference to the literature
+    &#34;&#34;&#34;
+    chianti_dbase_root,chianti_version = getChiantiDir()
+    filename = chianti_dbase_root + &#39;ioneq&#39; + os.path.sep + &#39;chianti.ioneq&#39;
+    print(&#39; testing default file:&#39;,filename)
+    data,reference = readFile(filename)
+
+    n = len(data)
+    nt = np.int(data[0].split()[0])  ## number of temperatures
+    nz = np.int(data[0].split()[1])  ## number of elements
+
+    ## get temperatures
+    t = np.asarray(data[1].split()).astype(np.float)
+
+    ioneq = np.zeros((nt,nz,nz+1))
+
+    for i,ln in enumerate(data[2:]):
+        lns = ln.split()
+        z1,ion1 = np.int(lns[0]),np.int(lns[1])
+        ioneq[:,z1-1,ion1-1] = np.asarray(lns[2:]).astype(np.float)
+
+    result = {&#34;temp&#34;:t,
+            &#34;ionfrac&#34;:ioneq,
+            &#34;filename&#34;:filename,
+            &#34;version&#34;:chianti_version,
+            &#34;reference&#34;:reference}
+
+    return result</code></pre>
+</details>
+</dd>
+<dt id="pycelp.chianti.limit_levels"><code class="name flex">
+<span>def <span class="ident">limit_levels</span></span>(<span>input, nlevels, type=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def limit_levels(input,nlevels,type = None):
+    &#34;&#34;&#34;
+
+    &#34;&#34;&#34;
+
+    if (type == None):
+        print(&#39;A type must be speficed for the limit levels routine&#39;)
+        raise
+
+    if (type == &#39;elvl&#39;):
+
+        nlev_input = len(input[&#39;index&#39;])
+        if (nlev_input &lt; nlevels):
+            print(&#39; --- Number of requested levels exceeds those in database&#39;)
+            print(&#39; --- Using all levels&#39;)
+            return input
+
+        keys = &#39;index&#39;,&#39;conf&#39;,&#39;conf_latex&#39;,&#39;conf_index&#39;,&#39;term&#39;,&#39;term_latex&#39;, \
+        &#39;level&#39;,&#39;level_latex&#39;,&#39;full_level&#39;,&#39;full_level_latex&#39;,&#39;label&#39;,&#39;mult&#39;, \
+        &#39;s&#39;,&#39;l&#39;,&#39;l_sym&#39;,&#39;j&#39;,&#39;j_str&#39;,&#39;parity&#39;,&#39;parity_str&#39;,&#39;weight&#39;, \
+        &#39;obs_energy&#39;,&#39;theory_energy&#39;,&#39;energy&#39;
+
+        for k in keys:
+            input[k] = input[k][0:nlevels]
+
+        return input
+
+    if (type == &#39;wgfa&#39;):
+
+        lowlev = input[&#39;lower_level_index&#39;]
+        upplev = input[&#39;upper_level_index&#39;]
+        wg = (lowlev &lt; nlevels+1) * (upplev &lt; nlevels+1)
+
+        keys = &#39;lower_level_index&#39;,&#39;upper_level_index&#39;,&#39;wavelength&#39;, \
+        &#39;gf&#39;,&#39;A_einstein&#39;
+
+        for k in keys:
+            input[k] = input[k][wg]
+
+        return input
+
+    if (type == &#39;scups&#39;):
+
+        lowlev = input[&#39;lower_level_index&#39;]
+        upplev = input[&#39;upper_level_index&#39;]
+        wg = (lowlev &lt; nlevels+1) * (upplev &lt; nlevels+1)
+
+        keys = &#39;lower_level_index&#39;,&#39;upper_level_index&#39;,&#39;delta_energy&#39;, \
+        &#39;gf&#39;,&#39;high_t_limit&#39;,&#39;n_t&#39;,&#39;bt_type&#39;,&#39;bt_c&#39;,&#39;bt_t&#39;,&#39;bt_upsilon&#39;
+
+        for k in keys:
+            input[k] = input[k][wg]
+
+        return input
+
+    if (type == &#39;splups&#39;):
+
+        lowlev = input[&#39;lower_level_index&#39;]
+        upplev = input[&#39;upper_level_index&#39;]
+        wg = (lowlev &lt; nlevels+1) * (upplev &lt; nlevels+1)
+
+        keys = &#39;lower_level_index&#39;,&#39;upper_level_index&#39;,&#39;bt_type&#39;, \
+        &#39;gf&#39;,&#39;delta_energy&#39;,&#39;bt_c&#39;,&#39;n_t&#39;,&#39;bt_t&#39;,&#39;bt_upsilon&#39;
+
+        for k in keys:
+            input[k] = input[k][wg]
+
+        return input</code></pre>
+</details>
+</dd>
+<dt id="pycelp.chianti.readFile"><code class="name flex">
+<span>def <span class="ident">readFile</span></span>(<span>filename)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def readFile(filename):
+    print(&#39; reading: &#39;,filename)
+    with open(filename, &#39;r&#39;) as f:
+        lines = f.readlines()
+
+    for i,line in enumerate(lines):
+        if line.strip() == &#39;-1&#39; or r&#39;%file&#39; in line:  # sometimes the first -1 is missing
+            i_start = i if r&#39;%file&#39; in line else i+1
+            data = lines[0:i]
+            footer = lines[i_start:len(lines)]
+            break
+
+    reference = [ln.strip() for ln in footer]
+    return data,reference</code></pre>
+</details>
+</dd>
+<dt id="pycelp.chianti.scupsRead"><code class="name flex">
+<span>def <span class="ident">scupsRead</span></span>(<span>ion_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reads scups files</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def scupsRead(ion_name):
+    &#34;&#34;&#34;
+    Reads scups files
+    &#34;&#34;&#34;
+    chianti_dbase_root,chianti_version = getChiantiDir()
+    element, ion = ion_name.split(&#39;_&#39;)
+    filename = chianti_dbase_root + element + os.path.sep + ion_name + os.path.sep + ion_name + &#39;.scups&#39;
+    data,reference = readFile(filename)
+
+    n = len(data)//3   ## data for each transition spread over three lines
+
+    lower_level_index = []
+    upper_level_index = []
+    delta_energy = []
+    gf = []
+    high_t_limit = []
+    n_t = []
+    bt_type = []
+    bt_c = []
+    bt_t = []
+    bt_upsilon = []
+
+    ## fortran formating for line 1 of 3
+    scupsFormat = &#39;(I7,I7,E12.3,E12.3,E12.3,I5,I3,E12.3)&#39;
+    ## I believe the I3 format is incorrect
+    widFormat = [0,7,7,12,12,12,5,5,12]
+    widC = np.cumsum(widFormat)
+
+    for i in range(n):
+        ln1 = data[i*3+0]
+        ln2 = data[i*3+1]
+        ln3 = data[i*3+2]
+        chunks = [ln1[widC[j]:widC[j+1]] for j in range(len(widC)-1)]
+        lower_level_index.append(np.int(chunks[0]))
+        upper_level_index.append(np.int(chunks[1]))
+        delta_energy.append(np.float(chunks[2]))
+        gf.append(np.float(chunks[3]))
+        high_t_limit.append(np.float(chunks[4]))
+        n_t.append(np.int(chunks[5]))
+        bt_type.append(np.int(chunks[6]))
+        bt_c.append(np.float(chunks[7]))
+        bt_t.append(np.array(ln2.split(),dtype = np.float))
+        bt_upsilon.append(np.array(ln3.split(),dtype = np.float))
+
+    ntrans = len(bt_t)
+    nt_max = np.max(n_t)
+    bt_t_arr = np.zeros((ntrans,nt_max))
+    bt_u_arr = np.zeros((ntrans,nt_max))
+    for n in range(ntrans):
+        bt_t_arr[n,0:n_t[n]] = bt_t[n]
+        bt_u_arr[n,0:n_t[n]] = bt_upsilon[n]
+
+    result = {&#34;lower_level_index&#34;:np.array(lower_level_index),
+            &#34;upper_level_index&#34;:np.array(upper_level_index),
+            &#34;delta_energy&#34;:np.array(delta_energy),
+            &#34;gf&#34;:np.array(gf),
+            &#34;high_t_limit&#34;:np.array(high_t_limit),
+            &#34;n_t&#34;:np.array(n_t),
+            &#34;bt_type&#34;:np.array(bt_type),
+            &#34;bt_c&#34;:np.array(bt_c),
+            &#34;bt_t&#34;:bt_t_arr,
+            &#34;bt_upsilon&#34;:bt_u_arr,
+            &#34;filename&#34;:filename,
+            &#34;version&#34;:chianti_version,
+            &#34;reference&#34;:reference}
+
+    return result</code></pre>
+</details>
+</dd>
+<dt id="pycelp.chianti.splupsRead"><code class="name flex">
+<span>def <span class="ident">splupsRead</span></span>(<span>ion_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reads splups proton rate files</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def splupsRead(ion_name):
+    &#34;&#34;&#34;
+    Reads splups proton rate files
+    &#34;&#34;&#34;
+    chianti_dbase_root,chianti_version = getChiantiDir()
+    element, ion = ion_name.split(&#39;_&#39;)
+    filename = chianti_dbase_root + element + os.path.sep + ion_name + os.path.sep + ion_name + &#39;.psplups&#39;
+    data,reference = readFile(filename)
+
+    n = len(data)
+
+    lower_level_index = []
+    upper_level_index = []
+    t_type = []
+    gf = []
+    delta_energy = []
+    bt_c = []
+    nspl = []
+    bt_t = []
+    bt_upsilon = []
+
+    for i in range(n):
+        ln = data[i]
+        ## figure out number of spline points by subtracting
+        ## length of first 6 elements from line and divide by
+        ## length of spline value
+        npts = int((len(ln) -3*3-3*10)/10)
+        widFormat = [0,3,3,3,10,10,10]
+        for ss in range(npts): widFormat.append(10)
+        widC = np.cumsum(widFormat)
+        chunks = [ln[widC[j]:widC[j+1]] for j in range(len(widC)-1)]
+        lower_level_index.append(int(chunks[0]))
+        upper_level_index.append(int(chunks[1]))
+        t_type.append(int(chunks[2]))
+        gf.append(np.float(chunks[3]))
+        delta_energy.append(np.float(chunks[4]))
+        bt_c.append(np.float(chunks[5]))
+        nspl.append(npts)
+        bt_t.append(np.linspace(0,1,npts))
+        bt_upsilon.append(np.array(chunks[6:],dtype=np.float))
+
+    result = {&#34;lower_level_index&#34;:np.array(lower_level_index),
+            &#34;upper_level_index&#34;:np.array(upper_level_index),
+            &#34;bt_type&#34;:np.array(t_type),
+            &#34;gf&#34;:np.array(gf),
+            &#34;delta_energy&#34;:np.array(delta_energy),
+            &#34;bt_c&#34;:np.array(bt_c),
+            &#34;n_t&#34;:np.array(nspl),
+            &#34;bt_t&#34;:np.array(bt_t),
+            &#34;bt_upsilon&#34;:np.array(bt_upsilon),
+            &#34;filename&#34;:filename,
+            &#34;version&#34;:chianti_version,
+            &#34;reference&#34;:reference}
+
+    return result</code></pre>
+</details>
+</dd>
+<dt id="pycelp.chianti.wgfaRead"><code class="name flex">
+<span>def <span class="ident">wgfaRead</span></span>(<span>ion_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>"
+Reads the wgfa file for a given ion from the chianti database.
+Assumes $XUVTOP is defined as environmental variable</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ion_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of ion, e.g. 'fe_13'</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wgfaRead(ion_name):
+    &#34;&#34;&#34;&#34;
+    Reads the wgfa file for a given ion from the chianti database.
+    Assumes $XUVTOP is defined as environmental variable
+
+    Parameters
+    ----------
+    ion_name : `str`
+        Name of ion, e.g. &#39;fe_13&#39;
+    &#34;&#34;&#34;
+    chianti_dbase_root,chianti_version = getChiantiDir()
+    element, ion = ion_name.split(&#39;_&#39;)
+    filename = chianti_dbase_root + element + os.path.sep + ion_name + os.path.sep + ion_name + &#39;.wgfa&#39;
+    data,reference = readFile(filename)
+
+    n = len(data)
+    lower_level_index = np.zeros(n,dtype = np.int)  ## lower level index
+    upper_level_index = np.zeros(n,dtype = np.int)  ## upper level index
+    wavelength  = np.zeros(n,dtype = np.float)  ## transition wavelength
+    gf = np.zeros(n,dtype = np.float)  ## oscillator strength
+    A_einstein = np.zeros(n,dtype = np.float)  ## radiative decay rate
+
+    wgfaFormat = &#39;(2i5,f15.3,2e15.3)&#39;
+    for i,ln in enumerate(data):
+        lower_level_index[i] = np.int(ln[0:5])
+        upper_level_index[i] = np.int(ln[5:10])
+        wavelength[i] = np.float(ln[10:25])
+        gf[i] = np.float(ln[25:40])
+        A_einstein[i] = np.float(ln[40:55])
+
+    result = {&#34;lower_level_index&#34;:np.array(lower_level_index),
+              &#34;upper_level_index&#34;:np.array(upper_level_index),
+              &#34;wavelength&#34;:np.array(wavelength),
+              &#34;gf&#34;:np.array(gf),
+              &#34;A_einstein&#34;:np.array(A_einstein),
+              &#34;filename&#34;:filename,
+              &#34;version&#34;:chianti_version,
+              &#34;reference&#34;:reference}
+
+    return result</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pycelp" href="index.html">pycelp</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="pycelp.chianti.abundRead" href="#pycelp.chianti.abundRead">abundRead</a></code></li>
+<li><code><a title="pycelp.chianti.convertConfig" href="#pycelp.chianti.convertConfig">convertConfig</a></code></li>
+<li><code><a title="pycelp.chianti.elvlcRead" href="#pycelp.chianti.elvlcRead">elvlcRead</a></code></li>
+<li><code><a title="pycelp.chianti.getAtomicWeight" href="#pycelp.chianti.getAtomicWeight">getAtomicWeight</a></code></li>
+<li><code><a title="pycelp.chianti.getChiantiDir" href="#pycelp.chianti.getChiantiDir">getChiantiDir</a></code></li>
+<li><code><a title="pycelp.chianti.getIonZ" href="#pycelp.chianti.getIonZ">getIonZ</a></code></li>
+<li><code><a title="pycelp.chianti.ioneqRead" href="#pycelp.chianti.ioneqRead">ioneqRead</a></code></li>
+<li><code><a title="pycelp.chianti.limit_levels" href="#pycelp.chianti.limit_levels">limit_levels</a></code></li>
+<li><code><a title="pycelp.chianti.readFile" href="#pycelp.chianti.readFile">readFile</a></code></li>
+<li><code><a title="pycelp.chianti.scupsRead" href="#pycelp.chianti.scupsRead">scupsRead</a></code></li>
+<li><code><a title="pycelp.chianti.splupsRead" href="#pycelp.chianti.splupsRead">splupsRead</a></code></li>
+<li><code><a title="pycelp.chianti.wgfaRead" href="#pycelp.chianti.wgfaRead">wgfaRead</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
