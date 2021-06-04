@@ -21,6 +21,11 @@ A read-only Enhanced PDF version of Schad & Dima 2020 is available via this [lin
 
 The original code developed by [Schad & Dima 2020](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract) (previously referred to as pyCLE) was a Fortran based code wrapped in python.  pyCELP is a completely new implementation coded entirely in Python.  It takes advantage of specific algorithm changes, numba jit compilers, and efficient numpy linear algebra packages to provide excellent speed performance that in most cases exceeds the earlier code.  More information pertaining to numba is below.
 
+## Citing pyCLEP
+
+If you use pyCLEP, please reference [Schad & Dima (2020)](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract).  Further references for the polarized theory include [Casini & Judge (1999)](https://ui.adsabs.harvard.edu/abs/1999ApJ...522..524C/abstract) and [Egidio Landi Degl’innocenti and Marco
+Landolfi (2004)](https://link.springer.com/book/10.1007/1-4020-2415-0).
+
 ## Install
 
 ### Dependencies
