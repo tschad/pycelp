@@ -38,7 +38,7 @@ class Ion:
     --------
     """
 
-    def __init__(self, ion_name=None,nlevels=None,ioneqFile=None,
+    def __init__(self, ion_name,nlevels=None,ioneqFile=None,
                 abundFile=None,all_ks = False):
 
         ## READ CHIANTI ATOMIC DATA
@@ -233,9 +233,10 @@ class Ion:
             radmat_std[n,:] = DD[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
         return radmat_std
 
-    def calc(self,edens,etemp,ht,thetab,include_limbdark = True,include_protons = True):
+    def calc_rho_sym(self,edens,etemp,ht,thetab,include_limbdark = True,include_protons = True):
         """
-        Calculates rho
+        Calculates the elements of the atomic density matrix (rho) for the
+        case of a cylindrically symmetric radiation field.
         """
         thetab = np.deg2rad(thetab)
         ptemp = etemp
@@ -281,12 +282,6 @@ class Ion:
 
         self.rho = rho
         self.totn = totn
-
-    def get_totn(self):
-        return self.totn
-
-    def get_rho(self):
-        return self.rho
 
     def get_maxtemp(self):
         """ Returns the temperature at maximum ionization fraction """
