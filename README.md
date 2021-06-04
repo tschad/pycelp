@@ -31,10 +31,9 @@ Landolfi (2004)](https://link.springer.com/book/10.1007/1-4020-2415-0).
 ### Dependencies
 
 * python3, numpy, numba
-* (optional - for tests/examples) matplotlib, scipy
+* (optional - for tests/examples) matplotlib, scipy, jupyter
 * (optional - for updating docs) pdoc3
-* The [CHIANTI atomic database](http://www.chiantidatabase.org/chianti_download.html) is also required.  (Currelty tested with v9) pyCELP will automatically search for the Chianti atomic database path using the default environment variable XUVTOP.
-
+* The [CHIANTI atomic database](http://www.chiantidatabase.org/chianti_download.html) is also required.  (Currently tested with v9; though testing with v10 is planned soon.) pyCELP will automatically search for the Chianti atomic database path using the default environment variable XUVTOP.
 
 ### Conda environment
 
