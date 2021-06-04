@@ -182,40 +182,40 @@ coefficients for non-dipole transitions.</p></div>
 <dl>
 <dt id="pycelp.Ion"><code class="flex name class">
 <span>class <span class="ident">Ion</span></span>
-<span>(</span><span>ion_name=None, nlevels=None, ioneqFile=None, abundFile=None, all_ks=False)</span>
+<span>(</span><span>ion_name, nlevels=None, ioneqFile=None, abundFile=None, all_ks=False)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Ion class</p>
-<p>The ion object is the primary class used by pycelp for calculations of the
+<div class="desc"><p>The ion object is the primary class used by pycelp for calculations of the
 polarized emission for a particular transition. Upon initialization, an Ion
 object loads all necessary atomic data from the CHIANTI database and
 pre-calculates all pre-factors and static terms of the statistical
 equilibrium rate equations.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>ion_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>Name of ion, e.g. 'fe_13'</dd>
+<dt><strong><code>ion_name</code></strong> :&ensp;<code><code>str&lt;/code&gt; (name&lt;code&gt; of &lt;/code&gt;ion, e.g. 'fe_13')</code></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 id="other-parameters">Other Parameters</h2>
 <dl>
-<dt><strong><code>nlevels</code></strong> :&ensp;<code>'int'</code></dt>
+<dt><strong><code>nlevels</code></strong> :&ensp;<code>'int'
+(number</code> of <code>energy levels to include</code>, default <code>is all)</code></dt>
 <dd>&nbsp;</dd>
-<dt><strong><code>ioneqFile</code></strong> :&ensp;<code>str</code>, optional</dt>
-<dd>Ionization equilibrium dataset</dd>
-<dt><strong><code>abundFile</code></strong> :&ensp;<code>str</code>, optional</dt>
-<dd>Abundance dataset</dd>
-<dt><strong><code>all_ks</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>Flag to</dd>
+<dt><strong><code>ioneqFile</code></strong> :&ensp;<code>`str' (Ionization equilibrium dataset</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>abundFile</code></strong> :&ensp;<code><code>str&lt;/code&gt; (Abundance dataset)</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>all_ks</code></strong> :&ensp;<code><code>bool&lt;/code&gt; (Flag to</code></dt>
+<dd>&nbsp;</dd>
 </dl>
-<h2 id="examples">Examples</h2></div>
+<h2 id="examples">Examples</h2>
+<p>import pyclep
+fe13 = pycelp.Ion('fe_13',nlevels = 50)</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Ion:
     &#34;&#34;&#34;
-    Ion class
-
     The ion object is the primary class used by pycelp for calculations of the
     polarized emission for a particular transition. Upon initialization, an Ion
     object loads all necessary atomic data from the CHIANTI database and
@@ -224,24 +224,22 @@ equilibrium rate equations.</p>
 
     Parameters
     ----------
-    ion_name : `str`
-        Name of ion, e.g. &#39;fe_13&#39;
+    ion_name : `str` (name of ion, e.g. &#39;fe_13&#39;)
 
     Other Parameters
     ----------------
-    nlevels:  &#39;int&#39;
-    ioneqFile : `str`, optional
-        Ionization equilibrium dataset
-    abundFile : `str`, optional
-        Abundance dataset
-    all_ks : `bool`, optional
-        Flag to
+    nlevels:  &#39;int&#39;  (number of energy levels to include, default is all)
+    ioneqFile : `str&#39; (Ionization equilibrium dataset
+    abundFile : `str` (Abundance dataset)
+    all_ks : `bool` (Flag to
 
     Examples
     --------
+    import pyclep
+    fe13 = pycelp.Ion(&#39;fe_13&#39;,nlevels = 50) 
     &#34;&#34;&#34;
 
-    def __init__(self, ion_name=None,nlevels=None,ioneqFile=None,
+    def __init__(self, ion_name,nlevels=None,ioneqFile=None,
                 abundFile=None,all_ks = False):
 
         ## READ CHIANTI ATOMIC DATA
@@ -393,6 +391,11 @@ equilibrium rate equations.</p>
     Number of Radiative Transitions: {len(self.alamb)}
     Ionization Equilbrium Filename: {self.ioneq_data[&#39;filename&#39;]}&#34;&#34;&#34;
 
+    def list_variables(self):
+        &#34;&#34;&#34; provides a listing and information of all variables &#34;&#34;&#34;
+        print(&#39; tbd &#39;)
+        return
+
     def calc_ecoll_matrix_standard(self,edens,etemp):
         wkzero = np.argwhere(self.see_k == 0)[:,0]
         ecmat_std = np.zeros((self.nlevels,self.nlevels))
@@ -436,9 +439,10 @@ equilibrium rate equations.</p>
             radmat_std[n,:] = DD[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
         return radmat_std
 
-    def calc(self,edens,etemp,ht,thetab,include_limbdark = True,include_protons = True):
+    def calc_rho_sym(self,edens,etemp,ht,thetab,include_limbdark = True,include_protons = True):
         &#34;&#34;&#34;
-        Calculates rho
+        Calculates the elements of the atomic density matrix (rho) for the
+        case of a cylindrically symmetric radiation field.
         &#34;&#34;&#34;
         thetab = np.deg2rad(thetab)
         ptemp = etemp
@@ -484,12 +488,6 @@ equilibrium rate equations.</p>
 
         self.rho = rho
         self.totn = totn
-
-    def get_totn(self):
-        return self.totn
-
-    def get_rho(self):
-        return self.rho
 
     def get_maxtemp(self):
         &#34;&#34;&#34; Returns the temperature at maximum ionization fraction &#34;&#34;&#34;
@@ -571,65 +569,6 @@ equilibrium rate equations.</p>
 </details>
 <h3>Methods</h3>
 <dl>
-<dt id="pycelp.Ion.calc"><code class="name flex">
-<span>def <span class="ident">calc</span></span>(<span>self, edens, etemp, ht, thetab, include_limbdark=True, include_protons=True)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Calculates rho</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def calc(self,edens,etemp,ht,thetab,include_limbdark = True,include_protons = True):
-    &#34;&#34;&#34;
-    Calculates rho
-    &#34;&#34;&#34;
-    thetab = np.deg2rad(thetab)
-    ptemp = etemp
-    toth  = 0.85*edens
-    pdens = 1.*toth
-    if not include_protons:
-        pdens = 0.
-
-    self.edens = edens
-    self.pdens = pdens
-    self.toth  = toth
-    self.thetab_rad = thetab
-
-    eq_frac_int  = 10.**(util.spintone(np.log10(etemp),self.ioneq_logtemp,self.ioneq_logfrac,self.ioneq_yderiv2))
-    totn         = 10.**(self.element_abund-12.)*toth*eq_frac_int
-
-    erates_up,erates_down = intErates(self.elowlev,self.eupplev,self.qnj, \
-                                      self.scups_data[&#39;delta_energy&#39;],self.scups_data[&#39;bt_c&#39;], \
-                                      self.scups_data[&#39;bt_type&#39;],self.scups_data[&#39;bt_t&#39;], \
-                                      self.scups_data[&#39;bt_upsilon&#39;],self.scups_data[&#39;yd2&#39;], \
-                                      etemp,edens)
-
-    prates_up,prates_down = intPrates(self.plowlev,self.pupplev,self.qnj, \
-                                      self.splups_data[&#39;delta_energy&#39;],self.splups_data[&#39;bt_c&#39;], \
-                                      self.splups_data[&#39;bt_type&#39;],self.splups_data[&#39;bt_t&#39;], \
-                                      self.splups_data[&#39;bt_upsilon&#39;],self.splups_data[&#39;yd2&#39;], \
-                                      ptemp,pdens)
-
-    self.radj    = util.rad_field_bframe(self.alamb,thetab,ht,include_limbdark = include_limbdark)
-
-    ecmat   = getElectronSEE(self.ciK,self.ciK_indx,self.csK,self.csK_indx,
-                             erates_up,erates_down,self.see_neq)
-    pcmat   = getElectronSEE(self.ciKp,self.ciKp_indx,self.csKp,self.csKp_indx,
-                             prates_up,prates_down,self.see_neq)
-    nonDmat = getNonDipoleSEE(self.tnD,self.tnD_indx,self.radj,np.copy(self.nonD_spon))
-    Dmat    = getDipoleSEE(self.tD,self.tD_indx,self.radj,np.copy(self.Dmat_spon))
-
-    self.collmat = ecmat + pcmat
-    self.radmat = Dmat + nonDmat
-    self.see_matrix = self.collmat + self.radmat
-
-    rho     = util.seeSolve(self.see_matrix,self.weight,self.see_lev,self.see_k)
-
-    self.rho = rho
-    self.totn = totn</code></pre>
-</details>
-</dd>
 <dt id="pycelp.Ion.calc_Iemiss"><code class="name flex">
 <span>def <span class="ident">calc_Iemiss</span></span>(<span>self, wv_air)</span>
 </code></dt>
@@ -758,6 +697,67 @@ currently does not include geometry or atomic polarization</p></div>
     return radmat_std</code></pre>
 </details>
 </dd>
+<dt id="pycelp.Ion.calc_rho_sym"><code class="name flex">
+<span>def <span class="ident">calc_rho_sym</span></span>(<span>self, edens, etemp, ht, thetab, include_limbdark=True, include_protons=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates the elements of the atomic density matrix (rho) for the
+case of a cylindrically symmetric radiation field.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_rho_sym(self,edens,etemp,ht,thetab,include_limbdark = True,include_protons = True):
+    &#34;&#34;&#34;
+    Calculates the elements of the atomic density matrix (rho) for the
+    case of a cylindrically symmetric radiation field.
+    &#34;&#34;&#34;
+    thetab = np.deg2rad(thetab)
+    ptemp = etemp
+    toth  = 0.85*edens
+    pdens = 1.*toth
+    if not include_protons:
+        pdens = 0.
+
+    self.edens = edens
+    self.pdens = pdens
+    self.toth  = toth
+    self.thetab_rad = thetab
+
+    eq_frac_int  = 10.**(util.spintone(np.log10(etemp),self.ioneq_logtemp,self.ioneq_logfrac,self.ioneq_yderiv2))
+    totn         = 10.**(self.element_abund-12.)*toth*eq_frac_int
+
+    erates_up,erates_down = intErates(self.elowlev,self.eupplev,self.qnj, \
+                                      self.scups_data[&#39;delta_energy&#39;],self.scups_data[&#39;bt_c&#39;], \
+                                      self.scups_data[&#39;bt_type&#39;],self.scups_data[&#39;bt_t&#39;], \
+                                      self.scups_data[&#39;bt_upsilon&#39;],self.scups_data[&#39;yd2&#39;], \
+                                      etemp,edens)
+
+    prates_up,prates_down = intPrates(self.plowlev,self.pupplev,self.qnj, \
+                                      self.splups_data[&#39;delta_energy&#39;],self.splups_data[&#39;bt_c&#39;], \
+                                      self.splups_data[&#39;bt_type&#39;],self.splups_data[&#39;bt_t&#39;], \
+                                      self.splups_data[&#39;bt_upsilon&#39;],self.splups_data[&#39;yd2&#39;], \
+                                      ptemp,pdens)
+
+    self.radj    = util.rad_field_bframe(self.alamb,thetab,ht,include_limbdark = include_limbdark)
+
+    ecmat   = getElectronSEE(self.ciK,self.ciK_indx,self.csK,self.csK_indx,
+                             erates_up,erates_down,self.see_neq)
+    pcmat   = getElectronSEE(self.ciKp,self.ciKp_indx,self.csKp,self.csKp_indx,
+                             prates_up,prates_down,self.see_neq)
+    nonDmat = getNonDipoleSEE(self.tnD,self.tnD_indx,self.radj,np.copy(self.nonD_spon))
+    Dmat    = getDipoleSEE(self.tD,self.tD_indx,self.radj,np.copy(self.Dmat_spon))
+
+    self.collmat = ecmat + pcmat
+    self.radmat = Dmat + nonDmat
+    self.see_matrix = self.collmat + self.radmat
+
+    rho     = util.seeSolve(self.see_matrix,self.weight,self.see_lev,self.see_k)
+
+    self.rho = rho
+    self.totn = totn</code></pre>
+</details>
+</dd>
 <dt id="pycelp.Ion.get_lower_level_alignment"><code class="name flex">
 <span>def <span class="ident">get_lower_level_alignment</span></span>(<span>self, wv_air)</span>
 </code></dt>
@@ -793,32 +793,6 @@ input &ndash; wv_air == air wavelength in Angstrom</p></div>
     eq_frac_int  = 10.**(util.spintarr(logt,self.ioneq_logtemp,self.ioneq_logfrac,self.ioneq_yderiv2))
     logt_max = logt[np.argmax(eq_frac_int)]
     return 10.**logt_max</code></pre>
-</details>
-</dd>
-<dt id="pycelp.Ion.get_rho"><code class="name flex">
-<span>def <span class="ident">get_rho</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_rho(self):
-    return self.rho</code></pre>
-</details>
-</dd>
-<dt id="pycelp.Ion.get_totn"><code class="name flex">
-<span>def <span class="ident">get_totn</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_totn(self):
-    return self.totn</code></pre>
 </details>
 </dd>
 <dt id="pycelp.Ion.get_upper_level_alignment"><code class="name flex">
@@ -859,6 +833,21 @@ input &ndash; wv_air == air wavelength in Angstrom</p></div>
     upplev = self.rupplev[ww]
     rho00 = self.rho[upplev,0]
     return rho00</code></pre>
+</details>
+</dd>
+<dt id="pycelp.Ion.list_variables"><code class="name flex">
+<span>def <span class="ident">list_variables</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>provides a listing and information of all variables</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_variables(self):
+    &#34;&#34;&#34; provides a listing and information of all variables &#34;&#34;&#34;
+    print(&#39; tbd &#39;)
+    return</code></pre>
 </details>
 </dd>
 <dt id="pycelp.Ion.show_lines"><code class="name flex">
@@ -929,19 +918,18 @@ input &ndash; wv_air == air wavelength in Angstrom</p></div>
 <li>
 <h4><code><a title="pycelp.Ion" href="#pycelp.Ion">Ion</a></code></h4>
 <ul class="">
-<li><code><a title="pycelp.Ion.calc" href="#pycelp.Ion.calc">calc</a></code></li>
 <li><code><a title="pycelp.Ion.calc_Iemiss" href="#pycelp.Ion.calc_Iemiss">calc_Iemiss</a></code></li>
 <li><code><a title="pycelp.Ion.calc_dipole_matrix_standard" href="#pycelp.Ion.calc_dipole_matrix_standard">calc_dipole_matrix_standard</a></code></li>
 <li><code><a title="pycelp.Ion.calc_ecoll_matrix_standard" href="#pycelp.Ion.calc_ecoll_matrix_standard">calc_ecoll_matrix_standard</a></code></li>
 <li><code><a title="pycelp.Ion.calc_nonDipole_matrix_standard" href="#pycelp.Ion.calc_nonDipole_matrix_standard">calc_nonDipole_matrix_standard</a></code></li>
 <li><code><a title="pycelp.Ion.calc_pcoll_matrix_standard" href="#pycelp.Ion.calc_pcoll_matrix_standard">calc_pcoll_matrix_standard</a></code></li>
 <li><code><a title="pycelp.Ion.calc_rad_matrix_standard" href="#pycelp.Ion.calc_rad_matrix_standard">calc_rad_matrix_standard</a></code></li>
+<li><code><a title="pycelp.Ion.calc_rho_sym" href="#pycelp.Ion.calc_rho_sym">calc_rho_sym</a></code></li>
 <li><code><a title="pycelp.Ion.get_lower_level_alignment" href="#pycelp.Ion.get_lower_level_alignment">get_lower_level_alignment</a></code></li>
 <li><code><a title="pycelp.Ion.get_maxtemp" href="#pycelp.Ion.get_maxtemp">get_maxtemp</a></code></li>
-<li><code><a title="pycelp.Ion.get_rho" href="#pycelp.Ion.get_rho">get_rho</a></code></li>
-<li><code><a title="pycelp.Ion.get_totn" href="#pycelp.Ion.get_totn">get_totn</a></code></li>
 <li><code><a title="pycelp.Ion.get_upper_level_alignment" href="#pycelp.Ion.get_upper_level_alignment">get_upper_level_alignment</a></code></li>
 <li><code><a title="pycelp.Ion.get_upper_level_rho00" href="#pycelp.Ion.get_upper_level_rho00">get_upper_level_rho00</a></code></li>
+<li><code><a title="pycelp.Ion.list_variables" href="#pycelp.Ion.list_variables">list_variables</a></code></li>
 <li><code><a title="pycelp.Ion.show_lines" href="#pycelp.Ion.show_lines">show_lines</a></code></li>
 </ul>
 </li>

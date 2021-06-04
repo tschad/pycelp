@@ -11,8 +11,6 @@ import pycelp.util as util
 
 class Ion:
     """
-    Ion class
-
     The ion object is the primary class used by pycelp for calculations of the
     polarized emission for a particular transition. Upon initialization, an Ion
     object loads all necessary atomic data from the CHIANTI database and
@@ -21,21 +19,22 @@ class Ion:
 
     Parameters
     ----------
-    ion_name : `str`
-        Name of ion, e.g. 'fe_13'
+    ion_name : `str` (name of ion, e.g. 'fe_13')
 
     Other Parameters
     ----------------
-    nlevels:  'int'
-    ioneqFile : `str`, optional
-        Ionization equilibrium dataset
-    abundFile : `str`, optional
-        Abundance dataset
-    all_ks : `bool`, optional
-        Flag to
+    nlevels:  'int'  (number of energy levels to include, default is all)
+
+    ioneqFile : `str' (Ionization equilibrium dataset
+
+    abundFile : `str` (Abundance dataset)
+
+    all_ks : `bool` (Flag to
 
     Examples
     --------
+    import pyclep
+    fe13 = pycelp.Ion('fe_13',nlevels = 50)
     """
 
     def __init__(self, ion_name,nlevels=None,ioneqFile=None,
@@ -189,6 +188,11 @@ class Ion:
     Number of SEE equations: {self.see_neq}
     Number of Radiative Transitions: {len(self.alamb)}
     Ionization Equilbrium Filename: {self.ioneq_data['filename']}"""
+
+    def list_variables(self):
+        """ provides a listing and information of all variables """
+        print(' tbd ')
+        return
 
     def calc_ecoll_matrix_standard(self,edens,etemp):
         wkzero = np.argwhere(self.see_k == 0)[:,0]
