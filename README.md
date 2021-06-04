@@ -23,7 +23,7 @@ The original code developed by [Schad & Dima 2020](https://ui.adsabs.harvard.edu
 
 ## Citing pyCLEP
 
-If you use pyCLEP, please reference [Schad & Dima (2020)](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract).  Further references for the polarized theory include [Casini & Judge (1999)](https://ui.adsabs.harvard.edu/abs/1999ApJ...522..524C/abstract) and [Egidio Landi Degl’innocenti and Marco
+If you use pyCLEP, please reference [Schad & Dima (2020)](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract).  Further references for the polarized theory include [Casini & Judge (1999)](https://ui.adsabs.harvard.edu/abs/1999ApJ...522..524C/abstract) and [Landi Degl’innocenti &
 Landolfi (2004)](https://link.springer.com/book/10.1007/1-4020-2415-0).
 
 ## Install
