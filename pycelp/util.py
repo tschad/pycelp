@@ -18,7 +18,7 @@ vCLV = np.asarray([0.33,1.6,0.85,0.90,0.57, 0.20, 0.03,-0.1,-0.16,-0.05,
                     -0.12,-0.07,-0.07])
 
 def vac2air(wvlamb):
-    """ Converts wavelengths from vacuum to air-equivalent """ 
+    """ Converts wavelengths from vacuum to air-equivalent """
     ww = (wvlamb < 2000.)
     convl = np.zeros_like(wvlamb)
     convl[ww] = wvlamb[ww]
@@ -169,11 +169,16 @@ def get_eTransType(elvl_data,scups_data):
 
 @njit(cache=True)
 def rad_field_bframe(wlang,thetab,rphot,include_limbdark = True,photo_temp = 6000.):
-    """
-    inputs:
-      wlang - wavelength of transition in angstrom
-      thetab - inclination of the magnetic field wrt solar vertical in radians
-      rphot - height above surface in radius units
+    """ Calculates the radiation field tensor in the cylindrically symmetric case
+
+    Parameters
+    ----------
+    wlang : float, array-like (unit: angstroms)
+        wavelength of transition
+    thetab : float (unit: radians)
+        inclination of the magnetic field wrt solar vertical in radians
+    rphot : float (unit: fraction of solar radius)
+        height above surface in radius units
     """
 
     nline = len(wlang)

@@ -22,9 +22,8 @@ def getChiantiDir():
     return chianti_dbase_root,chianti_version
 
 def getIonZ(ion_name):
-    '''
-    Get Atomic Number of the Element given an ion name, e.g. 'fe_13'
-    '''
+    """ Get Atomic Number of the Element given an ion name, e.g. 'fe_13' """
+
     element, ion = ion_name.split('_')
     zlabl=np.array(['H','He','Li','Be','B','C','N','O','F','Ne','Na',
        'Mg','Al','Si','P','S','Cl','Ar','K','Ca','Sc','Ti','V','Cr',
@@ -35,9 +34,8 @@ def getIonZ(ion_name):
     return ionz
 
 def getAtomicWeight(element):
-    """
-    Get atomic weight of element
-    """
+    """ Get atomic weight of element """
+
     elem = np.array(['h','he','li','be','b','c','n','o','f',
         'ne','na','mg','al','si','p','s','cl','ar','k',
         'ca','sc','ti','v','cr','mn','fe'])

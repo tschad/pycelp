@@ -47,7 +47,7 @@ vCLV = np.asarray([0.33,1.6,0.85,0.90,0.57, 0.20, 0.03,-0.1,-0.16,-0.05,
                     -0.12,-0.07,-0.07])
 
 def vac2air(wvlamb):
-    &#34;&#34;&#34; Converts wavelengths from vacuum to air-equivalent &#34;&#34;&#34; 
+    &#34;&#34;&#34; Converts wavelengths from vacuum to air-equivalent &#34;&#34;&#34;
     ww = (wvlamb &lt; 2000.)
     convl = np.zeros_like(wvlamb)
     convl[ww] = wvlamb[ww]
@@ -198,11 +198,16 @@ def get_eTransType(elvl_data,scups_data):
 
 @njit(cache=True)
 def rad_field_bframe(wlang,thetab,rphot,include_limbdark = True,photo_temp = 6000.):
-    &#34;&#34;&#34;
-    inputs:
-      wlang - wavelength of transition in angstrom
-      thetab - inclination of the magnetic field wrt solar vertical in radians
-      rphot - height above surface in radius units
+    &#34;&#34;&#34; Calculates the radiation field tensor in the cylindrically symmetric case
+
+    Parameters
+    ----------
+    wlang : float, array-like (unit: angstroms)
+        wavelength of transition
+    thetab : float (unit: radians)
+        inclination of the magnetic field wrt solar vertical in radians
+    rphot : float (unit: fraction of solar radius)
+        height above surface in radius units
     &#34;&#34;&#34;
 
     nline = len(wlang)
@@ -586,21 +591,32 @@ def newint(x,a,b,u,v,up,vp):
 <span>def <span class="ident">rad_field_bframe</span></span>(<span>wlang, thetab, rphot, include_limbdark=True, photo_temp=6000.0)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>inputs:
-wlang - wavelength of transition in angstrom
-thetab - inclination of the magnetic field wrt solar vertical in radians
-rphot - height above surface in radius units</p></div>
+<div class="desc"><p>Calculates the radiation field tensor in the cylindrically symmetric case</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>wlang</code></strong> :&ensp;<code>float, array-like (unit: angstroms)</code></dt>
+<dd>wavelength of transition</dd>
+<dt><strong><code>thetab</code></strong> :&ensp;<code>float (unit: radians)</code></dt>
+<dd>inclination of the magnetic field wrt solar vertical in radians</dd>
+<dt><strong><code>rphot</code></strong> :&ensp;<code>float (unit: fraction</code> of <code>solar radius)</code></dt>
+<dd>height above surface in radius units</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@njit(cache=True)
 def rad_field_bframe(wlang,thetab,rphot,include_limbdark = True,photo_temp = 6000.):
-    &#34;&#34;&#34;
-    inputs:
-      wlang - wavelength of transition in angstrom
-      thetab - inclination of the magnetic field wrt solar vertical in radians
-      rphot - height above surface in radius units
+    &#34;&#34;&#34; Calculates the radiation field tensor in the cylindrically symmetric case
+
+    Parameters
+    ----------
+    wlang : float, array-like (unit: angstroms)
+        wavelength of transition
+    thetab : float (unit: radians)
+        inclination of the magnetic field wrt solar vertical in radians
+    rphot : float (unit: fraction of solar radius)
+        height above surface in radius units
     &#34;&#34;&#34;
 
     nline = len(wlang)
@@ -776,7 +792,7 @@ def spintone(xnew,knots,values,ydiv2):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def vac2air(wvlamb):
-    &#34;&#34;&#34; Converts wavelengths from vacuum to air-equivalent &#34;&#34;&#34; 
+    &#34;&#34;&#34; Converts wavelengths from vacuum to air-equivalent &#34;&#34;&#34;
     ww = (wvlamb &lt; 2000.)
     convl = np.zeros_like(wvlamb)
     convl[ww] = wvlamb[ww]

@@ -19,22 +19,25 @@ class Ion:
 
     Parameters
     ----------
-    ion_name : `str` (name of ion, e.g. 'fe_13')
+    ion_name : str
+        Name of ion (e.g., 'fe_13')
+    nlevels:  int (default = None)
+        Number of energy levels to include (default is all)
+    ioneqFile : str (default = None)
+        Ionization equilibrium filename (defaults to Chianti default file)
+    abundFile : str (default = None)
+        Abundance filename (defaults to sun_photospheric_2009_asplund.abund)
+    all_ks : bool (default = False)
+        Flag to include all multipole order Ks in the calculation
+        The default is to include only the even values of K for the no
+        coherence hypothesis, as discussed in LD&L (2004) Section 13.5.
 
-    Other Parameters
-    ----------------
-    nlevels:  'int'  (number of energy levels to include, default is all)
+    References
+    ----------
+    Egidio Landi Degl’innocenti and Marco Landolfi (2004)
+    "Polarization in Spectral Lines"
+    <https://link.springer.com/book/10.1007/1-4020-2415-0>
 
-    ioneqFile : `str' (Ionization equilibrium dataset
-
-    abundFile : `str` (Abundance dataset)
-
-    all_ks : `bool` (Flag to
-
-    Examples
-    --------
-    import pyclep
-    fe13 = pycelp.Ion('fe_13',nlevels = 50)
     """
 
     def __init__(self, ion_name,nlevels=None,ioneqFile=None,
@@ -68,6 +71,14 @@ class Ion:
         eq_logfrac    = np.log10(eq_frac)
         yderiv2       = util.new_second_derivative(eq_logtemp,eq_logfrac,1e100,1e100)
         qnj           = elvl_data['j']
+
+        ### DERIVE D and E coefficients
+        ss,ll,jj = elvl_data['s'],elvl_data['l'],elvl_data['j']
+        landeg = util.calcLande(jj,ss,ll)
+        Jupp,Jlow = jj[rupplev],jj[rlowlev]
+        gupp,glow = landeg[rupplev],landeg[rlowlev]
+        Dcoeff = util.getDcoeff(Jupp,Jlow)
+        Ecoeff = util.getEcoeff(Jupp,Jlow,gupp,glow)
 
         ######### SETUP INDICES OF THE SEE MATRIX AND GET WEIGHTS
         see_neq,see_index,see_lev,see_k,see_dk = util.setupSEE(qnj,all_ks=all_ks)
@@ -168,6 +179,8 @@ class Ion:
         ## radiative transition info
         self.rlowlev    = rlowlev
         self.rupplev    = rupplev
+        self.Dcoeff     = Dcoeff
+        self.Ecoeff     = Ecoeff
         self.alamb      = alamb
         self.wv_air     = wv_air
         self.a_up2low   = a_up2low
@@ -189,58 +202,38 @@ class Ion:
     Number of Radiative Transitions: {len(self.alamb)}
     Ionization Equilbrium Filename: {self.ioneq_data['filename']}"""
 
-    def list_variables(self):
-        """ provides a listing and information of all variables """
-        print(' tbd ')
-        return
+    def get_maxtemp(self):
+        """ Returns the temperature at maximum ionization fraction in Kelvin """
+        logt = np.linspace(5,7,50)
+        eq_frac_int  = 10.**(util.spintarr(logt,self.ioneq_logtemp,self.ioneq_logfrac,self.ioneq_yderiv2))
+        logt_max = logt[np.argmax(eq_frac_int)]
+        return 10.**logt_max
 
-    def calc_ecoll_matrix_standard(self,edens,etemp):
-        wkzero = np.argwhere(self.see_k == 0)[:,0]
-        ecmat_std = np.zeros((self.nlevels,self.nlevels))
-        for n in range(self.nlevels):
-            ecmat_std[n,:] = self.ecmat[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
-        return ecmat_std
-
-    def calc_pcoll_matrix_standard(self):
-        wkzero = np.argwhere(self.see_k == 0)[:,0]
-        pcmat_std = np.zeros((self.nlevels,self.nlevels))
-        for n in range(self.nlevels):
-            pcmat_std[n,:] = self.pcmat[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
-        return pcmat_std
-
-    def calc_dipole_matrix_standard(self,ht,thetab):
-        radj    = util.rad_field_bframe(self.alamb,thetab,ht,limbd_flag = True)
-        Dmat    = getDipoleSEE(self.tD,self.tD_indx,radj,np.copy(self.Dmat_spon))
-        wkzero = np.argwhere(self.see_k == 0)[:,0]
-        Dmat_std = np.zeros((self.nlevels,self.nlevels))
-        for n in range(self.nlevels):
-            Dmat_std[n,:] = Dmat[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
-        return Dmat_std
-
-    def calc_nonDipole_matrix_standard(self,ht,thetab):
-        radj    = util.rad_field_bframe(self.alamb,thetab,ht,limbd_flag = True)
-        nonDmat = getNonDipoleSEE(self.tnD,self.tnD_indx,radj,np.copy(self.nonD_spon))
-        wkzero = np.argwhere(self.see_k == 0)[:,0]
-        nonDmat_std = np.zeros((self.nlevels,self.nlevels))
-        for n in range(self.nlevels):
-            nonDmat_std[n,:] = nonDmat[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
-        return nonDmat_std
-
-    def calc_rad_matrix_standard(self,ht,thetab):
-        radj    = util.rad_field_bframe(self.alamb,thetab,ht,limbd_flag = True)
-        nonDmat = getNonDipoleSEE(self.tnD,self.tnD_indx,radj,np.copy(self.nonD_spon))
-        Dmat    = getDipoleSEE(self.tD,self.tD_indx,radj,np.copy(self.Dmat_spon))
-        DD = nonDmat + Dmat
-        wkzero = np.argwhere(self.see_k == 0)[:,0]
-        radmat_std = np.zeros((self.nlevels,self.nlevels))
-        for n in range(self.nlevels):
-            radmat_std[n,:] = DD[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
-        return radmat_std
-
-    def calc_rho_sym(self,edens,etemp,ht,thetab,include_limbdark = True,include_protons = True):
+    def calc_rho_sym(self,edens,etemp,height,thetab,include_limbdark = True,
+                    include_protons = True):
         """
         Calculates the elements of the atomic density matrix (rho) for the
         case of a cylindrically symmetric radiation field.
+
+        Parameters
+        ----------
+        edens : float (units: cm^-3)
+            Electron density (e.g., 1e8)
+        etemp : float (units: K)
+            Electron temperature (e.g., 1.e6)
+        height : float (units: fraction of a solar radius)
+            Height above the solar photosphere
+        thetab : float (units: degrees)
+            Inclination angle of the magnetic field relative to the solar
+            vertical (i.e. 0 == vertical, 90 = horizontal)
+
+        Other Parameters
+        ----------
+        include_limbdark:  bool (default: True)
+            Flag to include limb darkening in the radiation field calculation
+        include_protons:  bool (default: True)
+            Flat to include protons in the collisional rates
+
         """
         thetab = np.deg2rad(thetab)
         ptemp = etemp
@@ -269,7 +262,7 @@ class Ion:
                                           self.splups_data['bt_upsilon'],self.splups_data['yd2'], \
                                           ptemp,pdens)
 
-        self.radj    = util.rad_field_bframe(self.alamb,thetab,ht,include_limbdark = include_limbdark)
+        self.radj    = util.rad_field_bframe(self.alamb,thetab,height,include_limbdark = include_limbdark)
 
         ecmat   = getElectronSEE(self.ciK,self.ciK_indx,self.csK,self.csK_indx,
                                  erates_up,erates_down,self.see_neq)
@@ -287,45 +280,84 @@ class Ion:
         self.rho = rho
         self.totn = totn
 
-    def get_maxtemp(self):
-        """ Returns the temperature at maximum ionization fraction """
-        logt = np.linspace(5,7,50)
-        eq_frac_int  = 10.**(util.spintarr(logt,self.ioneq_logtemp,self.ioneq_logfrac,self.ioneq_yderiv2))
-        logt_max = logt[np.argmax(eq_frac_int)]
-        return 10.**logt_max
+    def calc_ecoll_matrix_standard(self):
+        """ to be documented - dev use only for now """
+        wkzero = np.argwhere(self.see_k == 0)[:,0]
+        ecmat_std = np.zeros((self.nlevels,self.nlevels))
+        for n in range(self.nlevels):
+            ecmat_std[n,:] = self.ecmat[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
+        return ecmat_std
+
+    def calc_pcoll_matrix_standard(self):
+        """ to be documented - dev use only for now """
+        wkzero = np.argwhere(self.see_k == 0)[:,0]
+        pcmat_std = np.zeros((self.nlevels,self.nlevels))
+        for n in range(self.nlevels):
+            pcmat_std[n,:] = self.pcmat[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
+        return pcmat_std
+
+    def calc_dipole_matrix_standard(self,ht,thetab):
+        """ to be documented - dev use only for now """
+        radj    = util.rad_field_bframe(self.alamb,thetab,ht,limbd_flag = True)
+        Dmat    = getDipoleSEE(self.tD,self.tD_indx,radj,np.copy(self.Dmat_spon))
+        wkzero = np.argwhere(self.see_k == 0)[:,0]
+        Dmat_std = np.zeros((self.nlevels,self.nlevels))
+        for n in range(self.nlevels):
+            Dmat_std[n,:] = Dmat[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
+        return Dmat_std
+
+    def calc_nonDipole_matrix_standard(self,ht,thetab):
+        """ to be documented - dev use only for now """
+        radj    = util.rad_field_bframe(self.alamb,thetab,ht,limbd_flag = True)
+        nonDmat = getNonDipoleSEE(self.tnD,self.tnD_indx,radj,np.copy(self.nonD_spon))
+        wkzero = np.argwhere(self.see_k == 0)[:,0]
+        nonDmat_std = np.zeros((self.nlevels,self.nlevels))
+        for n in range(self.nlevels):
+            nonDmat_std[n,:] = nonDmat[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
+        return nonDmat_std
+
+    def calc_rad_matrix_standard(self,ht,thetab):
+        """ to be documented - dev use only for now """
+        radj    = util.rad_field_bframe(self.alamb,thetab,ht,limbd_flag = True)
+        nonDmat = getNonDipoleSEE(self.tnD,self.tnD_indx,radj,np.copy(self.nonD_spon))
+        Dmat    = getDipoleSEE(self.tD,self.tD_indx,radj,np.copy(self.Dmat_spon))
+        DD = nonDmat + Dmat
+        wkzero = np.argwhere(self.see_k == 0)[:,0]
+        radmat_std = np.zeros((self.nlevels,self.nlevels))
+        for n in range(self.nlevels):
+            radmat_std[n,:] = DD[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
+        return radmat_std
 
     def get_lower_level_alignment(self,wv_air):
-        """ Returns the atomic alignment for upper level of given transition
-        input -- wv_air == air wavelength in Angstrom
+        """ Returns the atomic alignment for the lower level of given transition
+
+        Parameters
+        ----------
+        wv_air : float (unit: angstroms)
+            Air wavelength of spectral line
         """
         ww = np.argmin(np.abs(self.wv_air - wv_air))
+
+        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
+            print(' warning: requested wavelength for calculation does have a good match')
+            print(' requested: ', wv_air)
+            print(' closest:   ', self.wv_air[ww])
+            raise
+
         lowlev = self.rlowlev[ww]
         alignment = self.rho[lowlev,2] / self.rho[lowlev,0]
         return alignment
 
     def get_upper_level_alignment(self,wv_air):
-        """ Returns the atomic alignment for upper level of given transition
-        input -- wv_air == air wavelength in Angstrom
-        """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-        upplev = self.rupplev[ww]
-        alignment = self.rho[upplev,2] / self.rho[upplev,0]
-        return alignment
+        """ Returns the atomic alignment for the upper level of given transition
 
-    def get_upper_level_rho00(self,wv_air):
-        """ Returns the atomic alignment for upper level of given transition
-        input -- wv_air == air wavelength in Angstrom
+        Parameters
+        ----------
+        wv_air : float (unit: angstroms)
+            Air wavelength of spectral line
         """
         ww = np.argmin(np.abs(self.wv_air - wv_air))
-        upplev = self.rupplev[ww]
-        rho00 = self.rho[upplev,0]
-        return rho00
 
-    def calc_Iemiss(self,wv_air):
-        """ returns the intensity
-        Note:  currently does not include geometry or atomic polarization
-        """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
         if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
             print(' warning: requested wavelength for calculation does have a good match')
             print(' requested: ', wv_air)
@@ -333,19 +365,132 @@ class Ion:
             raise
 
         upplev = self.rupplev[ww]
+        alignment = self.rho[upplev,2] / self.rho[upplev,0]
+        return alignment
+
+    def get_upper_level_rho00(self,wv_air):
+        """ Returns rho(Q=0,K=0) for the upper level of given transition
+
+        Parameters
+        ----------
+        wv_air : float (unit: angstroms)
+            Air wavelength of spectral line
+        """
+        ww = np.argmin(np.abs(self.wv_air - wv_air))
+
+        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
+            print(' warning: requested wavelength for calculation does have a good match')
+            print(' requested: ', wv_air)
+            print(' closest:   ', self.wv_air[ww])
+            raise
+
+        upplev = self.rupplev[ww]
+        rho00 = self.rho[upplev,0]
+        return rho00
+
+    def get_EinsteinA(self,wv_air):
+        """ Returns the Einstein A for a selected transition
+
+        Parameters
+        ----------
+        wv_air : float (unit: angstroms)
+            Air wavelength of spectral line
+        """
+        ww = np.argmin(np.abs(self.wv_air - wv_air))
+
+        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
+            print(' warning: requested wavelength for calculation does have a good match')
+            print(' requested: ', wv_air)
+            print(' closest:   ', self.wv_air[ww])
+            raise
+
+        return self.a_up2low[ww]
+
+    def get_Dcoeff(self,wv_air):
+        """ Returns the D coefficent for a selected transition
+
+        Parameters
+        ----------
+        wv_air : float (unit: angstroms)
+            Air wavelength of spectral line
+        """
+        ww = np.argmin(np.abs(self.wv_air - wv_air))
+
+        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
+            print(' warning: requested wavelength for calculation does have a good match')
+            print(' requested: ', wv_air)
+            print(' closest:   ', self.wv_air[ww])
+            raise
+
+        return self.Dcoeff[ww]
+
+    def get_Ecoeff(self,wv_air):
+        """ Returns the E coefficent for a selected transition
+
+        Parameters
+        ----------
+
+        wv_air : float (unit: angstroms)
+            Air wavelength of spectral line
+        """
+        ww = np.argmin(np.abs(self.wv_air - wv_air))
+
+        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
+            print(' warning: requested wavelength for calculation does have a good match')
+            print(' requested: ', wv_air)
+            print(' closest:   ', self.wv_air[ww])
+            raise
+
+        return self.Ecoeff[ww]
+
+    def calc_Iemiss(self,wv_air,thetaBLOS = 0.):
+        """ returns the intensity emission coefficent for a selected transition
+
+        Parameters
+        ----------
+        wv_air : float (unit: angstroms)
+            Air wavelength of spectral line
+        thetaBLOS : float (unit: degrees)
+            inclination angle of the magnetic field relative to the line of sight
+        """
+        ww = np.argmin(np.abs(self.wv_air - wv_air))
+
+        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
+            print(' warning: requested wavelength for calculation does have a good match')
+            print(' requested: ', wv_air)
+            print(' closest:   ', self.wv_air[ww])
+            raise
+
+        upplev = self.rupplev[ww]
+        Dcoeff = self.Dcoeff[ww]
+        sigma = self.get_upper_level_alignment(wv_air)
+        thetaBLOS = np.deg2rad(thetaBLOS)
+
         hh = 6.626176e-27  ## ergs sec (planck's constant);
         cc = 2.99792458e10 ## cm s^-1 (speed of light)
         hnu = hh*cc / (self.alamb[ww]/1.e8)
         Ju = self.qnj[upplev]
+
         ## convert units
         sr2arcsec = (180./np.pi)**2.*3600.**2.
         phergs = hh*(3.e8)/(self.alamb[ww] * 1.e-10)
-        val = hnu/4./np.pi*self.a_up2low[ww] *np.sqrt(2.*Ju+1)*self.rho[upplev,0] * self.totn
+        val = hnu/4./np.pi*self.a_up2low[ww] * np.sqrt(2.*Ju+1)*self.rho[upplev,0] * self.totn
+        val = val * (1. + 3./(2.*np.sqrt(2.)) * (np.cos(thetaBLOS)**2 - (1./3.)  )   )
         val = val/sr2arcsec/phergs
+
         return val
 
     def show_lines(self,nlines=None,start=0):
-        """ prints out information on the radiative transitions"""
+        """ prints out information for the radiative transitions
+
+        Parameters
+        ----------
+        nlines : int (default = None)
+            The number of spectral lines to print
+        start:  int (default = 0)
+            Starting index of lines printed.
+            Lines are ordered roughly by energy level indices
+        """
 
         if (nlines == None):
             nlines = len(self.alamb)
@@ -360,7 +505,3 @@ class Ion:
             wvair = np.round(self.wv_air[ln],3)
             upplev,lowlev = self.rupplev[ln],self.rlowlev[ln]
             print(ln, wv,wvair, self.elvl_data['full_level'][upplev], ' --> ', self.elvl_data['full_level'][lowlev])
-
-
-    ## get stokes
-    ## plot

@@ -53,9 +53,8 @@ def getChiantiDir():
     return chianti_dbase_root,chianti_version
 
 def getIonZ(ion_name):
-    &#39;&#39;&#39;
-    Get Atomic Number of the Element given an ion name, e.g. &#39;fe_13&#39;
-    &#39;&#39;&#39;
+    &#34;&#34;&#34; Get Atomic Number of the Element given an ion name, e.g. &#39;fe_13&#39; &#34;&#34;&#34;
+
     element, ion = ion_name.split(&#39;_&#39;)
     zlabl=np.array([&#39;H&#39;,&#39;He&#39;,&#39;Li&#39;,&#39;Be&#39;,&#39;B&#39;,&#39;C&#39;,&#39;N&#39;,&#39;O&#39;,&#39;F&#39;,&#39;Ne&#39;,&#39;Na&#39;,
        &#39;Mg&#39;,&#39;Al&#39;,&#39;Si&#39;,&#39;P&#39;,&#39;S&#39;,&#39;Cl&#39;,&#39;Ar&#39;,&#39;K&#39;,&#39;Ca&#39;,&#39;Sc&#39;,&#39;Ti&#39;,&#39;V&#39;,&#39;Cr&#39;,
@@ -66,9 +65,8 @@ def getIonZ(ion_name):
     return ionz
 
 def getAtomicWeight(element):
-    &#34;&#34;&#34;
-    Get atomic weight of element
-    &#34;&#34;&#34;
+    &#34;&#34;&#34; Get atomic weight of element &#34;&#34;&#34;
+
     elem = np.array([&#39;h&#39;,&#39;he&#39;,&#39;li&#39;,&#39;be&#39;,&#39;b&#39;,&#39;c&#39;,&#39;n&#39;,&#39;o&#39;,&#39;f&#39;,
         &#39;ne&#39;,&#39;na&#39;,&#39;mg&#39;,&#39;al&#39;,&#39;si&#39;,&#39;p&#39;,&#39;s&#39;,&#39;cl&#39;,&#39;ar&#39;,&#39;k&#39;,
         &#39;ca&#39;,&#39;sc&#39;,&#39;ti&#39;,&#39;v&#39;,&#39;cr&#39;,&#39;mn&#39;,&#39;fe&#39;])
@@ -912,9 +910,8 @@ if __name__ == &#34;__main__&#34;:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def getAtomicWeight(element):
-    &#34;&#34;&#34;
-    Get atomic weight of element
-    &#34;&#34;&#34;
+    &#34;&#34;&#34; Get atomic weight of element &#34;&#34;&#34;
+
     elem = np.array([&#39;h&#39;,&#39;he&#39;,&#39;li&#39;,&#39;be&#39;,&#39;b&#39;,&#39;c&#39;,&#39;n&#39;,&#39;o&#39;,&#39;f&#39;,
         &#39;ne&#39;,&#39;na&#39;,&#39;mg&#39;,&#39;al&#39;,&#39;si&#39;,&#39;p&#39;,&#39;s&#39;,&#39;cl&#39;,&#39;ar&#39;,&#39;k&#39;,
         &#39;ca&#39;,&#39;sc&#39;,&#39;ti&#39;,&#39;v&#39;,&#39;cr&#39;,&#39;mn&#39;,&#39;fe&#39;])
@@ -958,9 +955,8 @@ if __name__ == &#34;__main__&#34;:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def getIonZ(ion_name):
-    &#39;&#39;&#39;
-    Get Atomic Number of the Element given an ion name, e.g. &#39;fe_13&#39;
-    &#39;&#39;&#39;
+    &#34;&#34;&#34; Get Atomic Number of the Element given an ion name, e.g. &#39;fe_13&#39; &#34;&#34;&#34;
+
     element, ion = ion_name.split(&#39;_&#39;)
     zlabl=np.array([&#39;H&#39;,&#39;He&#39;,&#39;Li&#39;,&#39;Be&#39;,&#39;B&#39;,&#39;C&#39;,&#39;N&#39;,&#39;O&#39;,&#39;F&#39;,&#39;Ne&#39;,&#39;Na&#39;,
        &#39;Mg&#39;,&#39;Al&#39;,&#39;Si&#39;,&#39;P&#39;,&#39;S&#39;,&#39;Cl&#39;,&#39;Ar&#39;,&#39;K&#39;,&#39;Ca&#39;,&#39;Sc&#39;,&#39;Ti&#39;,&#39;V&#39;,&#39;Cr&#39;,

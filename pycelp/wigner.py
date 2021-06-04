@@ -1,5 +1,5 @@
 """
-This module provies functions to calculate Wigner 3j, 6j, and 9j symbols.
+This module provides functions to calculate Wigner 3j, 6j, and 9j symbols.
 """
 
 from numba import njit
@@ -14,8 +14,6 @@ def w3js(j1,j2,j3,m1,m2,m3):
     """
     This function calculates the 3-j symbol
     J_i and M_i have to be twice the actual value of J and M
-    originally from hazel maths.f90 fact is array of read(kind=8)
-    factorial numbers 0:301
 
     See Appendix 1 of Landi Degl'Innocenti & Landolfi
     Also equation 2.19 and 2.22
