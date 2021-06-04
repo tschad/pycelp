@@ -101,14 +101,6 @@ class Ion:
         yderiv2       = util.new_second_derivative(eq_logtemp,eq_logfrac,1e100,1e100)
         qnj           = elvl_data[&#39;j&#39;]
 
-        ### DERIVE D and E coefficients
-        ss,ll,jj = elvl_data[&#39;s&#39;],elvl_data[&#39;l&#39;],elvl_data[&#39;j&#39;]
-        landeg = util.calcLande(jj,ss,ll)
-        Jupp,Jlow = jj[rupplev],jj[rlowlev]
-        gupp,glow = landeg[rupplev],landeg[rlowlev]
-        Dcoeff = util.getDcoeff(Jupp,Jlow)
-        Ecoeff = util.getEcoeff(Jupp,Jlow,gupp,glow)
-
         ######### SETUP INDICES OF THE SEE MATRIX AND GET WEIGHTS
         see_neq,see_index,see_lev,see_k,see_dk = util.setupSEE(qnj,all_ks=all_ks)
         weight = np.zeros(see_neq)
@@ -148,6 +140,14 @@ class Ion:
         nrad = len(rlowlev)
 
         wv_air = util.vac2air(alamb)
+
+        ### DERIVE D and E coefficients
+        ss,ll,jj = elvl_data[&#39;s&#39;],elvl_data[&#39;l&#39;],elvl_data[&#39;j&#39;]
+        landeg = util.calcLande(jj,ss,ll)
+        Jupp,Jlow = jj[rupplev],jj[rlowlev]
+        gupp,glow = landeg[rupplev],landeg[rlowlev]
+        Dcoeff = util.getDcoeff(Jupp,Jlow)
+        Ecoeff = util.getEcoeff(Jupp,Jlow,gupp,glow)
 
         ## --&gt; Non-dipoles
         print(&#39; setting up non-dipole radiative rate factors&#39;)
@@ -472,8 +472,29 @@ class Ion:
 
         return self.Ecoeff[ww]
 
-    def calc_Iemiss(self,wv_air,thetaBLOS = 0.):
+    def get_Jupp(self, wv_air):
+        &#34;&#34;&#34; Returns the E coefficent for a selected transition
+
+        Parameters
+        ----------
+
+        wv_air : float (unit: angstroms)
+            Air wavelength of spectral line
+        &#34;&#34;&#34;
+        ww = np.argmin(np.abs(self.wv_air - wv_air))
+
+        if ((self.wv_air[ww] - wv_air)/wv_air &gt; 0.05):
+            print(&#39; warning: requested wavelength for calculation does have a good match&#39;)
+            print(&#39; requested: &#39;, wv_air)
+            print(&#39; closest:   &#39;, self.wv_air[ww])
+            raise
+
+        upplev = self.rupplev[ww]
+        return self.qnj[upplev]
+
+    def calc_Iemiss(self,wv_air,thetaBLOS = np.rad2deg(np.arccos(1./np.sqrt(3.))) ):
         &#34;&#34;&#34; returns the intensity emission coefficent for a selected transition
+        return units are photons
 
         Parameters
         ----------
@@ -481,6 +502,7 @@ class Ion:
             Air wavelength of spectral line
         thetaBLOS : float (unit: degrees)
             inclination angle of the magnetic field relative to the line of sight
+            default is van vleck
         &#34;&#34;&#34;
         ww = np.argmin(np.abs(self.wv_air - wv_air))
 
@@ -500,7 +522,7 @@ class Ion:
         hnu = hh*cc / (self.alamb[ww]/1.e8)
         Ju = self.qnj[upplev]
 
-        ## convert units
+        ## convert units to
         sr2arcsec = (180./np.pi)**2.*3600.**2.
         phergs = hh*(3.e8)/(self.alamb[ww] * 1.e-10)
         val = hnu/4./np.pi*self.a_up2low[ww] * np.sqrt(2.*Ju+1)*self.rho[upplev,0] * self.totn
@@ -641,14 +663,6 @@ coherence hypothesis, as discussed in LD&amp;L (2004) Section 13.5.</dd>
         yderiv2       = util.new_second_derivative(eq_logtemp,eq_logfrac,1e100,1e100)
         qnj           = elvl_data[&#39;j&#39;]
 
-        ### DERIVE D and E coefficients
-        ss,ll,jj = elvl_data[&#39;s&#39;],elvl_data[&#39;l&#39;],elvl_data[&#39;j&#39;]
-        landeg = util.calcLande(jj,ss,ll)
-        Jupp,Jlow = jj[rupplev],jj[rlowlev]
-        gupp,glow = landeg[rupplev],landeg[rlowlev]
-        Dcoeff = util.getDcoeff(Jupp,Jlow)
-        Ecoeff = util.getEcoeff(Jupp,Jlow,gupp,glow)
-
         ######### SETUP INDICES OF THE SEE MATRIX AND GET WEIGHTS
         see_neq,see_index,see_lev,see_k,see_dk = util.setupSEE(qnj,all_ks=all_ks)
         weight = np.zeros(see_neq)
@@ -688,6 +702,14 @@ coherence hypothesis, as discussed in LD&amp;L (2004) Section 13.5.</dd>
         nrad = len(rlowlev)
 
         wv_air = util.vac2air(alamb)
+
+        ### DERIVE D and E coefficients
+        ss,ll,jj = elvl_data[&#39;s&#39;],elvl_data[&#39;l&#39;],elvl_data[&#39;j&#39;]
+        landeg = util.calcLande(jj,ss,ll)
+        Jupp,Jlow = jj[rupplev],jj[rlowlev]
+        gupp,glow = landeg[rupplev],landeg[rlowlev]
+        Dcoeff = util.getDcoeff(Jupp,Jlow)
+        Ecoeff = util.getEcoeff(Jupp,Jlow,gupp,glow)
 
         ## --&gt; Non-dipoles
         print(&#39; setting up non-dipole radiative rate factors&#39;)
@@ -1012,8 +1034,29 @@ coherence hypothesis, as discussed in LD&amp;L (2004) Section 13.5.</dd>
 
         return self.Ecoeff[ww]
 
-    def calc_Iemiss(self,wv_air,thetaBLOS = 0.):
+    def get_Jupp(self, wv_air):
+        &#34;&#34;&#34; Returns the E coefficent for a selected transition
+
+        Parameters
+        ----------
+
+        wv_air : float (unit: angstroms)
+            Air wavelength of spectral line
+        &#34;&#34;&#34;
+        ww = np.argmin(np.abs(self.wv_air - wv_air))
+
+        if ((self.wv_air[ww] - wv_air)/wv_air &gt; 0.05):
+            print(&#39; warning: requested wavelength for calculation does have a good match&#39;)
+            print(&#39; requested: &#39;, wv_air)
+            print(&#39; closest:   &#39;, self.wv_air[ww])
+            raise
+
+        upplev = self.rupplev[ww]
+        return self.qnj[upplev]
+
+    def calc_Iemiss(self,wv_air,thetaBLOS = np.rad2deg(np.arccos(1./np.sqrt(3.))) ):
         &#34;&#34;&#34; returns the intensity emission coefficent for a selected transition
+        return units are photons
 
         Parameters
         ----------
@@ -1021,6 +1064,7 @@ coherence hypothesis, as discussed in LD&amp;L (2004) Section 13.5.</dd>
             Air wavelength of spectral line
         thetaBLOS : float (unit: degrees)
             inclination angle of the magnetic field relative to the line of sight
+            default is van vleck
         &#34;&#34;&#34;
         ww = np.argmin(np.abs(self.wv_air - wv_air))
 
@@ -1040,7 +1084,7 @@ coherence hypothesis, as discussed in LD&amp;L (2004) Section 13.5.</dd>
         hnu = hh*cc / (self.alamb[ww]/1.e8)
         Ju = self.qnj[upplev]
 
-        ## convert units
+        ## convert units to
         sr2arcsec = (180./np.pi)**2.*3600.**2.
         phergs = hh*(3.e8)/(self.alamb[ww] * 1.e-10)
         val = hnu/4./np.pi*self.a_up2low[ww] * np.sqrt(2.*Ju+1)*self.rho[upplev,0] * self.totn
@@ -1078,23 +1122,26 @@ coherence hypothesis, as discussed in LD&amp;L (2004) Section 13.5.</dd>
 <h3>Methods</h3>
 <dl>
 <dt id="pycelp.ion.Ion.calc_Iemiss"><code class="name flex">
-<span>def <span class="ident">calc_Iemiss</span></span>(<span>self, wv_air, thetaBLOS=0.0)</span>
+<span>def <span class="ident">calc_Iemiss</span></span>(<span>self, wv_air, thetaBLOS=54.735610317245346)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>returns the intensity emission coefficent for a selected transition</p>
+<div class="desc"><p>returns the intensity emission coefficent for a selected transition
+return units are photons</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>wv_air</code></strong> :&ensp;<code>float (unit: angstroms)</code></dt>
 <dd>Air wavelength of spectral line</dd>
 <dt><strong><code>thetaBLOS</code></strong> :&ensp;<code>float (unit: degrees)</code></dt>
-<dd>inclination angle of the magnetic field relative to the line of sight</dd>
+<dd>inclination angle of the magnetic field relative to the line of sight
+default is van vleck</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def calc_Iemiss(self,wv_air,thetaBLOS = 0.):
+<pre><code class="python">def calc_Iemiss(self,wv_air,thetaBLOS = np.rad2deg(np.arccos(1./np.sqrt(3.))) ):
     &#34;&#34;&#34; returns the intensity emission coefficent for a selected transition
+    return units are photons
 
     Parameters
     ----------
@@ -1102,6 +1149,7 @@ coherence hypothesis, as discussed in LD&amp;L (2004) Section 13.5.</dd>
         Air wavelength of spectral line
     thetaBLOS : float (unit: degrees)
         inclination angle of the magnetic field relative to the line of sight
+        default is van vleck
     &#34;&#34;&#34;
     ww = np.argmin(np.abs(self.wv_air - wv_air))
 
@@ -1121,7 +1169,7 @@ coherence hypothesis, as discussed in LD&amp;L (2004) Section 13.5.</dd>
     hnu = hh*cc / (self.alamb[ww]/1.e8)
     Ju = self.qnj[upplev]
 
-    ## convert units
+    ## convert units to
     sr2arcsec = (180./np.pi)**2.*3600.**2.
     phergs = hh*(3.e8)/(self.alamb[ww] * 1.e-10)
     val = hnu/4./np.pi*self.a_up2low[ww] * np.sqrt(2.*Ju+1)*self.rho[upplev,0] * self.totn
@@ -1430,6 +1478,41 @@ vertical (i.e. 0 == vertical, 90 = horizontal)</dd>
     return self.a_up2low[ww]</code></pre>
 </details>
 </dd>
+<dt id="pycelp.ion.Ion.get_Jupp"><code class="name flex">
+<span>def <span class="ident">get_Jupp</span></span>(<span>self, wv_air)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the E coefficent for a selected transition</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>wv_air</code></strong> :&ensp;<code>float (unit: angstroms)</code></dt>
+<dd>Air wavelength of spectral line</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_Jupp(self, wv_air):
+    &#34;&#34;&#34; Returns the E coefficent for a selected transition
+
+    Parameters
+    ----------
+
+    wv_air : float (unit: angstroms)
+        Air wavelength of spectral line
+    &#34;&#34;&#34;
+    ww = np.argmin(np.abs(self.wv_air - wv_air))
+
+    if ((self.wv_air[ww] - wv_air)/wv_air &gt; 0.05):
+        print(&#39; warning: requested wavelength for calculation does have a good match&#39;)
+        print(&#39; requested: &#39;, wv_air)
+        print(&#39; closest:   &#39;, self.wv_air[ww])
+        raise
+
+    upplev = self.rupplev[ww]
+    return self.qnj[upplev]</code></pre>
+</details>
+</dd>
 <dt id="pycelp.ion.Ion.get_lower_level_alignment"><code class="name flex">
 <span>def <span class="ident">get_lower_level_alignment</span></span>(<span>self, wv_air)</span>
 </code></dt>
@@ -1627,6 +1710,7 @@ Lines are ordered roughly by energy level indices</dd>
 <li><code><a title="pycelp.ion.Ion.get_Dcoeff" href="#pycelp.ion.Ion.get_Dcoeff">get_Dcoeff</a></code></li>
 <li><code><a title="pycelp.ion.Ion.get_Ecoeff" href="#pycelp.ion.Ion.get_Ecoeff">get_Ecoeff</a></code></li>
 <li><code><a title="pycelp.ion.Ion.get_EinsteinA" href="#pycelp.ion.Ion.get_EinsteinA">get_EinsteinA</a></code></li>
+<li><code><a title="pycelp.ion.Ion.get_Jupp" href="#pycelp.ion.Ion.get_Jupp">get_Jupp</a></code></li>
 <li><code><a title="pycelp.ion.Ion.get_lower_level_alignment" href="#pycelp.ion.Ion.get_lower_level_alignment">get_lower_level_alignment</a></code></li>
 <li><code><a title="pycelp.ion.Ion.get_maxtemp" href="#pycelp.ion.Ion.get_maxtemp">get_maxtemp</a></code></li>
 <li><code><a title="pycelp.ion.Ion.get_upper_level_alignment" href="#pycelp.ion.Ion.get_upper_level_alignment">get_upper_level_alignment</a></code></li>

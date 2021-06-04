@@ -443,8 +443,29 @@ class Ion:
 
         return self.Ecoeff[ww]
 
-    def calc_Iemiss(self,wv_air,thetaBLOS = 0.):
+    def get_Jupp(self, wv_air):
+        """ Returns the E coefficent for a selected transition
+
+        Parameters
+        ----------
+
+        wv_air : float (unit: angstroms)
+            Air wavelength of spectral line
+        """
+        ww = np.argmin(np.abs(self.wv_air - wv_air))
+
+        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
+            print(' warning: requested wavelength for calculation does have a good match')
+            print(' requested: ', wv_air)
+            print(' closest:   ', self.wv_air[ww])
+            raise
+
+        upplev = self.rupplev[ww]
+        return self.qnj[upplev]
+
+    def calc_Iemiss(self,wv_air,thetaBLOS = np.rad2deg(np.arccos(1./np.sqrt(3.))) ):
         """ returns the intensity emission coefficent for a selected transition
+        return units are photons
 
         Parameters
         ----------
@@ -452,6 +473,7 @@ class Ion:
             Air wavelength of spectral line
         thetaBLOS : float (unit: degrees)
             inclination angle of the magnetic field relative to the line of sight
+            default is van vleck
         """
         ww = np.argmin(np.abs(self.wv_air - wv_air))
 
@@ -471,7 +493,7 @@ class Ion:
         hnu = hh*cc / (self.alamb[ww]/1.e8)
         Ju = self.qnj[upplev]
 
-        ## convert units
+        ## convert units to
         sr2arcsec = (180./np.pi)**2.*3600.**2.
         phergs = hh*(3.e8)/(self.alamb[ww] * 1.e-10)
         val = hnu/4./np.pi*self.a_up2low[ww] * np.sqrt(2.*Ju+1)*self.rho[upplev,0] * self.totn
