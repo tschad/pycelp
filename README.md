@@ -56,6 +56,8 @@ Below is a minimal example of using the pycelp code from a python terminal.  For
 more extensive examples, see those provided in the examples subdirectory
 within the project repo.
 
+A tour of the main class can be seen in [this notebook](https://github.com/tschad/pycelp/blob/main/examples/A_tour_of_the_Ion_class.ipynb).
+
 ```shell
 (juplab) [schad@Schad-Mac pycelp]$ python
 Python 3.9.4 (default, Apr  9 2021, 09:32:38)
