@@ -1,5 +1,5 @@
 '''
-This module contains the Ion class for pycelp. 
+This module contains the Ion class for pycelp.
 '''
 
 import numpy as np
@@ -10,21 +10,37 @@ from pycelp.dipoles import *
 import pycelp.util as util
 
 class Ion:
-    """ Class that defines a single ion """
+    """
+    Ion class
+
+    The ion object is the primary class used by pycelp for calculations of the
+    polarized emission for a particular transition. Upon initialization, an Ion
+    object loads all necessary atomic data from the CHIANTI database and
+    pre-calculates all pre-factors and static terms of the statistical
+    equilibrium rate equations.
+
+    Parameters
+    ----------
+    ion_name : `str`
+        Name of ion, e.g. 'fe_13'
+
+    Other Parameters
+    ----------------
+    nlevels:  'int'
+    ioneqFile : `str`, optional
+        Ionization equilibrium dataset
+    abundFile : `str`, optional
+        Abundance dataset
+    all_ks : `bool`, optional
+        Flag to
+
+    Examples
+    --------
+    """
 
     def __init__(self, ion_name=None,nlevels=None,ioneqFile=None,
                 abundFile=None,all_ks = False):
-        """
-        Extract all atomic data necessary for calculations
-        other variables??? radiation temperature?
 
-        Parameters
-        ----------
-        ion_name : `str`
-            Name of ion, e.g. 'fe_13'
-        nlevels  : int
-
-        """
         ## READ CHIANTI ATOMIC DATA
         elvl_data    = elvlcRead(ion_name)   ## ENERGY LEVEL DATA
         wgfa_data    = wgfaRead(ion_name)    ## RADIATIVE TRANSITION DATA

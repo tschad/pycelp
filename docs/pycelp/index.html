@@ -185,36 +185,65 @@ coefficients for non-dipole transitions.</p></div>
 <span>(</span><span>ion_name=None, nlevels=None, ioneqFile=None, abundFile=None, all_ks=False)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Class that defines a single ion </p>
-<p>Extract all atomic data necessary for calculations
-other variables??? radiation temperature?</p>
+<div class="desc"><p>Ion class</p>
+<p>The ion object is the primary class used by pycelp for calculations of the
+polarized emission for a particular transition. Upon initialization, an Ion
+object loads all necessary atomic data from the CHIANTI database and
+pre-calculates all pre-factors and static terms of the statistical
+equilibrium rate equations.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>ion_name</code></strong> :&ensp;<code>str</code></dt>
 <dd>Name of ion, e.g. 'fe_13'</dd>
 </dl>
-<p>nlevels
-: int</p></div>
+<h2 id="other-parameters">Other Parameters</h2>
+<dl>
+<dt><strong><code>nlevels</code></strong> :&ensp;<code>'int'</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>ioneqFile</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Ionization equilibrium dataset</dd>
+<dt><strong><code>abundFile</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Abundance dataset</dd>
+<dt><strong><code>all_ks</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Flag to</dd>
+</dl>
+<h2 id="examples">Examples</h2></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Ion:
-    &#34;&#34;&#34; Class that defines a single ion &#34;&#34;&#34;
+    &#34;&#34;&#34;
+    Ion class
+
+    The ion object is the primary class used by pycelp for calculations of the
+    polarized emission for a particular transition. Upon initialization, an Ion
+    object loads all necessary atomic data from the CHIANTI database and
+    pre-calculates all pre-factors and static terms of the statistical
+    equilibrium rate equations.
+
+    Parameters
+    ----------
+    ion_name : `str`
+        Name of ion, e.g. &#39;fe_13&#39;
+
+    Other Parameters
+    ----------------
+    nlevels:  &#39;int&#39;
+    ioneqFile : `str`, optional
+        Ionization equilibrium dataset
+    abundFile : `str`, optional
+        Abundance dataset
+    all_ks : `bool`, optional
+        Flag to
+
+    Examples
+    --------
+    &#34;&#34;&#34;
 
     def __init__(self, ion_name=None,nlevels=None,ioneqFile=None,
                 abundFile=None,all_ks = False):
-        &#34;&#34;&#34;
-        Extract all atomic data necessary for calculations
-        other variables??? radiation temperature?
 
-        Parameters
-        ----------
-        ion_name : `str`
-            Name of ion, e.g. &#39;fe_13&#39;
-        nlevels  : int
-
-        &#34;&#34;&#34;
         ## READ CHIANTI ATOMIC DATA
         elvl_data    = elvlcRead(ion_name)   ## ENERGY LEVEL DATA
         wgfa_data    = wgfaRead(ion_name)    ## RADIATIVE TRANSITION DATA
