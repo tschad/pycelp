@@ -72,14 +72,6 @@ class Ion:
         yderiv2       = util.new_second_derivative(eq_logtemp,eq_logfrac,1e100,1e100)
         qnj           = elvl_data['j']
 
-        ### DERIVE D and E coefficients
-        ss,ll,jj = elvl_data['s'],elvl_data['l'],elvl_data['j']
-        landeg = util.calcLande(jj,ss,ll)
-        Jupp,Jlow = jj[rupplev],jj[rlowlev]
-        gupp,glow = landeg[rupplev],landeg[rlowlev]
-        Dcoeff = util.getDcoeff(Jupp,Jlow)
-        Ecoeff = util.getEcoeff(Jupp,Jlow,gupp,glow)
-
         ######### SETUP INDICES OF THE SEE MATRIX AND GET WEIGHTS
         see_neq,see_index,see_lev,see_k,see_dk = util.setupSEE(qnj,all_ks=all_ks)
         weight = np.zeros(see_neq)
@@ -119,6 +111,14 @@ class Ion:
         nrad = len(rlowlev)
 
         wv_air = util.vac2air(alamb)
+
+        ### DERIVE D and E coefficients
+        ss,ll,jj = elvl_data['s'],elvl_data['l'],elvl_data['j']
+        landeg = util.calcLande(jj,ss,ll)
+        Jupp,Jlow = jj[rupplev],jj[rlowlev]
+        gupp,glow = landeg[rupplev],landeg[rlowlev]
+        Dcoeff = util.getDcoeff(Jupp,Jlow)
+        Ecoeff = util.getEcoeff(Jupp,Jlow,gupp,glow)
 
         ## --> Non-dipoles
         print(' setting up non-dipole radiative rate factors')
