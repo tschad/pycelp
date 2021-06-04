@@ -8,6 +8,8 @@ A **py**thon package for **C**oronal **E**mission **L**ine **P**olarization calc
 
 Lead Developer: Tom Schad - National Solar Observatory
 
+Code reference documentation available at [tschad.github.io/pycle](https://tschad.github.io/pycelp/pycelp/)
+
 **DISCLAIMER: pycelp is still in the early stages of development. Contributors are welcome. **
 
 ## Introduction
