@@ -53,6 +53,7 @@ $ git clone https://github.com/tschad/pycelp.git
 $ cd pycelp
 $ python setup.py develop  
 ```
+Once the pyclep package is cloned or downloaded into a directory, it can be installed with the provided setup script either in develop or install mode.  The above shows the develop mode installation which is useful when adding to the code. 
 
 ## Examples
 
