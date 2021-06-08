@@ -280,6 +280,72 @@ class Ion:
         self.rho = rho
         self.totn = totn
 
+    def calcInputRadJ(self,edens,etemp,radj,include_protons = True):
+        """
+        Calculates the elements of the atomic density matrix (rho) in the case
+        that the radiation field tensor components are given as a input.
+
+        Parameters
+        ----------
+        edens : float (units: cm^-3)
+            Electron density (e.g., 1e8)
+        etemp : float (units: K)
+            Electron temperature (e.g., 1.e6)
+        radj : float,nparray (shape is (3, number of radiative transitions))
+            Radiation field tensor components (QK = 00,01,02) for all
+            radiative transitions in the ion
+
+        Other Parameters
+        ----------
+        include_protons:  bool (default: True)
+            Flat to include protons in the collisional rates
+
+        """
+
+        ptemp = etemp
+        toth  = 0.85*edens
+        pdens = 1.*toth
+        if not include_protons:
+            pdens = 0.
+
+        self.edens = edens
+        self.pdens = pdens
+        self.toth  = toth
+
+        eq_frac_int  = 10.**(util.spintone(np.log10(etemp),self.ioneq_logtemp,self.ioneq_logfrac,self.ioneq_yderiv2))
+        totn         = 10.**(self.element_abund-12.)*toth*eq_frac_int
+
+        erates_up,erates_down = intErates(self.elowlev,self.eupplev,self.qnj, \
+                                          self.scups_data['delta_energy'],self.scups_data['bt_c'], \
+                                          self.scups_data['bt_type'],self.scups_data['bt_t'], \
+                                          self.scups_data['bt_upsilon'],self.scups_data['yd2'], \
+                                          etemp,edens)
+
+        prates_up,prates_down = intPrates(self.plowlev,self.pupplev,self.qnj, \
+                                          self.splups_data['delta_energy'],self.splups_data['bt_c'], \
+                                          self.splups_data['bt_type'],self.splups_data['bt_t'], \
+                                          self.splups_data['bt_upsilon'],self.splups_data['yd2'], \
+                                          ptemp,pdens)
+
+        self.radj    = radj
+
+        ecmat   = getElectronSEE(self.ciK,self.ciK_indx,self.csK,self.csK_indx,
+                                 erates_up,erates_down,self.see_neq)
+        pcmat   = getElectronSEE(self.ciKp,self.ciKp_indx,self.csKp,self.csKp_indx,
+                                 prates_up,prates_down,self.see_neq)
+        nonDmat = getNonDipoleSEE(self.tnD,self.tnD_indx,self.radj,np.copy(self.nonD_spon))
+        Dmat    = getDipoleSEE(self.tD,self.tD_indx,self.radj,np.copy(self.Dmat_spon))
+
+        self.collmat = ecmat + pcmat
+        self.radmat = Dmat + nonDmat
+        self.see_matrix = self.collmat + self.radmat
+
+        rho     = util.seeSolve(self.see_matrix,self.weight,self.see_lev,self.see_k)
+
+        self.rho = rho
+        self.totn = totn
+
+
     def calc_ecoll_matrix_standard(self):
         """ to be documented - dev use only for now """
         wkzero = np.argwhere(self.see_k == 0)[:,0]
