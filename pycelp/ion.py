@@ -345,7 +345,6 @@ class Ion:
         self.rho = rho
         self.totn = totn
 
-
     def calc_ecoll_matrix_standard(self):
         """ to be documented - dev use only for now """
         wkzero = np.argwhere(self.see_k == 0)[:,0]
