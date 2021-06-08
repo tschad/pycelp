@@ -280,7 +280,7 @@ class Ion:
         self.rho = rho
         self.totn = totn
 
-    def calcInputRadJ(self,edens,etemp,radj,include_protons = True):
+    def calc_rho_radj(self,edens,etemp,radj,include_protons = True):
         """
         Calculates the elements of the atomic density matrix (rho) in the case
         that the radiation field tensor components are given as a input.
