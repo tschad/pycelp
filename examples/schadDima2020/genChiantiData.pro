@@ -1,8 +1,13 @@
 ;;
 ;;  IDL File
 ;;
-;;  Tom Schad - 25 March 2021
+;;  Tom Schad 
 ;;
+;; Notes:  Likely this could be made much faster.  It's slow for now. 
+;;
+;; History: 
+;;    25 March 2021 :  original version 
+;;    24 June 2021 : updating to Chianti v10 with expanded model for Si IX (590 levels)
 ;; ==========================================
 
 ieqf = !xuvtop + '/ioneq/chianti.ioneq'
@@ -10,7 +15,7 @@ abf  = !xuvtop + '/abundance/sun_photospheric_2009_asplund.abund'
 
 ions = ['fe_14','fe_11','fe_13','fe_13','si_10', 'si_9']
 iontemps = 10.^[6.3,6.1,6.25,6.25,6.15,6.05]
-wvl  = [   5304,   7894,  10749,  10800, 14305, 39277.]
+wvl  = [   5304,   7894,  10749,  10800, 14305, 39293.]
 nions = n_elements(ions)
 
 ;;
@@ -23,7 +28,7 @@ nt   = n_elements(logt)
 dens = 10.^(8.5)
 rht  = 1.1
 
-goto,skip1
+;goto,skip1
 
 ch_int = dblarr(nt,nions)
 
@@ -75,8 +80,7 @@ ions = ['fe_14','fe_11','fe_13','fe_13','si_10', 'si_9']
 levels = intarr(3,nions) * 0
 levels[0,*] = 27    ;; 27 levels
 levels[1,*] = 100   ;; 100 levels if they exit
-levels[1,5] = 0     ;; Si 9 only have 46 levels
-levels[2,*] = [739,996,749,749,204,46]  ;; all levels
+levels[2,*] = [739,996,749,749,204,590]  ;; all levels
 
 for zz = 0,n_elements(ions)-1 do begin   ;; IONS / WAVELENGTHS
   gname = ions[zz]
