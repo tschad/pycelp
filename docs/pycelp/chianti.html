@@ -529,10 +529,14 @@ def ioneqRead(filename):
     t = np.asarray(data[1].split()).astype(np.float)
 
     ioneq = np.zeros((nt,nz,nz+1))
+    
+    widFormat = [0,3,3]
+    for ss in range(nt): widFormat.append(10)
+    widC = np.cumsum(widFormat)
 
     for i,ln in enumerate(data[2:]):
-        lns = ln.split()
-        z1,ion1 = np.int(lns[0]),np.int(lns[1])
+        lns = [ln[widC[j]:widC[j+1]] for j in range(len(widC)-1)]
+        z1,ion1 = int(lns[0]),int(lns[1])
         ioneq[:,z1-1,ion1-1] = np.asarray(lns[2:]).astype(np.float)
 
     result = {&#34;temp&#34;:t,
@@ -1003,10 +1007,14 @@ Ionization equilibrium values and the reference to the literature</p></div>
     t = np.asarray(data[1].split()).astype(np.float)
 
     ioneq = np.zeros((nt,nz,nz+1))
+    
+    widFormat = [0,3,3]
+    for ss in range(nt): widFormat.append(10)
+    widC = np.cumsum(widFormat)
 
     for i,ln in enumerate(data[2:]):
-        lns = ln.split()
-        z1,ion1 = np.int(lns[0]),np.int(lns[1])
+        lns = [ln[widC[j]:widC[j+1]] for j in range(len(widC)-1)]
+        z1,ion1 = int(lns[0]),int(lns[1])
         ioneq[:,z1-1,ion1-1] = np.asarray(lns[2:]).astype(np.float)
 
     result = {&#34;temp&#34;:t,

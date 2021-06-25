@@ -4,7 +4,7 @@
 [![github](https://img.shields.io/badge/GitHub-tschad%2FpyCELP-blue.svg?style=flat)](https://github.com/tschad/pycelp)
 [![ADS](https://img.shields.io/badge/NASA%20ADS-SoPh%2C%20V295%2C%207%2C%2098-red)](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract)
 
-pyCLEP (aka "pi-KELP"): a **py**thon package for **C**oronal **E**mission **L**ine **P**olarization calculations.
+pyCELP (aka "pi-KELP"): a **py**thon package for **C**oronal **E**mission **L**ine **P**olarization calculations.
 
 Lead Developer: Tom Schad - National Solar Observatory
 
@@ -33,7 +33,7 @@ Landolfi (2004)](https://link.springer.com/book/10.1007/1-4020-2415-0).
 * python3, numpy, numba
 * (optional - for tests/examples) matplotlib, scipy, jupyter
 * (optional - for updating docs) pdoc3
-* The [CHIANTI atomic database](http://www.chiantidatabase.org/chianti_download.html) is also required.  (Currently tested with v9; though testing with v10 is planned soon.) pyCELP will automatically search for the Chianti atomic database path using the default environment variable XUVTOP.
+* The [CHIANTI atomic database](http://www.chiantidatabase.org/chianti_download.html) is also required.  Originally, this code was developed with Chianti v9; however, it is now upgraded to use Chianti v10.  Chianti v9 should still work; however, there have been modifications in particular to the Si IX model that the update version and its example codes assume. pyCELP will automatically search for the Chianti atomic database path using the default environment variable XUVTOP.
 
 ### Conda environment
 
