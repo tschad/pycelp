@@ -19,6 +19,8 @@ pyCELP is used to forward synthesize the polarized emission of ionized atoms for
 
 A read-only Enhanced PDF version of Schad & Dima 2020 is available via this [link](https://rdcu.be/b5J2X).
 
+A read-only Enhanced PDF version of Schad & Dima 2021, regarding symmetry-breaking effects, is available via this [link](https://rdcu.be/cBp1o).
+
 The original code developed by [Schad & Dima 2020](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract) (previously referred to as pyCLE) was a Fortran based code wrapped in python.  pyCELP is a completely new implementation coded entirely in Python.  It takes advantage of specific algorithm changes, numba jit compilers, and efficient numpy linear algebra packages to provide excellent speed performance that in most cases exceeds the earlier code.  More information pertaining to numba is below.
 
 ## Citing pyCLEP
