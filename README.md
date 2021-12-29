@@ -23,9 +23,11 @@ A read-only Enhanced PDF version of Schad & Dima 2021, regarding symmetry-breaki
 
 The original code developed by [Schad & Dima 2020](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract) (previously referred to as pyCLE) was a Fortran based code wrapped in python.  pyCELP is a completely new implementation coded entirely in Python.  It takes advantage of specific algorithm changes, numba jit compilers, and efficient numpy linear algebra packages to provide excellent speed performance that in most cases exceeds the earlier code.  More information pertaining to numba is below.
 
-## Citing pyCLEP
+## Citing pyCELP
 
-If you use pyCLEP, please reference [Schad & Dima (2020)](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract).  Further references for the polarized theory include [Casini & Judge (1999)](https://ui.adsabs.harvard.edu/abs/1999ApJ...522..524C/abstract) and [Landi Degl’innocenti &
+If you use pyCELP, please reference [Schad & Dima (2020)](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract). pyCELP is listed on the [Astrophysics Source Code Library (ASCL)](https://ascl.net/) registry and its bibcode can be found on [NASA/ADS](https://ui.adsabs.harvard.edu/abs/2021ascl.soft12001S/abstract).
+
+Further references for the polarized theory include [Casini & Judge (1999)](https://ui.adsabs.harvard.edu/abs/1999ApJ...522..524C/abstract) and [Landi Degl’innocenti &
 Landolfi (2004)](https://link.springer.com/book/10.1007/1-4020-2415-0).
 
 ## Install
