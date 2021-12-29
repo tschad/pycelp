@@ -25,7 +25,7 @@ The original code developed by [Schad & Dima 2020](https://ui.adsabs.harvard.edu
 
 ## Citing pyCELP
 
-If you use pyCELP, please reference [Schad & Dima (2020)](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract). pyCELP is listed on the [Astrophysics Source Code Library (ASCL)](https://ascl.net/) registry and its bibcode can be found on [NASA/ADS](https://ui.adsabs.harvard.edu/abs/2021ascl.soft12001S/abstract).
+If you use pyCELP, please reference [Schad & Dima (2020)](https://ui.adsabs.harvard.edu/abs/2020SoPh..295...98S/abstract). pyCELP is listed on the [Astrophysics Source Code Library (ASCL)](https://ascl.net/2112.001) registry and its bibcode can be found on [NASA/ADS](https://ui.adsabs.harvard.edu/abs/2021ascl.soft12001S/abstract).
 
 Further references for the polarized theory include [Casini & Judge (1999)](https://ui.adsabs.harvard.edu/abs/1999ApJ...522..524C/abstract) and [Landi Degl’innocenti &
 Landolfi (2004)](https://link.springer.com/book/10.1007/1-4020-2415-0).
