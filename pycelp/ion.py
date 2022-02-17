@@ -592,3 +592,37 @@ class Ion:
             wvair = np.round(self.wv_air[ln],3)
             upplev,lowlev = self.rupplev[ln],self.rlowlev[ln]
             print(ln, wv,wvair, self.elvl_data['full_level'][upplev], ' --> ', self.elvl_data['full_level'][lowlev])
+
+    def energy_levels_to_dataframe(self): 
+        
+        try: 
+            import pandas as pd
+        except: 
+            print(' To print Energy Level Information using dataframe requires pandas package to be installed')
+            
+        energy_units = self.elvl_data['energy_units']
+        
+        d = {'Index'         : self.elvl_data['index'], 
+             'Ion_name'      : np.repeat(self.ion_name,self.nlevels),
+             'Ion_z'         : np.repeat(self.elvl_data['ion_z'],self.nlevels),
+             'Configuration' : self.elvl_data['conf'], 
+             'Conf Index'    : self.elvl_data['conf_index'],
+             'Term'          : self.elvl_data['term'], 
+             'Level'         : self.elvl_data['level'], 
+             'Full Level'    : self.elvl_data['full_level'],
+             'Label'         : self.elvl_data['label'],
+             'Spin Multiplicity'  : self.elvl_data['mult'],
+             'S'      : self.elvl_data['s'],
+             'L'      : self.elvl_data['l'],
+             'L Symbol' : self.elvl_data['l_sym'],
+             'J'      : self.elvl_data['j'],
+             'Parity' : self.elvl_data['parity'],
+             'Parity Str' : self.elvl_data['parity_str'],
+             'Stat. Weight'  : self.elvl_data['weight'],
+             'Obs Energy [' + energy_units + ']' : self.elvl_data['obs_energy'],
+             'Theory Energy [' + energy_units + ']' : self.elvl_data['theory_energy'],
+             'Energy [' + energy_units + ']' : self.elvl_data['energy']}
+ 
+        df = pd.DataFrame(data=d)
+    
+        return df 
