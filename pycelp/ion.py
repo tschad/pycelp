@@ -136,6 +136,7 @@ class Ion:
         ########################
         self.nlevels = nlevels
         self.elvl_data    = elvl_data
+        self.landeg       = landeg
         self.wgfa_data    = wgfa_data
         self.scups_data   = scups_data
         self.splups_data  = splups_data
