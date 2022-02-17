@@ -532,8 +532,9 @@ class Ion:
         return self.qnj[upplev]
 
     def calc_Iemiss(self,wv_air,thetaBLOS = np.rad2deg(np.arccos(1./np.sqrt(3.))) ):
-        """ returns the intensity emission coefficent for a selected transition
-        return units are photons
+        """ returns the line-integrated intensity emission coefficent for a selected transition
+        
+        return units are photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$
 
         Parameters
         ----------
@@ -556,19 +557,101 @@ class Ion:
         sigma = self.get_upper_level_alignment(wv_air)
         thetaBLOS = np.deg2rad(thetaBLOS)
 
+        EinsteinA = self.a_up2low[ww]  ## Transition probability 
+        Jupp = self.qnj[upplev]     ## Upper level angular momentum 
+        upper_lev_rho00 = self.rho[upplev,0] ## Get the Q=0,K=0 atomic density matrix element in the reduced statistical tensor of upper level
+        upper_lev_pop_frac =  np.sqrt(2.*Jupp+1)*upper_lev_rho00  ## Calculate population in standard representation 
+        total_ion_population = self.totn        
+
         hh = 6.626176e-27  ## ergs sec (planck's constant);
         cc = 2.99792458e10 ## cm s^-1 (speed of light)
         hnu = hh*cc / (self.alamb[ww]/1.e8)
-        Ju = self.qnj[upplev]
 
-        ## convert units to
+        ## calculate line-integrated emission coefficient 
+        C_coeff = hnu/4./np.pi * EinsteinA * upper_lev_pop_frac * total_ion_population
+        epsI = C_coeff * (1. + 3./(2.*np.sqrt(2.)) * (np.cos(thetaBLOS)**2 - (1./3.)  )   )
+        
+        ## unit conversion 
         sr2arcsec = (180./np.pi)**2.*3600.**2.
         phergs = hh*(3.e8)/(self.alamb[ww] * 1.e-10)
-        val = hnu/4./np.pi*self.a_up2low[ww] * np.sqrt(2.*Ju+1)*self.rho[upplev,0] * self.totn
-        val = val * (1. + 3./(2.*np.sqrt(2.)) * (np.cos(thetaBLOS)**2 - (1./3.)  )   )
-        val = val/sr2arcsec/phergs
+        epsI = epsI/sr2arcsec/phergs
 
-        return val
+        return epsI
+        
+    def calc_PolEmissCoeff(self,wv_air,magnetic_field_amplitude,thetaBLOS,azimuthBLOS=0.): 
+        """ returns the polarized emission coefficent for a selected transition
+        
+        return units: 
+        I,Q,U :: photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$
+        V     ::  photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$ Angstrom^{-1}
+
+        Parameters
+        ----------
+        wv_air : float (unit: angstroms)
+            Air wavelength of spectral line
+        magnetic_field_amplitude: float (unit: gauss)
+            Total magnitude of the magnetic field 
+        thetaBLOS : float (unit: degrees)
+            inclination angle of the magnetic field relative to the line of sight
+        azimuthBLOS : float (unit: degrees) [default = 0] 
+            azimuth angle of magnetic field relative to coordinate frame aligned with 
+            the line-of-sight projected magnetic field orientation. 
+        """
+        
+        ww = np.argmin(np.abs(self.wv_air - wv_air))
+
+        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
+            print(' warning: requested wavelength for calculation does have a good match')
+            print(' requested: ', wv_air)
+            print(' closest:   ', self.wv_air[ww])
+            raise
+            
+        ## convert to radians 
+        thetaBLOS = np.deg2rad(thetaBLOS) 
+        azimuthBLOS = np.deg2rad(azimuthBLOS)
+            
+        ## get transition and level population information 
+        EinsteinA = self.a_up2low[ww]  ## Transition probability 
+        Dcoeff = self.Dcoeff[ww]     ## Atomic parameters D and E for the line
+        Ecoeff = self.Ecoeff[ww]   ## Atomic parameters D and E for the line 
+        geff = self.landeg[ww]    ## get Lande geff in LS coupline 
+        upplev = self.rupplev[ww]   ## index of radiative transition upper level 
+        Jupp = self.qnj[upplev]     ## Upper level angular momentum 
+        upper_lev_rho00 = self.rho[upplev,0] ## Get the Q=0,K=0 atomic density matrix element in the reduced statistical tensor of upper level
+        upper_lev_pop_frac =  np.sqrt(2.*Jupp+1)*upper_lev_rho00  ## Calculate population in standard representation 
+        upper_lev_alignment = self.rho[upplev,2] / self.rho[upplev,0]          ## Get the alignment value 
+        total_ion_population = self.totn        
+        ALARMOR = 1399612.2*magnetic_field_amplitude         ## Get Larmor frequency in units of s^-1 
+
+        ## scaling coefficent for the Stokes V emission coefficient 
+        wv_vac_cm = self.alamb[ww] * 1.e-8 
+        hh = 6.626176e-27  ## ergs sec (planck's constant);
+        cc = 2.99792458e10 ## cm s^-1 (speed of light)
+        Vscl = - (wv_vac_cm)**2   / cc  * 1.e8  ## units of Angstrom 
+        hnu = hh*cc / (self.alamb[ww]/1.e8)
+        
+        ## Common coefficent related to populations        
+        C_coeff = hnu/4./np.pi * EinsteinA * upper_lev_pop_frac * total_ion_population
+        epsI = C_coeff * (1. + 3./(2.*np.sqrt(2.)) * (np.cos(thetaBLOS)**2 - (1./3.)  )   )
+        epsQ = C_coeff*(3./(2.*np.sqrt(2.)))*(np.sin(thetaBLOS)**2)*Dcoeff*upper_lev_alignment
+        epsU = 0
+        epsV = C_coeff*np.cos(thetaBLOS)*ALARMOR*Vscl*(geff + Ecoeff*upper_lev_alignment)
+
+        ## rotate for the azimuthal direction 
+        epsQr =  np.cos(2.*azimuthBLOS)*epsQ+ np.sin(2.*azimuthBLOS)*epsU
+        epsUr = -np.sin(2.*azimuthBLOS)*epsQ + np.cos(2.*azimuthBLOS)*epsU
+        epsQ = epsQr
+        epsU = epsUr 
+        
+        ## convert to returned units 
+        sr2arcsec = (180./np.pi)**2.*3600.**2.
+        phergs = hh*(3.e8)/(self.alamb[ww] * 1.e-10)
+        epsI = epsI/sr2arcsec/phergs        
+        epsQ = epsQ/sr2arcsec/phergs        
+        epsU = epsU/sr2arcsec/phergs        
+        epsV = epsV/sr2arcsec/phergs        
+        
+        return epsI, epsQ, epsU, epsV 
         
     def show_lines(self,nlines=None,start=0):
         """ prints out information for the radiative transitions
