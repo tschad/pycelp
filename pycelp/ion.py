@@ -119,7 +119,8 @@ class Ion:
         gupp,glow = landeg[rupplev],landeg[rlowlev]
         Dcoeff = util.getDcoeff(Jupp,Jlow)
         Ecoeff = util.getEcoeff(Jupp,Jlow,gupp,glow)
-
+        geff = 0.5*(glow+gupp) + 0.25 * (glow-gupp) * (Jlow*(Jlow+1.) - Jupp*(Jupp+1.))
+        
         ## --> Non-dipoles
         print(' setting up non-dipole radiative rate factors')
         tnD,tnD_indx,nonD_spon= setup_nonDipoles(rlowlev,rupplev,qnj,b_low2up,a_up2low,
@@ -182,6 +183,7 @@ class Ion:
         self.rupplev    = rupplev
         self.Dcoeff     = Dcoeff
         self.Ecoeff     = Ecoeff
+        self.geff       = geff
         self.alamb      = alamb
         self.wv_air     = wv_air
         self.a_up2low   = a_up2low
@@ -617,6 +619,7 @@ class Ion:
              'L'      : self.elvl_data['l'],
              'L Symbol' : self.elvl_data['l_sym'],
              'J'      : self.elvl_data['j'],
+             'Lande g' : self.landeg,
              'Parity' : self.elvl_data['parity'],
              'Parity Str' : self.elvl_data['parity_str'],
              'Stat. Weight'  : self.elvl_data['weight'],
