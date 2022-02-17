@@ -569,7 +569,7 @@ class Ion:
         val = val/sr2arcsec/phergs
 
         return val
-
+        
     def show_lines(self,nlines=None,start=0):
         """ prints out information for the radiative transitions
 
@@ -597,27 +597,27 @@ class Ion:
             print(ln, wv,wvair, self.elvl_data['full_level'][upplev], ' --> ', self.elvl_data['full_level'][lowlev])
 
     def energy_levels_to_dataframe(self): 
+        """ Converts Chianti Energy Level information to a Pandas dataframe """
         
         try: 
             import pandas as pd
         except: 
-            print(' To print Energy Level Information using dataframe requires pandas package to be installed')
+            print(' To convert Energy Level Information to dataframe requires pandas package to be installed')
             
         energy_units = self.elvl_data['energy_units']
         
-        d = {'Index'         : self.elvl_data['index'], 
-             'Ion_name'      : np.repeat(self.ion_name,self.nlevels),
-             'Ion_z'         : np.repeat(self.elvl_data['ion_z'],self.nlevels),
-             'Configuration' : self.elvl_data['conf'], 
-             'Conf Index'    : self.elvl_data['conf_index'],
-             'Term'          : self.elvl_data['term'], 
-             'Level'         : self.elvl_data['level'], 
-             'Full Level'    : self.elvl_data['full_level'],
-             'Label'         : self.elvl_data['label'],
-             'Spin Multiplicity'  : self.elvl_data['mult'],
-             'S'      : self.elvl_data['s'],
-             'L'      : self.elvl_data['l'],
-             'L Symbol' : self.elvl_data['l_sym'],
+        d = {'Index'      : self.elvl_data['index'], 
+             'Ion_name'   : np.repeat(self.ion_name,self.nlevels),
+             'Ion_z'      : np.repeat(self.elvl_data['ion_z'],self.nlevels),
+             'Config'     : self.elvl_data['conf'], 
+             'Conf Idx' : self.elvl_data['conf_index'],
+             'Term'       : self.elvl_data['term'], 
+             'Level'      : self.elvl_data['level'], 
+             'Full Level' : self.elvl_data['full_level'],
+             'Spin Mult'  : self.elvl_data['mult'],
+             'S'       : self.elvl_data['s'],
+             'L'       : self.elvl_data['l'],
+             'Orbital' : self.elvl_data['l_sym'],
              'J'      : self.elvl_data['j'],
              'Lande g' : self.landeg,
              'Parity' : self.elvl_data['parity'],
@@ -630,3 +630,28 @@ class Ion:
         df = pd.DataFrame(data=d)
     
         return df 
+    
+    
+    def rad_transitions_to_dataframe(self): 
+        """ Converts Radiative Transition information to a Pandas dataframe """
+        
+        try: 
+            import pandas as pd
+        except: 
+            print(' To convert Radiative Transition Information to dataframe requires pandas package to be installed')
+            
+        d = {'Lambda Vac [A]' : self.alamb,
+             'Lambda Air [A]' : self.wv_air,
+             'UppLev Idx'     : self.rupplev +1,
+             'LowLev Idx'     : self.rlowlev +1,
+             'Upper Level'    : self.elvl_data['full_level'][self.rupplev],
+             'Lower Level'    : self.elvl_data['full_level'][self.rlowlev],
+             'geff [LS]'      : self.geff, 
+             'D coeff'        : self.Dcoeff,
+             'E coeff'        : self.Ecoeff,
+             'Einstein A'     : self.a_up2low} 
+        
+        df = pd.DataFrame(data=d)
+        
+        return df
+    
