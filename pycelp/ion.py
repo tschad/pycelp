@@ -484,6 +484,17 @@ class Ion:
         
         return df
     
+    
+    def get_transitionIndex(self,wv_air): 
+        ww = np.argmin(np.abs(self.wv_air - wv_air))
+
+        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
+            print(' warning: requested wavelength for calculation does have a good match')
+            print(' requested: ', wv_air)
+            print(' closest:   ', self.wv_air[ww])
+            raise
+        return ww 
+
 
     def get_lower_level_alignment(self,wv_air):
         """ Returns the atomic alignment for the lower level of given transition
@@ -493,17 +504,9 @@ class Ion:
         wv_air : float (unit: angstroms)
             Air wavelength of spectral line
         """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
+        ww = self.get_transitionIndex(wv_air) 
         lowlev = self.rlowlev[ww]
-        alignment = self.rho[lowlev,2] / self.rho[lowlev,0]
-        return alignment
+        return self.rho[lowlev,2] / self.rho[lowlev,0]
 
     def get_upper_level_alignment(self,wv_air):
         """ Returns the atomic alignment for the upper level of given transition
@@ -513,17 +516,9 @@ class Ion:
         wv_air : float (unit: angstroms)
             Air wavelength of spectral line
         """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
+        ww = self.get_transitionIndex(wv_air) 
         upplev = self.rupplev[ww]
-        alignment = self.rho[upplev,2] / self.rho[upplev,0]
-        return alignment
+        return self.rho[upplev,2] / self.rho[upplev,0]
 
     def get_upper_level_rho00(self,wv_air):
         """ Returns rho(Q=0,K=0) for the upper level of given transition
@@ -533,17 +528,9 @@ class Ion:
         wv_air : float (unit: angstroms)
             Air wavelength of spectral line
         """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
+        ww = self.get_transitionIndex(wv_air) 
         upplev = self.rupplev[ww]
-        rho00 = self.rho[upplev,0]
-        return rho00
+        return self.rho[upplev,0]
 
     def get_wvAirTrue(self,wv_air):
         """ Returns the database value for the wavelength 
@@ -553,16 +540,8 @@ class Ion:
         wv_air : float (unit: angstroms)
             Air wavelength of spectral line (approximate - only needs to be close) 
         """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
+        ww = self.get_transitionIndex(wv_air) 
         return self.wv_air[ww]
-    
     
     def get_wvVacTrue(self,wv_air):
         """ Returns the database value for the wavelength in vacuum
@@ -572,14 +551,7 @@ class Ion:
         wv_air : float (unit: angstroms)
             Air wavelength of spectral line (approximate - only needs to be close) 
         """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
+        ww = self.get_transitionIndex(wv_air) 
         return self.alamb[ww]
     
     def get_geff(self,wv_air): 
@@ -590,14 +562,7 @@ class Ion:
         wv_air : float (unit: angstroms)
             Air wavelength of spectral line (approximate - only needs to be close) 
         """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
+        ww = self.get_transitionIndex(wv_air) 
         return self.geff[ww]    ## get Lande geff in LS coupline    
     
     def get_EinsteinA(self,wv_air):
@@ -608,14 +573,7 @@ class Ion:
         wv_air : float (unit: angstroms)
             Air wavelength of spectral line
         """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
+        ww = self.get_transitionIndex(wv_air) 
         return self.a_up2low[ww]
 
     def get_Dcoeff(self,wv_air):
@@ -626,14 +584,7 @@ class Ion:
         wv_air : float (unit: angstroms)
             Air wavelength of spectral line
         """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
+        ww = self.get_transitionIndex(wv_air) 
         return self.Dcoeff[ww]
 
     def get_Ecoeff(self,wv_air):
@@ -645,14 +596,7 @@ class Ion:
         wv_air : float (unit: angstroms)
             Air wavelength of spectral line
         """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
+        ww = self.get_transitionIndex(wv_air) 
         return self.Ecoeff[ww]
 
     def get_Jupp(self, wv_air):
@@ -664,14 +608,7 @@ class Ion:
         wv_air : float (unit: angstroms)
             Air wavelength of spectral line
         """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
+        ww = self.get_transitionIndex(wv_air) 
         upplev = self.rupplev[ww]
         return self.qnj[upplev]
         
@@ -694,15 +631,8 @@ class Ion:
             azimuth angle of magnetic field relative to coordinate frame aligned with 
             the line-of-sight projected magnetic field orientation. 
         """
-        
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-            
+        ww = self.get_transitionIndex(wv_air) 
+    
         ## convert to radians 
         thetaBLOS = np.deg2rad(thetaBLOS) 
         azimuthBLOS = np.deg2rad(azimuthBLOS)
@@ -717,7 +647,6 @@ class Ion:
         upper_lev_rho00 = self.rho[upplev,0] ## Get the Q=0,K=0 atomic density matrix element (stat. tensor)
         upper_lev_pop_frac =  np.sqrt(2.*Jupp+1)*upper_lev_rho00  ## Calculate population in standard representation 
         upper_lev_alignment = self.rho[upplev,2] / self.rho[upplev,0]  ## Calculate the alignment value 
-        print(' upper_lev aligment: ',upper_lev_alignment)
         total_ion_population = self.totn        
         ALARMOR = 1399612.2*magnetic_field_amplitude    ## Get Larmor frequency in units of s^-1 
 
@@ -804,16 +733,8 @@ class Ion:
             The sampling resolution of the wavelength vector given as the ratio of the wavelength to the sampling. 
             
         """
-        
-        ## Get wavelength as in the database
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
         ## replace requested wavelength with database value 
+        ww = self.get_transitionIndex(wv_air) 
         wv_air = self.wv_air[ww]
    
         ## Get polarized emission coefficients 
