@@ -9,7 +9,7 @@ cc = 2.99792458e10 ## cm s^-1 (speed of light)
 
 class emissionLine:
     
-    def __init__(self,Ion,wv_air):   
+    def __init__(self,Ion,wv_air):  
         
         ww = np.argmin(np.abs(Ion.wv_air - wv_air))
 
@@ -19,6 +19,7 @@ class emissionLine:
             print(' closest:   ', Ion.wv_air[ww])
             raise
           
+        self.ion_name = Ion.ion_name
         self.transitionIndex = ww
         self.wavelength_in_air = Ion.wv_air[ww]
         self.wavelength_in_vacuum = Ion.alamb[ww]
@@ -34,11 +35,14 @@ class emissionLine:
         self.Jupp = Ion.qnj[self.upper_level_index]
         self.total_ion_population = Ion.totn
         self.upper_level_pop_frac =  np.sqrt(2.*self.Jupp+1)*self.upper_level_rho00  ## Calculate population in standard representation 
-                
+        self.atomic_weight = Ion.atomicWeight 
+        ## add temperatures, etc. 
+        
     def __repr__(self):
          return f"""pyCELP emissionLine class
     ---------------------
-    Transition Index: {self.transitionIndex}
+    Ion Name:           {self.ion_name}
+    Transition Index:   {self.transitionIndex}
     Wavelength in Air [Angstrom]: {self.wavelength_in_air}
     Wavelength in Vacuum [Angstrom]: {self.wavelength_in_vacuum}
     Lower Level Alignment: {self.lower_level_alignment}
@@ -63,7 +67,7 @@ class emissionLine:
         """
     
         ## convert to radians 
-        thetaBLOS = np.deg2rad(thetaBLOS) 
+        thetaBLOS = np.deg2rad(thetaBLOSdeg) 
         azimuthBLOS = np.deg2rad(azimuthBLOSdeg)
         ALARMOR = 1399612.2*magnetic_field_amplitude    ## Get Larmor frequency in units of s^-1 
 
@@ -111,9 +115,10 @@ class emissionLine:
         """
         magnetic_field_amplitude = 0.
         epsI, epsQ, epsU, epsV = self.calc_PolEmissCoeff(magnetic_field_amplitude,thetaBLOSdeg)
-        return epsI
+        epsI_units = r'photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$'
+        return epsI,epsI_units
 
-    def calc_stokesSpec(self,wv_air,magnetic_field_amplitude,thetaBLOS,
+    def calc_stokesSpec(self,magnetic_field_amplitude,thetaBLOS,
                        azimuthBLOS=0., 
                        doppler_velocity = 0.,
                        non_thermal_turb_velocity = 0.,

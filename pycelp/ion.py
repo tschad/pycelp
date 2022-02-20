@@ -7,6 +7,7 @@ from pycelp.chianti import *
 from pycelp.collisions import *
 from pycelp.non_dipoles import *
 from pycelp.dipoles import *
+from pycelp.emissionLine import * 
 import pycelp.util as util
 
 class Ion:
@@ -398,7 +399,6 @@ class Ion:
             radmat_std[n,:] = DD[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
         return radmat_std
     
-    
     def show_lines(self,nlines=None,start=0):
         """ prints out information for the radiative transitions
 
@@ -456,9 +456,7 @@ class Ion:
              'Theory Energy [' + energy_units + ']' : self.elvl_data['theory_energy'],
              'Energy [' + energy_units + ']' : self.elvl_data['energy']}
  
-        df = pd.DataFrame(data=d)
-    
-        return df 
+        return pd.DataFrame(data=d)
     
     
     def rad_transitions_to_dataframe(self): 
@@ -480,296 +478,15 @@ class Ion:
              'E coeff'        : self.Ecoeff,
              'Einstein A'     : self.a_up2low} 
         
-        df = pd.DataFrame(data=d)
-        
-        return df
+        return pd.DataFrame(data=d)
     
-    
-    def get_transitionIndex(self,wv_air): 
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-        return ww 
-
-
-    def get_lower_level_alignment(self,wv_air):
-        """ Returns the atomic alignment for the lower level of given transition
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = self.get_transitionIndex(wv_air) 
-        lowlev = self.rlowlev[ww]
-        return self.rho[lowlev,2] / self.rho[lowlev,0]
-
-    def get_upper_level_alignment(self,wv_air):
-        """ Returns the atomic alignment for the upper level of given transition
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = self.get_transitionIndex(wv_air) 
-        upplev = self.rupplev[ww]
-        return self.rho[upplev,2] / self.rho[upplev,0]
-
-    def get_upper_level_rho00(self,wv_air):
-        """ Returns rho(Q=0,K=0) for the upper level of given transition
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = self.get_transitionIndex(wv_air) 
-        upplev = self.rupplev[ww]
-        return self.rho[upplev,0]
-
-    def get_wvAirTrue(self,wv_air):
-        """ Returns the database value for the wavelength 
+    def get_emissionLine(self,wv_air): 
+        """ Returns an instance of the emissionLine class that contains all information needed to synthesize the line 
         
         Parameters
         ----------
         wv_air : float (unit: angstroms)
             Air wavelength of spectral line (approximate - only needs to be close) 
         """
-        ww = self.get_transitionIndex(wv_air) 
-        return self.wv_air[ww]
-    
-    def get_wvVacTrue(self,wv_air):
-        """ Returns the database value for the wavelength in vacuum
-        
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line (approximate - only needs to be close) 
-        """
-        ww = self.get_transitionIndex(wv_air) 
-        return self.alamb[ww]
-    
-    def get_geff(self,wv_air): 
-        """ Returns the effective lande factor (geff) for the transition
-        
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line (approximate - only needs to be close) 
-        """
-        ww = self.get_transitionIndex(wv_air) 
-        return self.geff[ww]    ## get Lande geff in LS coupline    
-    
-    def get_EinsteinA(self,wv_air):
-        """ Returns the Einstein A for a selected transition
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = self.get_transitionIndex(wv_air) 
-        return self.a_up2low[ww]
-
-    def get_Dcoeff(self,wv_air):
-        """ Returns the D coefficent for a selected transition
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = self.get_transitionIndex(wv_air) 
-        return self.Dcoeff[ww]
-
-    def get_Ecoeff(self,wv_air):
-        """ Returns the E coefficent for a selected transition
-
-        Parameters
-        ----------
-
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = self.get_transitionIndex(wv_air) 
-        return self.Ecoeff[ww]
-
-    def get_Jupp(self, wv_air):
-        """ Returns the E coefficent for a selected transition
-
-        Parameters
-        ----------
-
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = self.get_transitionIndex(wv_air) 
-        upplev = self.rupplev[ww]
-        return self.qnj[upplev]
-        
-    def calc_PolEmissCoeff(self,wv_air,magnetic_field_amplitude,thetaBLOS,azimuthBLOS=0.): 
-        """ returns the polarized emission coefficent for a selected transition
-        
-        return units: 
-        I,Q,U :: photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$
-        V     ::  photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$ Angstrom^{-1}
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        magnetic_field_amplitude: float (unit: gauss)
-            Total magnitude of the magnetic field 
-        thetaBLOS : float (unit: degrees)
-            inclination angle of the magnetic field relative to the line of sight
-        azimuthBLOS : float (unit: degrees) [default = 0] 
-            azimuth angle of magnetic field relative to coordinate frame aligned with 
-            the line-of-sight projected magnetic field orientation. 
-        """
-        ww = self.get_transitionIndex(wv_air) 
-    
-        ## convert to radians 
-        thetaBLOS = np.deg2rad(thetaBLOS) 
-        azimuthBLOS = np.deg2rad(azimuthBLOS)
-            
-        ## get transition and level population information 
-        EinsteinA = self.a_up2low[ww]  ## Transition probability 
-        Dcoeff = self.Dcoeff[ww]     ## Atomic parameters D and E for the line
-        Ecoeff = self.Ecoeff[ww]   ## Atomic parameters D and E for the line 
-        geff = self.geff[ww]    ## get Lande geff in LS coupline 
-        upplev = self.rupplev[ww]   ## index of radiative transition upper level 
-        Jupp = self.qnj[upplev]     ## Upper level angular momentum 
-        upper_lev_rho00 = self.rho[upplev,0] ## Get the Q=0,K=0 atomic density matrix element (stat. tensor)
-        upper_lev_pop_frac =  np.sqrt(2.*Jupp+1)*upper_lev_rho00  ## Calculate population in standard representation 
-        upper_lev_alignment = self.rho[upplev,2] / self.rho[upplev,0]  ## Calculate the alignment value 
-        total_ion_population = self.totn        
-        ALARMOR = 1399612.2*magnetic_field_amplitude    ## Get Larmor frequency in units of s^-1 
-
-        ## scaling coefficent for the Stokes V emission coefficient 
-        wv_vac_cm = self.alamb[ww] * 1.e-8 
-        hh = 6.626176e-27  ## ergs sec (planck's constant);
-        cc = 2.99792458e10 ## cm s^-1 (speed of light)
-        Vscl = - (wv_vac_cm)**2   / cc  * 1.e8  ## units of Angstrom * s 
-        hnu = hh*cc / (self.alamb[ww]/1.e8)
-        
-        ## Common coefficent related to populations        
-        C_coeff = hnu/4./np.pi * EinsteinA * upper_lev_pop_frac * total_ion_population
-        epsI = C_coeff * (1. + 3./(2.*np.sqrt(2.)) * Dcoeff * upper_lev_alignment* (np.cos(thetaBLOS)**2 - (1./3.)  )   )
-        epsQ = C_coeff*(3./(2.*np.sqrt(2.)))*(np.sin(thetaBLOS)**2)*Dcoeff*upper_lev_alignment
-        epsU = 0
-        epsV = Vscl * C_coeff*np.cos(thetaBLOS)*ALARMOR*(geff + Ecoeff*upper_lev_alignment)
-
-        ## rotate for the azimuthal direction 
-        epsQr =  np.cos(2.*azimuthBLOS)*epsQ+ np.sin(2.*azimuthBLOS)*epsU
-        epsUr = -np.sin(2.*azimuthBLOS)*epsQ + np.cos(2.*azimuthBLOS)*epsU
-        epsQ = epsQr
-        epsU = epsUr 
-        
-        ## convert to returned units 
-        sr2arcsec = (180./np.pi)**2.*3600.**2.
-        phergs = hh*(3.e8)/(self.alamb[ww] * 1.e-10)
-        epsI = epsI/sr2arcsec/phergs        
-        epsQ = epsQ/sr2arcsec/phergs        
-        epsU = epsU/sr2arcsec/phergs        
-        epsV = epsV/sr2arcsec/phergs        
-        
-        return epsI, epsQ, epsU, epsV 
-    
-    def calc_Iemiss(self,wv_air,thetaBLOS = np.rad2deg(np.arccos(1./np.sqrt(3.))) ):
-        """ returns the line-integrated intensity emission coefficent for a selected transition
-        
-        return units are photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        thetaBLOS : float (unit: degrees)
-            inclination angle of the magnetic field relative to the line of sight
-            default is van vleck
-        """
-        magnetic_field_amplitude =0.
-        epsI, epsQ, epsU, epsV = self.calc_PolEmissCoeff(wv_air,magnetic_field_amplitude,thetaBLOS)
-        return epsI
-
-    def calc_stokesSpec(self,wv_air,magnetic_field_amplitude,thetaBLOS,
-                       azimuthBLOS=0., 
-                       doppler_velocity = 0.,
-                       non_thermal_turb_velocity = 0.,
-                       doppler_spectral_range = (-120,120),
-                       specRes_wv_over_dwv = 100000):        
-        
-        """ calculate Stokes spectra after the statistical equilibrium has been solved 
-        
-        Assumes current electron temperature dictates the thermal line width. 
-        
-        return units: 
-        I,Q,U ::  photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2} Angstrom^{-1}$
-        V     ::  photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2} Angstrom^{-1}$ 
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Rest air wavelength of spectral line (needs to be close to database value)
-        magnetic_field_amplitude: float (unit: gauss)
-            Total magnitude of the magnetic field 
-        thetaBLOS : float (unit: degrees)
-            inclination angle of the magnetic field relative to the line of sight
-        azimuthBLOS : float (unit: degrees) [default = 0] 
-            azimuth angle of magnetic field relative to coordinate frame aligned with 
-            the line-of-sight projected magnetic field orientation. 
-        doppler_velocity : float (unit: km/s)
-            Doppler velocity of the spectral line 
-        non_thermal_turb_velocity  : float (unit: km/s) 
-            Non-thermal velocity convolved with the thermal component of the line width 
-        doppler_spectral_range : float 2-tuple (unit : km/2) 
-            Range of the spectrum calculated in Doppler velocity space relative to the line rest wavelength
-        specRes_wv_over_dwv: float (unitless) 
-            The sampling resolution of the wavelength vector given as the ratio of the wavelength to the sampling. 
-            
-        """
-        ## replace requested wavelength with database value 
-        ww = self.get_transitionIndex(wv_air) 
-        wv_air = self.wv_air[ww]
-   
-        ## Get polarized emission coefficients 
-        epsI, epsQ, epsU, epsV = self.calc_PolEmissCoeff(wv_air, magnetic_field_amplitude,  thetaBLOS, azimuthBLOS)
-        
-        ## setup wavelength vector 
-        assert doppler_spectral_range[1]>doppler_spectral_range[0]
-        dVel = 3e5 / specRes_wv_over_dwv
-        nwv = np.ceil((doppler_spectral_range[1] - doppler_spectral_range[0]) / dVel).astype(int)
-        velvec = np.linspace(*doppler_spectral_range,nwv)  ##;; velocity range used for the spectral axis
-        wvvec = (wv_air*1.e-10)*(1. + velvec/3.e5)  ## in units of meters at this point 
-
-        ## Calculate Gaussian Line Width        
-        awgt = self.atomicWeight 
-        M = (awgt*1.6605655e-24)/1000.   ## kilogram
-        kb = 1.380648e-23  ## J K^-1 [ = kg m^2 s^-2 K^-1]
-        etemp = self.etemp 
-        turbv = non_thermal_turb_velocity
-        sig = (1./np.sqrt(2.))*(wv_air*1.e-10/3.e8)*np.sqrt(2.*kb*etemp/M + (turbv*1000.)**2.)
-
-        ## calculate line center position 
-        wv0 = (wv_air*1.e-10) + (doppler_velocity/3.e5)*(wv_air*1.e-10)    ## in meters 
-        wv0 = wv0*1.e10     ## convert to Angstrom 
-        sig = sig*1.e10      ## convert to Angstrom 
-        wvvec = wvvec*1.e10  ## convert to Angstrom 
-        
-        ## normalized Gaussian profile
-        wprof  = 1./(np.sqrt(2.*np.pi)*sig) * np.exp(-(wvvec-wv0)**2./(2.*sig**2.))
-        ## normalized Gaussian derivative profiles 
-        wprof_deriv = (- (wvvec-wv0) / sig**2)  * wprof 
-
-        stokes = np.zeros((nwv,4) )
-        stokes[:,0] = epsI*wprof
-        stokes[:,1] = epsQ*wprof
-        stokes[:,2] = epsU*wprof
-        stokes[:,3] = epsV*wprof_deriv
-
-        return wvvec,stokes
+        line = emissionLine(self,wv_air)
+        return line 
