@@ -47,13 +47,20 @@ class Model:
         br = read_interp_psi(self.dir + 'br002.hdf',(lons,lats,rs))
         bt = read_interp_psi(self.dir + 'bt002.hdf',(lons,lats,rs))
         bp = read_interp_psi(self.dir + 'bp002.hdf',(lons,lats,rs))
+        vr = read_interp_psi(self.dir + 'vr002.hdf',(lons,lats,rs))
+        vt = read_interp_psi(self.dir + 'vt002.hdf',(lons,lats,rs))
+        vp = read_interp_psi(self.dir + 'vp002.hdf',(lons,lats,rs))
         ne = read_interp_psi(self.dir + 'rho002.hdf',(lons,lats,rs))
+        
         
         ## convert MAS normalized units into physical units
         temp = temp*(2.807067e7) ##  K
         br = br*2.2068908   ## Gauss
         bt = bt*2.2068908   ## Gauss
         bp = bp*2.2068908   ## Gauss
+        vr = vr*481.3711   ## km/s
+        vt = vt*481.3711   ## km/s
+        vp = vp*481.3711   ## km/s
         ne = ne*1.e8        ## cm^-3
 
         ##spherical coordinates and cartesian coordinates
@@ -66,6 +73,11 @@ class Model:
         bx = br*np.sin(theta3d)*np.cos(phi3d) + bt*np.cos(theta3d)*np.cos(phi3d) - bp*np.sin(phi3d)
         by = br*np.sin(theta3d)*np.sin(phi3d) + bt*np.cos(theta3d)*np.sin(phi3d) + bp*np.cos(phi3d)
         bz = br*np.cos(theta3d)               - bt*np.sin(theta3d)
+        
+        ## cartestian vectors of the velocity field 
+        vx = vr*np.sin(theta3d)*np.cos(phi3d) + vt*np.cos(theta3d)*np.cos(phi3d) - vp*np.sin(phi3d)
+        vy = vr*np.sin(theta3d)*np.sin(phi3d) + vt*np.cos(theta3d)*np.sin(phi3d) + vp*np.cos(phi3d)
+        vz = vr*np.cos(theta3d)               - vt*np.sin(theta3d)
 
         ## get inclinations in local solar reference frame
         ## using dot product between local radial and the magnetic field
@@ -95,6 +107,16 @@ class Model:
         self.bx   = bx
         self.by   = by
         self.bz   = bz
+        
+        ## spherical velocity field components
+        self.vr   = vr
+        self.vt   = vt
+        self.vp   = vp
+        
+        ## cartesian velocity field components
+        self.vx   = vx
+        self.vy   = vy
+        self.vz   = vz
 
         ## Field magnitude and local frame inclination angle 
         self.bmag = blen 
@@ -110,11 +132,15 @@ class Model:
     Data shape: {self.temp.shape}
     
     Variables: 
-    lons -- Longitudes
-    lats -- Latitudes
-    rs   -- Radial samples 
-    br,bt,bp  -- Spherical components of magnetic field 
-    bx,by,bz  -- Cartesian components of magnetic field 
-    bmag      -- total magnetic field intensity
-    thetaBlocal -- location inclination of magnetic field in solar frame
+    lons -- Longitudes [rad]
+    lats -- Latitudes [rad]
+    rs   -- Radial samples [solar radii units]
+    temp -- temperature [K]
+    ne -- electron density [cm^-3]
+    br,bt,bp  -- Spherical components of magnetic field [G]
+    bx,by,bz  -- Cartesian components of magnetic field [G]
+    vr,vt,vp  -- Spherical components of velocity field [km/s]
+    vx,vy,vz  -- Cartesian components of velocity field [km/s]
+    bmag      -- total magnetic field intensity [B]
+    thetaBlocal -- location inclination of magnetic field in solar frame [rad]
     """
