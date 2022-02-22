@@ -23,11 +23,13 @@ class emissionLine:
         self.transitionIndex = ww
         self.wavelength_in_air = Ion.wv_air[ww]
         self.wavelength_in_vacuum = Ion.alamb[ww]
-        self.lower_level_index = Ion.rlowlev[ww]        
-        self.lower_level_alignment = Ion.rho[self.lower_level_index,2] / Ion.rho[self.lower_level_index,0]
         self.upper_level_index = Ion.rupplev[ww]
+        self.upper_level_config = Ion.elvl_data['full_level'][self.upper_level_index]
         self.upper_level_alignment = Ion.rho[self.upper_level_index,2] / Ion.rho[self.upper_level_index,0]
         self.upper_level_rho00 = Ion.rho[self.upper_level_index,0]
+        self.lower_level_index = Ion.rlowlev[ww]      
+        self.lower_level_config = Ion.elvl_data['full_level'][self.lower_level_index]    
+        self.lower_level_alignment = Ion.rho[self.lower_level_index,2] / Ion.rho[self.lower_level_index,0]
         self.geff = Ion.geff[ww]  ## get Lande geff in LS coupling
         self.Einstein_A = Ion.a_up2low[ww]
         self.Dcoeff = Ion.Dcoeff[ww]
@@ -35,18 +37,15 @@ class emissionLine:
         self.Jupp = Ion.qnj[self.upper_level_index]
         self.total_ion_population = Ion.totn
         self.upper_level_pop_frac =  np.sqrt(2.*self.Jupp+1)*self.upper_level_rho00  ## Calculate population in standard representation 
-        self.atomic_weight = Ion.atomicWeight 
-        ## add temperatures, etc. 
+        self.atomic_weight = Ion.atomicWeight
+        self.electron_temperature = Ion.etemp 
         
     def __repr__(self):
-         return f"""pyCELP emissionLine class
-    ---------------------
-    Ion Name:           {self.ion_name}
-    Transition Index:   {self.transitionIndex}
-    Wavelength in Air [Angstrom]: {self.wavelength_in_air}
-    Wavelength in Vacuum [Angstrom]: {self.wavelength_in_vacuum}
-    Lower Level Alignment: {self.lower_level_alignment}
-    Upper Level Alignment: {self.upper_level_alignment}"""
+        print("pyCELP emissionLine class instance") 
+        print("----------------------------------")
+        for ky in self.__dict__: 
+            print('   ',ky,'  : ',self.__dict__[ky])
+        return """----------------------------------"""
         
     def calc_PolEmissCoeff(self,magnetic_field_amplitude,thetaBLOSdeg,azimuthBLOSdeg=0.): 
         """ returns the polarized emission coefficent for the emission line
@@ -93,10 +92,10 @@ class emissionLine:
         ## convert to returned units 
         sr2arcsec = (180./np.pi)**2.*3600.**2.
         phergs = hh*(3.e8)/(wv_vac * 1.e-10)
-        epsI = epsI/sr2arcsec/phergs        
-        epsQ = epsQ/sr2arcsec/phergs        
-        epsU = epsU/sr2arcsec/phergs        
-        epsV = epsV/sr2arcsec/phergs        
+        self.epsI = epsI/sr2arcsec/phergs        
+        self.epsQ = epsQ/sr2arcsec/phergs        
+        self.epsU = epsU/sr2arcsec/phergs        
+        self.epsV = epsV/sr2arcsec/phergs        
         
         return epsI, epsQ, epsU, epsV 
     
@@ -118,8 +117,8 @@ class emissionLine:
         epsI_units = r'photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$'
         return epsI,epsI_units
 
-    def calc_stokesSpec(self,magnetic_field_amplitude,thetaBLOS,
-                       azimuthBLOS=0., 
+    def calc_stokesSpec(self,magnetic_field_amplitude,thetaBLOSdeg,
+                       azimuthBLOSdeg=0., 
                        doppler_velocity = 0.,
                        non_thermal_turb_velocity = 0.,
                        doppler_spectral_range = (-120,120),
@@ -154,30 +153,27 @@ class emissionLine:
             The sampling resolution of the wavelength vector given as the ratio of the wavelength to the sampling. 
             
         """
-        ## replace requested wavelength with database value 
-        ww = self.get_transitionIndex(wv_air) 
-        wv_air = self.wv_air[ww]
    
         ## Get polarized emission coefficients 
-        epsI, epsQ, epsU, epsV = self.calc_PolEmissCoeff(wv_air, magnetic_field_amplitude,  thetaBLOS, azimuthBLOS)
+        epsI, epsQ, epsU, epsV = self.calc_PolEmissCoeff(magnetic_field_amplitude,  thetaBLOSdeg, azimuthBLOSdeg)
         
         ## setup wavelength vector 
         assert doppler_spectral_range[1]>doppler_spectral_range[0]
         dVel = 3e5 / specRes_wv_over_dwv
         nwv = np.ceil((doppler_spectral_range[1] - doppler_spectral_range[0]) / dVel).astype(int)
         velvec = np.linspace(*doppler_spectral_range,nwv)  ##;; velocity range used for the spectral axis
-        wvvec = (wv_air*1.e-10)*(1. + velvec/3.e5)  ## in units of meters at this point 
+        wvvec = (self.wavelength_in_air  *1.e-10)*(1. + velvec/3.e5)  ## in units of meters at this point 
 
         ## Calculate Gaussian Line Width        
-        awgt = self.atomicWeight 
+        awgt = self.atomic_weight 
         M = (awgt*1.6605655e-24)/1000.   ## kilogram
         kb = 1.380648e-23  ## J K^-1 [ = kg m^2 s^-2 K^-1]
-        etemp = self.etemp 
+        etemp = self.electron_temperature
         turbv = non_thermal_turb_velocity
-        sig = (1./np.sqrt(2.))*(wv_air*1.e-10/3.e8)*np.sqrt(2.*kb*etemp/M + (turbv*1000.)**2.)
+        sig = (1./np.sqrt(2.))*(self.wavelength_in_air*1.e-10/3.e8)*np.sqrt(2.*kb*etemp/M + (turbv*1000.)**2.)
 
         ## calculate line center position 
-        wv0 = (wv_air*1.e-10) + (doppler_velocity/3.e5)*(wv_air*1.e-10)    ## in meters 
+        wv0 = (self.wavelength_in_air*1.e-10) + (doppler_velocity/3.e5)*(self.wavelength_in_air*1.e-10)    ## in meters 
         wv0 = wv0*1.e10     ## convert to Angstrom 
         sig = sig*1.e10      ## convert to Angstrom 
         wvvec = wvvec*1.e10  ## convert to Angstrom 

@@ -331,8 +331,8 @@ class Ion:
                                           self.splups_data['delta_energy'],self.splups_data['bt_c'], \
                                           self.splups_data['bt_type'],self.splups_data['bt_t'], \
                                           self.splups_data['bt_upsilon'],self.splups_data['yd2'], \
-                                          ptemp,pdens)
-
+                                          ptemp,pdens) 
+        
         self.radj    = radj
 
         ecmat   = getElectronSEE(self.ciK,self.ciK_indx,self.csK,self.csK_indx,
