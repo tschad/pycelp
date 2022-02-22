@@ -20,25 +20,40 @@ class emissionLine:
             raise
           
         self.ion_name = Ion.ion_name
+        self.atomic_weight = Ion.atomicWeight
         self.transitionIndex = ww
         self.wavelength_in_air = Ion.wv_air[ww]
         self.wavelength_in_vacuum = Ion.alamb[ww]
         self.upper_level_index = Ion.rupplev[ww]
-        self.upper_level_config = Ion.elvl_data['full_level'][self.upper_level_index]
-        self.upper_level_alignment = Ion.rho[self.upper_level_index,2] / Ion.rho[self.upper_level_index,0]
-        self.upper_level_rho00 = Ion.rho[self.upper_level_index,0]
         self.lower_level_index = Ion.rlowlev[ww]      
-        self.lower_level_config = Ion.elvl_data['full_level'][self.lower_level_index]    
-        self.lower_level_alignment = Ion.rho[self.lower_level_index,2] / Ion.rho[self.lower_level_index,0]
+        self.upper_level_config = Ion.elvl_data['full_level'][self.upper_level_index]
+        self.lower_level_config = Ion.elvl_data['full_level'][self.lower_level_index]   
         self.geff = Ion.geff[ww]  ## get Lande geff in LS coupling
         self.Einstein_A = Ion.a_up2low[ww]
         self.Dcoeff = Ion.Dcoeff[ww]
         self.Ecoeff = Ion.Ecoeff[ww]
         self.Jupp = Ion.qnj[self.upper_level_index]
-        self.total_ion_population = Ion.totn
-        self.upper_level_pop_frac =  np.sqrt(2.*self.Jupp+1)*self.upper_level_rho00  ## Calculate population in standard representation 
-        self.atomic_weight = Ion.atomicWeight
-        self.electron_temperature = Ion.etemp 
+        wv_vac_cm = self.wavelength_in_vacuum * 1.e-8 
+        hnu = hh*cc / (wv_vac/1.e8)
+        self.hnu = hnu         
+        try: 
+            self.upper_level_alignment = Ion.rho[self.upper_level_index,2] / Ion.rho[self.upper_level_index,0]
+            self.upper_level_rho00 = Ion.rho[self.upper_level_index,0]
+            self.lower_level_alignment = Ion.rho[self.lower_level_index,2] / Ion.rho[self.lower_level_index,0]
+            self.total_ion_population = Ion.totn
+            self.upper_level_pop_frac =  np.sqrt(2.*self.Jupp+1)*self.upper_level_rho00  ## Calculate population in standard representation 
+            self.electron_temperature = Ion.etemp 
+            self.electron_density = Ion.edens
+            self.C_coeff =   self.hnu/4./np.pi * self.Einstein_A * self.upper_level_pop_frac * self.total_ion_population
+        except: 
+            self.upper_level_alignment  = None 
+            self.upper_level_rho00 = None
+            self.lower_level_alignment = None
+            self.total_ion_population = None 
+            self.upper_level_pop_frac = None 
+            self.C_coeff = None
+            self.electron_temperature = None
+            self.electron_density = None
         
     def __repr__(self):
         print("pyCELP emissionLine class instance") 
