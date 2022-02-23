@@ -89,30 +89,15 @@ class Model:
         self.lons = lons
         self.lats = lats 
         self.rs   = rs
-        
-        ## cartesian coordinats
-        self.x3d = x3d 
-        self.y3d = y3d 
-        self.z3d = z3d 
-        
+                
         self.temp = temp 
         self.ne   = ne
-        
-        ## spherical magnetic field components
-        self.br   = br
-        self.bt   = bt
-        self.bp   = bp
-        
+                
         ## cartesian magnetic field components
         self.bx   = bx
         self.by   = by
         self.bz   = bz
-        
-        ## spherical velocity field components
-        self.vr   = vr
-        self.vt   = vt
-        self.vp   = vp
-        
+                
         ## cartesian velocity field components
         self.vx   = vx
         self.vy   = vy
@@ -137,9 +122,7 @@ class Model:
     rs   -- Radial samples [solar radii units]
     temp -- temperature [K]
     ne -- electron density [cm^-3]
-    br,bt,bp  -- Spherical components of magnetic field [G]
     bx,by,bz  -- Cartesian components of magnetic field [G]
-    vr,vt,vp  -- Spherical components of velocity field [km/s]
     vx,vy,vz  -- Cartesian components of velocity field [km/s]
     bmag      -- total magnetic field intensity [B]
     thetaBlocal -- location inclination of magnetic field in solar frame [rad]
