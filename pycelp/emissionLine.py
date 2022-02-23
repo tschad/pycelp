@@ -33,8 +33,7 @@ class emissionLine:
         self.Dcoeff = Ion.Dcoeff[ww]
         self.Ecoeff = Ion.Ecoeff[ww]
         self.Jupp = Ion.qnj[self.upper_level_index]
-        wv_vac_cm = self.wavelength_in_vacuum * 1.e-8 
-        hnu = hh*cc / (wv_vac/1.e8)
+        hnu = hh*cc / (self.wavelength_in_vacuum/1.e8)
         self.hnu = hnu         
         try: 
             self.upper_level_alignment = Ion.rho[self.upper_level_index,2] / Ion.rho[self.upper_level_index,0]
