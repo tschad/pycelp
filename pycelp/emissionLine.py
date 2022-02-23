@@ -4,9 +4,6 @@ This module contains the emissionLine class for pycelp.
 
 import numpy as np
 
-hh = 6.626176e-27  ## ergs sec (planck's constant);
-cc = 2.99792458e10 ## cm s^-1 (speed of light)
-
 class emissionLine:
     
     def __init__(self,Ion,wv_air):  
@@ -33,6 +30,8 @@ class emissionLine:
         self.Dcoeff = Ion.Dcoeff[ww]
         self.Ecoeff = Ion.Ecoeff[ww]
         self.Jupp = Ion.qnj[self.upper_level_index]
+        hh = 6.626176e-27  ## ergs sec (planck's constant);
+        cc = 2.99792458e10 ## cm s^-1 (speed of light)
         hnu = hh*cc / (self.wavelength_in_vacuum/1.e8)
         self.hnu = hnu         
         try: 
@@ -40,7 +39,7 @@ class emissionLine:
             self.upper_level_rho00 = Ion.rho[self.upper_level_index,0]
             self.lower_level_alignment = Ion.rho[self.lower_level_index,2] / Ion.rho[self.lower_level_index,0]
             self.total_ion_population = Ion.totn
-            self.upper_level_pop_frac =  np.sqrt(2.*self.Jupp+1)*self.upper_level_rho00  ## Calculate population in standard representation 
+            self.upper_level_pop_frac = np.sqrt(2.*self.Jupp+1)*self.upper_level_rho00  ## Calculate population in standard representation 
             self.electron_temperature = Ion.etemp 
             self.electron_density = Ion.edens
             self.C_coeff =   self.hnu/4./np.pi * self.Einstein_A * self.upper_level_pop_frac * self.total_ion_population
@@ -87,13 +86,13 @@ class emissionLine:
         ## scaling coefficent for the Stokes V emission coefficient 
         wv_vac = self.wavelength_in_vacuum
         wv_vac_cm = wv_vac * 1.e-8 
+        cc = 2.99792458e10 ## cm s^-1 (speed of light)
         Vscl = - (wv_vac_cm)**2   / cc  * 1.e8  ## units of Angstrom * s 
-        hnu = hh*cc / (wv_vac/1.e8)
         
         ## Common coefficent related to populations        
-        C_coeff = hnu/4./np.pi * self.Einstein_A * self.upper_level_pop_frac * self.total_ion_population
-        epsI = C_coeff * (1. + 3./(2.*np.sqrt(2.)) * self.Dcoeff * self.upper_level_alignment* (np.cos(thetaBLOS)**2 - (1./3.)  )   )
-        epsQ = C_coeff*(3./(2.*np.sqrt(2.)))*(np.sin(thetaBLOS)**2)*self.Dcoeff*self.upper_level_alignment
+        C_coeff = self.C_coeff
+        epsI = C_coeff * (1.  +   3./(2.*np.sqrt(2.))*self.Dcoeff*self.upper_level_alignment*(np.cos(thetaBLOS)**2 - (1./3.)))
+        epsQ = C_coeff * (3./(2.*np.sqrt(2.)))*(np.sin(thetaBLOS)**2)*self.Dcoeff*self.upper_level_alignment
         epsU = 0
         epsV = Vscl * C_coeff*np.cos(thetaBLOS)*ALARMOR*(self.geff + self.Ecoeff*self.upper_level_alignment)
 
@@ -105,11 +104,13 @@ class emissionLine:
         
         ## convert to returned units 
         sr2arcsec = (180./np.pi)**2.*3600.**2.
+        hh = 6.626176e-27  ## ergs sec (planck's constant);
         phergs = hh*(3.e8)/(wv_vac * 1.e-10)
-        self.epsI = epsI/sr2arcsec/phergs        
-        self.epsQ = epsQ/sr2arcsec/phergs        
-        self.epsU = epsU/sr2arcsec/phergs        
-        self.epsV = epsV/sr2arcsec/phergs        
+        
+        epsI = epsI/sr2arcsec/phergs        
+        epsQ = epsQ/sr2arcsec/phergs        
+        epsU = epsU/sr2arcsec/phergs        
+        epsV = epsV/sr2arcsec/phergs        
         
         return epsI, epsQ, epsU, epsV 
     
