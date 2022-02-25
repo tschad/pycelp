@@ -1,10 +1,7 @@
 
-Ensure chianti directory can be found - including whether a path separator is at end or not of !xuvtop
 
-Calculate emission with direction vector and atomic alignment included 
-
-Ability to input radj for all
-
-Level resolved proton rates? 
+- Add level resolved proton rates? Currently these are distributed total rates. 
+- Add choice of ionization equilbrium file and abundances
+- Ability to plot collisional rates 
 
 
