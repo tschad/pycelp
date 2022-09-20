@@ -3,5 +3,5 @@
 - Add level resolved proton rates? Currently these are distributed total rates. 
 - Add choice of ionization equilbrium file and abundances
 - Ability to plot collisional rates 
-
+- Merge PSI branch when ready
 
