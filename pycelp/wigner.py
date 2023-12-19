@@ -5,9 +5,9 @@ This module provides functions to calculate Wigner 3j, 6j, and 9j symbols.
 from numba import njit
 import numpy as np
 
-fact = np.zeros(101,dtype=np.float)
+fact = np.zeros(101,dtype=np.float64)
 fact[0] = 1.
-for i in range(1,101): fact[i] = fact[i-1] * np.float(i)
+for i in range(1,101): fact[i] = fact[i-1] * np.float64(i)
 
 @njit(cache=True,fastmath=True)
 def w3js(j1,j2,j3,m1,m2,m3):
@@ -139,5 +139,5 @@ def w9js(j1,j2,j3,j4,j5,j6,j7,j8,j9):
        x1 = w6js(j1,j9,k,j8,j4,j7)
        x2 = w6js(j2,j6,k,j4,j8,j5)
        x3 = w6js(j1,j9,k,j6,j2,j3)
-       x = x + s*x1*x2*x3*(np.float(k)+1.)
+       x = x + s*x1*x2*x3*(np.float64(k)+1.)
     return x

@@ -127,15 +127,15 @@ def convertConfig(conf):
             if s2.isnumeric(): s2n = True
             if s3.isnumeric(): s3n = True
             if s1n and (s2 == ' ' or s2 == ''):  ## E.g., '3s2 ' or '3s2'
-                occup_str, occup,j,jlatex = s1, np.int(s1), indx+2, index2[ii]+2
+                occup_str, occup,j,jlatex = s1, np.int64(s1), indx+2, index2[ii]+2
             elif not s1n:  ## E.g., '3s '
                 occup_str, occup,j,jlatex = '',1,indx+1, index2[ii]+1
             elif s1n and s2n and (s3 == ' ' or s3 == ''): # E.g., '3d10 4s'
-                occup_str, occup,j,jlatex = s1+s2, np.int(s1+s2), indx+3, index2[ii]+3
+                occup_str, occup,j,jlatex = s1+s2, np.int64(s1+s2), indx+3, index2[ii]+3
             elif s1n and s2n and s3n: # E.g., '3d104s'
-                occup_str, occup,j,jlatex = s1+s2, np.int(s1+s2), indx+2, index2[ii]+2
+                occup_str, occup,j,jlatex = s1+s2, np.int64(s1+s2), indx+2, index2[ii]+2
             elif s1n and s2n and not s3n: # E.g., '3s22p'
-                occup_str, occup,j,jlatex = s1,np.int(s1),indx+2, index2[ii]+2
+                occup_str, occup,j,jlatex = s1,np.int64(s1),indx+2, index2[ii]+2
             elif s1n and not s2n and (s2 != ' '): # E.g., '3s2p'
                 occup_str, occup,j,jlatex = '',1,indx+1, index2[ii]+1
             else: # E.g., '4s'
@@ -184,14 +184,14 @@ def elvlcRead(ion_name):
 
     for i,ln in enumerate(data):
         chunks = [ln[widC[j]:widC[j+1]] for j in range(len(widC)-1)]
-        index[i] = np.int(chunks[0])
-        conf[i]  = np.str(chunks[1]).strip()
-        label[i] = np.str(chunks[2]).strip()
-        mult[i]  = np.int(chunks[3])
-        l_sym[i] = np.str(chunks[4]).strip()
-        j[i]     =  np.float(chunks[5])
-        obs_energy[i] = np.float(chunks[6])
-        theory_energy[i] = np.float(chunks[7])
+        index[i] = np.int64(chunks[0])
+        conf[i]  = np.str_(chunks[1]).strip()
+        label[i] = np.str_(chunks[2]).strip()
+        mult[i]  = np.int64(chunks[3])
+        l_sym[i] = np.str_(chunks[4]).strip()
+        j[i]     =  np.float64(chunks[5])
+        obs_energy[i] = np.float64(chunks[6])
+        theory_energy[i] = np.float64(chunks[7])
 
     ## best energy
     energy = [None] * nlvl
@@ -228,7 +228,7 @@ def elvlcRead(ion_name):
         for ww in wi: l[ww] = i
 
     ## spin quantum number
-    s = (np.asarray(mult,dtype=np.float)-1.)/2.
+    s = (np.asarray(mult,dtype=np.float32)-1.)/2.
     ## degeneracy
     weight = 2.*np.asarray(j) + 1.
 
@@ -242,10 +242,10 @@ def elvlcRead(ion_name):
     for i in range(nlvl):
         term[i] = str(mult[i]) + l_sym[i]
         term_latex[i] = '$^' + str(mult[i]) + '$' + l_sym[i]
-        if (np.int(j[i]) == j[i]):
-            j_str[i] = str(np.int(j[i]))
+        if (np.int64(j[i]) == j[i]):
+            j_str[i] = str(np.int64(j[i]))
         else:
-            j_str[i] = str(np.int(j[i]*2)) + '/2'
+            j_str[i] = str(np.int64(j[i]*2)) + '/2'
         level[i] = term[i] + j_str[i]
         level_latex[i] = term_latex[i] + '$_{' + j_str[i] + '}$'
         full_level[i] = conf[i] + ' ' + level[i]
@@ -300,19 +300,19 @@ def wgfaRead(ion_name):
     data,reference = readFile(filename)
 
     n = len(data)
-    lower_level_index = np.zeros(n,dtype = np.int)  ## lower level index
-    upper_level_index = np.zeros(n,dtype = np.int)  ## upper level index
-    wavelength  = np.zeros(n,dtype = np.float)  ## transition wavelength
-    gf = np.zeros(n,dtype = np.float)  ## oscillator strength
-    A_einstein = np.zeros(n,dtype = np.float)  ## radiative decay rate
+    lower_level_index = np.zeros(n,dtype = np.int32)  ## lower level index
+    upper_level_index = np.zeros(n,dtype = np.int32)  ## upper level index
+    wavelength  = np.zeros(n,dtype = np.float32)  ## transition wavelength
+    gf = np.zeros(n,dtype = np.float32)  ## oscillator strength
+    A_einstein = np.zeros(n,dtype = np.float32)  ## radiative decay rate
 
     wgfaFormat = '(2i5,f15.3,2e15.3)'
     for i,ln in enumerate(data):
-        lower_level_index[i] = np.int(ln[0:5])
-        upper_level_index[i] = np.int(ln[5:10])
-        wavelength[i] = np.float(ln[10:25])
-        gf[i] = np.float(ln[25:40])
-        A_einstein[i] = np.float(ln[40:55])
+        lower_level_index[i] = np.int64(ln[0:5])
+        upper_level_index[i] = np.int64(ln[5:10])
+        wavelength[i] = np.float64(ln[10:25])
+        gf[i] = np.float64(ln[25:40])
+        A_einstein[i] = np.float64(ln[40:55])
 
     result = {"lower_level_index":np.array(lower_level_index),
               "upper_level_index":np.array(upper_level_index),
@@ -358,16 +358,16 @@ def scupsRead(ion_name):
         ln2 = data[i*3+1]
         ln3 = data[i*3+2]
         chunks = [ln1[widC[j]:widC[j+1]] for j in range(len(widC)-1)]
-        lower_level_index.append(np.int(chunks[0]))
-        upper_level_index.append(np.int(chunks[1]))
-        delta_energy.append(np.float(chunks[2]))
-        gf.append(np.float(chunks[3]))
-        high_t_limit.append(np.float(chunks[4]))
-        n_t.append(np.int(chunks[5]))
-        bt_type.append(np.int(chunks[6]))
-        bt_c.append(np.float(chunks[7]))
-        bt_t.append(np.array(ln2.split(),dtype = np.float))
-        bt_upsilon.append(np.array(ln3.split(),dtype = np.float))
+        lower_level_index.append(np.int64(chunks[0]))
+        upper_level_index.append(np.int64(chunks[1]))
+        delta_energy.append(np.float64(chunks[2]))
+        gf.append(np.float64(chunks[3]))
+        high_t_limit.append(np.float64(chunks[4]))
+        n_t.append(np.int64(chunks[5]))
+        bt_type.append(np.int64(chunks[6]))
+        bt_c.append(np.float64(chunks[7]))
+        bt_t.append(np.array(ln2.split(),dtype = np.float32))
+        bt_upsilon.append(np.array(ln3.split(),dtype = np.float32))
 
     ntrans = len(bt_t)
     nt_max = np.max(n_t)
@@ -427,12 +427,12 @@ def splupsRead(ion_name):
         lower_level_index.append(int(chunks[0]))
         upper_level_index.append(int(chunks[1]))
         t_type.append(int(chunks[2]))
-        gf.append(np.float(chunks[3]))
-        delta_energy.append(np.float(chunks[4]))
-        bt_c.append(np.float(chunks[5]))
+        gf.append(np.float64(chunks[3]))
+        delta_energy.append(np.float64(chunks[4]))
+        bt_c.append(np.float64(chunks[5]))
         nspl.append(npts)
         bt_t.append(np.linspace(0,1,npts))
-        bt_upsilon.append(np.array(chunks[6:],dtype=np.float))
+        bt_upsilon.append(np.array(chunks[6:],dtype=np.float32))
 
     result = {"lower_level_index":np.array(lower_level_index),
             "upper_level_index":np.array(upper_level_index),
@@ -459,13 +459,13 @@ def abundRead(filename):
     data,reference = readFile(filename)
 
     n = len(data)
-    abund_z   = np.zeros(n,dtype=np.int)
-    abund_val = np.zeros(n,dtype=np.float)
+    abund_z   = np.zeros(n,dtype=np.int32)
+    abund_val = np.zeros(n,dtype=np.float32)
 
     for i,ln in enumerate(data):
         lns = ln.split()
-        abund_z[i] = np.int(lns[0])
-        abund_val[i] = np.float(lns[1])
+        abund_z[i] = np.int64(lns[0])
+        abund_val[i] = np.float64(lns[1])
 
     result = {"abund_z":abund_z,
         "abund_val":abund_val,
@@ -491,11 +491,11 @@ def ioneqRead(filename):
     data,reference = readFile(filename)
 
     n = len(data)
-    nt = np.int(data[0].split()[0])  ## number of temperatures
-    nz = np.int(data[0].split()[1])  ## number of elements
+    nt = np.int64(data[0].split()[0])  ## number of temperatures
+    nz = np.int64(data[0].split()[1])  ## number of elements
 
     ## get temperatures
-    t = np.asarray(data[1].split()).astype(np.float)
+    t = np.asarray(data[1].split()).astype(np.float32)
 
     ioneq = np.zeros((nt,nz,nz+1))
     
@@ -506,7 +506,7 @@ def ioneqRead(filename):
     for i,ln in enumerate(data[2:]):
         lns = [ln[widC[j]:widC[j+1]] for j in range(len(widC)-1)]
         z1,ion1 = int(lns[0]),int(lns[1])
-        ioneq[:,z1-1,ion1-1] = np.asarray(lns[2:]).astype(np.float)
+        ioneq[:,z1-1,ion1-1] = np.asarray(lns[2:]).astype(np.float32)
 
     result = {"temp":t,
             "ionfrac":ioneq,
