@@ -7,6 +7,7 @@ from pycelp.chianti import *
 from pycelp.collisions import *
 from pycelp.non_dipoles import *
 from pycelp.dipoles import *
+from pycelp.emissionLine import * 
 import pycelp.util as util
 
 class Ion:
@@ -119,7 +120,8 @@ class Ion:
         gupp,glow = landeg[rupplev],landeg[rlowlev]
         Dcoeff = util.getDcoeff(Jupp,Jlow)
         Ecoeff = util.getEcoeff(Jupp,Jlow,gupp,glow)
-
+        geff = 0.5*(glow+gupp) + 0.25 * (glow-gupp) * (Jlow*(Jlow+1.) - Jupp*(Jupp+1.))
+        
         ## --> Non-dipoles
         print(' setting up non-dipole radiative rate factors')
         tnD,tnD_indx,nonD_spon= setup_nonDipoles(rlowlev,rupplev,qnj,b_low2up,a_up2low,
@@ -136,6 +138,7 @@ class Ion:
         ########################
         self.nlevels = nlevels
         self.elvl_data    = elvl_data
+        self.landeg       = landeg
         self.wgfa_data    = wgfa_data
         self.scups_data   = scups_data
         self.splups_data  = splups_data
@@ -181,6 +184,7 @@ class Ion:
         self.rupplev    = rupplev
         self.Dcoeff     = Dcoeff
         self.Ecoeff     = Ecoeff
+        self.geff       = geff
         self.alamb      = alamb
         self.wv_air     = wv_air
         self.a_up2low   = a_up2low
@@ -243,6 +247,7 @@ class Ion:
             pdens = 0.
 
         self.edens = edens
+        self.etemp = etemp 
         self.pdens = pdens
         self.toth  = toth
         self.thetab_rad = thetab
@@ -309,6 +314,7 @@ class Ion:
             pdens = 0.
 
         self.edens = edens
+        self.etemp = etemp 
         self.pdens = pdens
         self.toth  = toth
 
@@ -325,8 +331,8 @@ class Ion:
                                           self.splups_data['delta_energy'],self.splups_data['bt_c'], \
                                           self.splups_data['bt_type'],self.splups_data['bt_t'], \
                                           self.splups_data['bt_upsilon'],self.splups_data['yd2'], \
-                                          ptemp,pdens)
-
+                                          ptemp,pdens) 
+        
         self.radj    = radj
 
         ecmat   = getElectronSEE(self.ciK,self.ciK_indx,self.csK,self.csK_indx,
@@ -392,181 +398,7 @@ class Ion:
         for n in range(self.nlevels):
             radmat_std[n,:] = DD[wkzero[n],wkzero] * self.weight[wkzero[n]]/self.weight[wkzero]
         return radmat_std
-
-    def get_lower_level_alignment(self,wv_air):
-        """ Returns the atomic alignment for the lower level of given transition
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
-        lowlev = self.rlowlev[ww]
-        alignment = self.rho[lowlev,2] / self.rho[lowlev,0]
-        return alignment
-
-    def get_upper_level_alignment(self,wv_air):
-        """ Returns the atomic alignment for the upper level of given transition
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
-        upplev = self.rupplev[ww]
-        alignment = self.rho[upplev,2] / self.rho[upplev,0]
-        return alignment
-
-    def get_upper_level_rho00(self,wv_air):
-        """ Returns rho(Q=0,K=0) for the upper level of given transition
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
-        upplev = self.rupplev[ww]
-        rho00 = self.rho[upplev,0]
-        return rho00
-
-    def get_EinsteinA(self,wv_air):
-        """ Returns the Einstein A for a selected transition
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
-        return self.a_up2low[ww]
-
-    def get_Dcoeff(self,wv_air):
-        """ Returns the D coefficent for a selected transition
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
-        return self.Dcoeff[ww]
-
-    def get_Ecoeff(self,wv_air):
-        """ Returns the E coefficent for a selected transition
-
-        Parameters
-        ----------
-
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
-        return self.Ecoeff[ww]
-
-    def get_Jupp(self, wv_air):
-        """ Returns the E coefficent for a selected transition
-
-        Parameters
-        ----------
-
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
-        upplev = self.rupplev[ww]
-        return self.qnj[upplev]
-
-    def calc_Iemiss(self,wv_air,thetaBLOS = np.rad2deg(np.arccos(1./np.sqrt(3.))) ):
-        """ returns the intensity emission coefficent for a selected transition
-        return units are photons
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        thetaBLOS : float (unit: degrees)
-            inclination angle of the magnetic field relative to the line of sight
-            default is van vleck
-        """
-        ww = np.argmin(np.abs(self.wv_air - wv_air))
-
-        if ((self.wv_air[ww] - wv_air)/wv_air > 0.05):
-            print(' warning: requested wavelength for calculation does have a good match')
-            print(' requested: ', wv_air)
-            print(' closest:   ', self.wv_air[ww])
-            raise
-
-        upplev = self.rupplev[ww]
-        Dcoeff = self.Dcoeff[ww]
-        sigma = self.get_upper_level_alignment(wv_air)
-        thetaBLOS = np.deg2rad(thetaBLOS)
-
-        hh = 6.626176e-27  ## ergs sec (planck's constant);
-        cc = 2.99792458e10 ## cm s^-1 (speed of light)
-        hnu = hh*cc / (self.alamb[ww]/1.e8)
-        Ju = self.qnj[upplev]
-
-        ## convert units to
-        sr2arcsec = (180./np.pi)**2.*3600.**2.
-        phergs = hh*(3.e8)/(self.alamb[ww] * 1.e-10)
-        val = hnu/4./np.pi*self.a_up2low[ww] * np.sqrt(2.*Ju+1)*self.rho[upplev,0] * self.totn
-        val = val * (1. + 3./(2.*np.sqrt(2.)) * (np.cos(thetaBLOS)**2 - (1./3.)  )   )
-        val = val/sr2arcsec/phergs
-
-        return val
-
+    
     def show_lines(self,nlines=None,start=0):
         """ prints out information for the radiative transitions
 
@@ -592,3 +424,69 @@ class Ion:
             wvair = np.round(self.wv_air[ln],3)
             upplev,lowlev = self.rupplev[ln],self.rlowlev[ln]
             print(ln, wv,wvair, self.elvl_data['full_level'][upplev], ' --> ', self.elvl_data['full_level'][lowlev])
+
+    def energy_levels_to_dataframe(self): 
+        """ Converts Chianti Energy Level information to a Pandas dataframe """
+        
+        try: 
+            import pandas as pd
+        except: 
+            print(' To convert Energy Level Information to dataframe requires pandas package to be installed')
+            
+        energy_units = self.elvl_data['energy_units']
+        
+        d = {'Index'      : self.elvl_data['index'], 
+             'Ion_name'   : np.repeat(self.ion_name,self.nlevels),
+             'Ion_z'      : np.repeat(self.elvl_data['ion_z'],self.nlevels),
+             'Config'     : self.elvl_data['conf'], 
+             'Conf Idx' : self.elvl_data['conf_index'],
+             'Term'       : self.elvl_data['term'], 
+             'Level'      : self.elvl_data['level'], 
+             'Full Level' : self.elvl_data['full_level'],
+             'Spin Mult'  : self.elvl_data['mult'],
+             'S'       : self.elvl_data['s'],
+             'L'       : self.elvl_data['l'],
+             'Orbital' : self.elvl_data['l_sym'],
+             'J'      : self.elvl_data['j'],
+             'Lande g' : self.landeg,
+             'Parity' : self.elvl_data['parity'],
+             'Parity Str' : self.elvl_data['parity_str'],
+             'Stat. Weight'  : self.elvl_data['weight'],
+             'Obs Energy [' + energy_units + ']' : self.elvl_data['obs_energy'],
+             'Theory Energy [' + energy_units + ']' : self.elvl_data['theory_energy'],
+             'Energy [' + energy_units + ']' : self.elvl_data['energy']}
+ 
+        return pd.DataFrame(data=d)
+    
+    
+    def rad_transitions_to_dataframe(self): 
+        """ Converts Radiative Transition information to a Pandas dataframe """
+        
+        try: 
+            import pandas as pd
+        except: 
+            print(' To convert Radiative Transition Information to dataframe requires pandas package to be installed')
+            
+        d = {'Lambda Vac [A]' : self.alamb,
+             'Lambda Air [A]' : self.wv_air,
+             'UppLev Idx'     : self.rupplev +1,
+             'LowLev Idx'     : self.rlowlev +1,
+             'Upper Level'    : self.elvl_data['full_level'][self.rupplev],
+             'Lower Level'    : self.elvl_data['full_level'][self.rlowlev],
+             'geff [LS]'      : self.geff, 
+             'D coeff'        : self.Dcoeff,
+             'E coeff'        : self.Ecoeff,
+             'Einstein A'     : self.a_up2low} 
+        
+        return pd.DataFrame(data=d)
+    
+    def get_emissionLine(self,wv_air): 
+        """ Returns an instance of the emissionLine class that contains all information needed to synthesize the line 
+        
+        Parameters
+        ----------
+        wv_air : float (unit: angstroms)
+            Air wavelength of spectral line (approximate - only needs to be close) 
+        """
+        line = emissionLine(self,wv_air)
+        return line 

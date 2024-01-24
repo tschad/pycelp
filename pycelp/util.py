@@ -213,12 +213,13 @@ def rad_field_bframe(wlang,thetab,rphot,include_limbdark = True,photo_temp = 600
         uc = 0.*uc
         vc = 0.*vc
 
+    ## LANDI DEGL'INNOCENTI & LANDOLFI (2004) Equation 12.34
     Jnu = 0.5 * planck * (a0 + a1*uc + a2*vc)
     Knu = 0.5 * planck * (b0 + b1*uc + b2*vc)
 
     radj = np.zeros((3,nline))
     radj[0,:] = Jnu
-    radj[2,:] = (3.0*Knu-Jnu)/(2.0*(2**0.5)) * factor
+    radj[2,:] = (3.0*Knu-Jnu)/(2.0*(2**0.5)) * factor  
 
     return radj
 
