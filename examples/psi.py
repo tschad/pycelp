@@ -97,6 +97,11 @@ class Model:
         self.bx   = bx
         self.by   = by
         self.bz   = bz
+
+        ## spherical magnetic field components
+        self.br   = br
+        self.bt   = bt
+        self.bp   = bp
                 
         ## cartesian velocity field components
         self.vx   = vx
