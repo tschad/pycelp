@@ -453,7 +453,7 @@ def splupsRead(ion_name):
 def abundRead(filename):
 
     chianti_dbase_root,chianti_version = getChiantiDir()
-    filename = chianti_dbase_root + 'abundance' + os.path.sep + 'sun_photospheric_2009_asplund.abund'
+    filename = chianti_dbase_root + 'abundance' + os.path.sep + 'sun_photospheric_2021_asplund.abund'
     print(' using default abundances:',filename)
 
     data,reference = readFile(filename)
