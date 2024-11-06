@@ -434,6 +434,12 @@ def splupsRead(ion_name):
         bt_t.append(np.linspace(0,1,npts))
         bt_upsilon.append(np.array(chunks[6:],dtype=np.float32))
 
+    bt_t_array = np.zeros((len(nspl),np.max(nspl)))
+    bt_upsilon_array = np.zeros((len(nspl),np.max(nspl)))
+    for i in range(n):
+        bt_t_array[i,:nspl[i]] = bt_t[i]
+        bt_upsilon_array[i,:nspl[i]] = bt_upsilon[i]
+    
     result = {"lower_level_index":np.array(lower_level_index),
             "upper_level_index":np.array(upper_level_index),
             "bt_type":np.array(t_type),
@@ -441,8 +447,8 @@ def splupsRead(ion_name):
             "delta_energy":np.array(delta_energy),
             "bt_c":np.array(bt_c),
             "n_t":np.array(nspl),
-            "bt_t":np.array(bt_t),
-            "bt_upsilon":np.array(bt_upsilon),
+            "bt_t":bt_t_array,
+            "bt_upsilon":bt_upsilon_array,
             "filename":filename,
             "version":chianti_version,
             "reference":reference}
