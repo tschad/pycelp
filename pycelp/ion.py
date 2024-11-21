@@ -49,7 +49,7 @@ class Ion:
         wgfa_data    = wgfaRead(ion_name)    ## RADIATIVE TRANSITION DATA
         scups_data   = scupsRead(ion_name)   ## ELECTRON COLLISIONAL DATA
         splups_data  = splupsRead(ion_name)  ## PROTON COLLISIONAL DATA
-        abund_data   = abundRead('temp')     ## not selectable yet
+        abund_data   = abundRead(abundFile)     ## not selectable yet
         ioneq_data   = ioneqRead('temp')     ## not selectable yet
 
         ### REDUCE NUMBER OF CONSIDERED LEVELS

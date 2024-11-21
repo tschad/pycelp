@@ -30,6 +30,7 @@ class emissionLine:
         self.Dcoeff = Ion.Dcoeff[ww]
         self.Ecoeff = Ion.Ecoeff[ww]
         self.Jupp = Ion.qnj[self.upper_level_index]
+        self.Jlow = Ion.qnj[self.lower_level_index]
         hh = 6.626176e-27  ## ergs sec (planck's constant);
         cc = 2.99792458e10 ## cm s^-1 (speed of light)
         hnu = hh*cc / (self.wavelength_in_vacuum/1.e8)
