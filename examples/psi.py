@@ -20,11 +20,11 @@ def read_psi_hdf(fn):
 
 def read_interp_psi(fn,points_ref):
     ## read data and get interpolating function
-    dat,lons,lats,rs = read_psi_hdf(fn)
-    fInt = rgi((lons,lats,rs),dat,method = 'linear',fill_value = 0.,bounds_error = False)
+    dat,phis,thetas,rs = read_psi_hdf(fn)
+    fInt = rgi((phis,thetas,rs),dat,method = 'linear',fill_value = 0.,bounds_error = False)
     ## get meshgrid of points for the new reference coordinates
-    lons_ref,lats_ref,rs_ref = points_ref
-    npoints = np.meshgrid(lons_ref,lats_ref,rs_ref,indexing = 'ij')
+    phis_ref,thetas_ref,rs_ref = points_ref
+    npoints = np.meshgrid(phis_ref,thetas_ref,rs_ref,indexing = 'ij')
     flat = np.array([m.flatten() for m in npoints])
     ## interpolate and reshape
     datInt = fInt(flat.T).reshape(*npoints[0].shape)
@@ -41,17 +41,17 @@ class Model:
         ## Interpolate PSI model onto an unstaggered grid...
         ## Use lons from br and lats,rs from bp as the reference coordinates
         ## this is because they have different shapes normally due to end points 
-        br,lons,latsB,rsB = read_psi_hdf(self.dir + 'br002.hdf')
-        bp,lonsB,lats,rs = read_psi_hdf(self.dir + 'bp002.hdf')
-        temp = read_interp_psi(self.dir + 't002.hdf',(lons,lats,rs))
-        br = read_interp_psi(self.dir + 'br002.hdf',(lons,lats,rs))
-        bt = read_interp_psi(self.dir + 'bt002.hdf',(lons,lats,rs))
-        bp = read_interp_psi(self.dir + 'bp002.hdf',(lons,lats,rs))
-        vr = read_interp_psi(self.dir + 'vr002.hdf',(lons,lats,rs))
-        vt = read_interp_psi(self.dir + 'vt002.hdf',(lons,lats,rs))
-        vp = read_interp_psi(self.dir + 'vp002.hdf',(lons,lats,rs))
-        ne = read_interp_psi(self.dir + 'rho002.hdf',(lons,lats,rs))
+        br,phis,thetasB,rsB = read_psi_hdf(self.dir + 'br002.hdf')
+        bp,phisB,thetas,rs = read_psi_hdf(self.dir + 'bp002.hdf')
         
+        temp = read_interp_psi(self.dir + 't002.hdf',(phis,thetas,rs))
+        br = read_interp_psi(self.dir + 'br002.hdf',(phis,thetas,rs))
+        bt = read_interp_psi(self.dir + 'bt002.hdf',(phis,thetas,rs))
+        bp = read_interp_psi(self.dir + 'bp002.hdf',(phis,thetas,rs))
+        vr = read_interp_psi(self.dir + 'vr002.hdf',(phis,thetas,rs))
+        vt = read_interp_psi(self.dir + 'vt002.hdf',(phis,thetas,rs))
+        vp = read_interp_psi(self.dir + 'vp002.hdf',(phis,thetas,rs))
+        ne = read_interp_psi(self.dir + 'rho002.hdf',(phis,thetas,rs))
         
         ## convert MAS normalized units into physical units
         temp = temp*(2.807067e7) ##  K
@@ -64,7 +64,7 @@ class Model:
         ne = ne*1.e8        ## cm^-3
 
         ##spherical coordinates and cartesian coordinates
-        phi3d,theta3d,r3d = np.meshgrid(lons,lats,rs,indexing = 'ij')
+        phi3d,theta3d,r3d = np.meshgrid(phis,thetas,rs,indexing = 'ij')
         x3d = r3d*np.sin(theta3d)*np.cos(phi3d)
         y3d = r3d*np.sin(theta3d)*np.sin(phi3d)
         z3d = r3d*np.cos(theta3d)
@@ -86,10 +86,13 @@ class Model:
         localinc  = np.arccos(((bx*x3d + by*y3d + bz*z3d)/(rlen*blen)).clip(min = -1,max=1))
 
         ## Grid sample locations 
-        self.lons = lons
-        self.lats = lats 
         self.rs   = rs
-                
+        self.thetas = thetas
+        self.phis = phis
+        
+        self.lats = np.pi/2. - thetas 
+        self.lons = phis
+
         self.temp = temp 
         self.ne   = ne
                 
@@ -116,15 +119,17 @@ class Model:
          return f"""psi Model class
     ---------------------
     Data Directory Names: {self.dir}
-    Number of longitude samples: {len(self.lons)}
-    Number of latitude samples: {len(self.lats)}
+    Number of phi samples: {len(self.lons)}
+    Number of theta samples: {len(self.lats)}
     Number of radial samples: {len(self.rs)}
     Data shape: {self.temp.shape}
     
     Variables: 
+    thetas -- Spherical polar angle coordinates [rad]
+    phis   -- Spherical azimuthal angle coordinates [rad] (same as lons)
+    rs   -- Radial coordinates [solar radii units]
     lons -- Longitudes [rad]
     lats -- Latitudes [rad]
-    rs   -- Radial samples [solar radii units]
     temp -- temperature [K]
     ne -- electron density [cm^-3]
     bx,by,bz  -- Cartesian components of magnetic field [G]
