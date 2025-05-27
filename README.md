@@ -8,7 +8,7 @@ pyCELP (aka "pi-KELP"): a **py**thon package for **C**oronal **E**mission **L**i
 
 Lead Developer: Tom Schad - National Solar Observatory
 
-Code reference documentation available at [tschad.github.io/pycle](https://tschad.github.io/pycelp/pycelp/)
+Code reference documentation available at [tschad.github.io/pycelp](https://tschad.github.io/pycelp/pycelp/)
 
 **DISCLAIMER: pycelp is still in the early stages of development. Contributors are welcome. **
 
@@ -113,7 +113,7 @@ pyCELP uses numpy libraries which can have multithreaded modules.  If pyCELP is 
 
 ## Updating documentation
 
-Code reference documentation is available at [tschad.github.io/pycle](https:://tschad.github.io/pycle).  These are created using pdoc3.  They are easily manually built and/or updated from the main project repo directory by using the following command.  
+Code reference documentation is available at [tschad.github.io/pycelp](https:://tschad.github.io/pycelp).  These are created using pdoc3.  They are easily manually built and/or updated from the main project repo directory by using the following command.  
 
 ```shell
 pdoc --html --force --output-dir docs pycelp
@@ -121,9 +121,4 @@ pdoc --html --force --output-dir docs pycelp
 
 ## Acknowledgements
 
-pyCELP evolved from work initially using the CLE code developed by Phil Judge
-and Roberto Casini at the High Altitude Observatory.  While pyCELP is now a
-completely independent implementation, we express our gratitude for all we
-learned by using CLE.  pyCELP has been developed based on the excellent
-treatise on spectral line polarization by Egidio Landi Degl’innocenti and Marco
-Landolfi available [here](https://link.springer.com/book/10.1007/1-4020-2415-0).
+pyCELP evolved from work initially using the CLE code developed by Phil Judge and Roberto Casini at the High Altitude Observatory.  While pyCELP is now a completely independent implementation, we express our gratitude for all we learned by using CLE.  pyCELP has been developed based on the excellent treatise on spectral line polarization by Egidio Landi Degl’innocenti and Marco Landolfi available [here](https://link.springer.com/book/10.1007/1-4020-2415-0).

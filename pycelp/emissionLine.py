@@ -5,7 +5,12 @@ This module contains the emissionLine class for pycelp.
 import numpy as np
 
 class emissionLine:
-    
+    """
+    The emissionLine object can obtained from a pycelp.Ion class object by calling Ion.emissionLine.  
+    This class inherits the information from the Ion class pertaining to a particular atomic transition. 
+    It is used to calculate radiative quantities for that given transition. 
+    """
+
     def __init__(self,Ion,wv_air):  
         
         ww = np.argmin(np.abs(Ion.wv_air - wv_air))
