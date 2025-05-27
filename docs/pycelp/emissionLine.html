@@ -2,18 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.9.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.1">
 <title>pycelp.emissionLine API documentation</title>
-<meta name="description" content="This module contains the emissionLine class for pycelp." />
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
-<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
-<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<meta name="description" content="This module contains the emissionLine class for pycelp.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
-<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
 </head>
 <body>
 <main>
@@ -23,218 +26,6 @@
 </header>
 <section id="section-intro">
 <p>This module contains the emissionLine class for pycelp.</p>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">&#39;&#39;&#39;
-This module contains the emissionLine class for pycelp.
-&#39;&#39;&#39;
-
-import numpy as np
-
-class emissionLine:
-    
-    def __init__(self,Ion,wv_air):  
-        
-        ww = np.argmin(np.abs(Ion.wv_air - wv_air))
-
-        if ((Ion.wv_air[ww] - wv_air)/wv_air &gt; 0.05):
-            print(&#39; warning: requested wavelength for calculation does have a good match&#39;)
-            print(&#39; requested: &#39;, wv_air)
-            print(&#39; closest:   &#39;, Ion.wv_air[ww])
-            raise
-          
-        self.ion_name = Ion.ion_name
-        self.atomic_weight = Ion.atomicWeight
-        self.transitionIndex = ww
-        self.wavelength_in_air = Ion.wv_air[ww]
-        self.wavelength_in_vacuum = Ion.alamb[ww]
-        self.upper_level_index = Ion.rupplev[ww]
-        self.lower_level_index = Ion.rlowlev[ww]      
-        self.upper_level_config = Ion.elvl_data[&#39;full_level&#39;][self.upper_level_index]
-        self.lower_level_config = Ion.elvl_data[&#39;full_level&#39;][self.lower_level_index]   
-        self.geff = Ion.geff[ww]  ## get Lande geff in LS coupling
-        self.Einstein_A = Ion.a_up2low[ww]
-        self.Dcoeff = Ion.Dcoeff[ww]
-        self.Ecoeff = Ion.Ecoeff[ww]
-        self.Jupp = Ion.qnj[self.upper_level_index]
-        hh = 6.626176e-27  ## ergs sec (planck&#39;s constant);
-        cc = 2.99792458e10 ## cm s^-1 (speed of light)
-        hnu = hh*cc / (self.wavelength_in_vacuum/1.e8)
-        self.hnu = hnu         
-        try: 
-            self.upper_level_alignment = Ion.rho[self.upper_level_index,2] / Ion.rho[self.upper_level_index,0]
-            self.upper_level_rho00 = Ion.rho[self.upper_level_index,0]
-            self.lower_level_alignment = Ion.rho[self.lower_level_index,2] / Ion.rho[self.lower_level_index,0]
-            self.total_ion_population = Ion.totn
-            self.upper_level_pop_frac = np.sqrt(2.*self.Jupp+1)*self.upper_level_rho00  ## Calculate population in standard representation 
-            self.electron_temperature = Ion.etemp 
-            self.electron_density = Ion.edens
-            self.C_coeff =   self.hnu/4./np.pi * self.Einstein_A * self.upper_level_pop_frac * self.total_ion_population
-        except: 
-            self.upper_level_alignment  = None 
-            self.upper_level_rho00 = None
-            self.lower_level_alignment = None
-            self.total_ion_population = None 
-            self.upper_level_pop_frac = None 
-            self.C_coeff = None
-            self.electron_temperature = None
-            self.electron_density = None
-        
-    def __repr__(self):
-        print(&#34;pyCELP emissionLine class instance&#34;) 
-        print(&#34;----------------------------------&#34;)
-        for ky in self.__dict__: 
-            print(&#39;   &#39;,ky,&#39;  : &#39;,self.__dict__[ky])
-        return &#34;&#34;&#34;----------------------------------&#34;&#34;&#34;
-        
-    def calc_PolEmissCoeff(self,magnetic_field_amplitude,thetaBLOSdeg,azimuthBLOSdeg=0.): 
-        &#34;&#34;&#34; returns the polarized emission coefficent for the emission line
-        
-        return units: 
-        I,Q,U :: photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$
-        V     ::  photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$ Angstrom^{-1}
-
-        Parameters
-        ----------
-        magnetic_field_amplitude: float (unit: gauss)
-            Total magnitude of the magnetic field 
-        thetaBLOSdeg : float (unit: degrees)
-            inclination angle of the magnetic field relative to the line of sight
-        azimuthBLOSdeg : float (unit: degrees) [default = 0] 
-            azimuth angle of magnetic field relative to coordinate frame aligned with 
-            the line-of-sight projected magnetic field orientation. 
-        &#34;&#34;&#34;
-    
-        ## convert to radians 
-        thetaBLOS = np.deg2rad(thetaBLOSdeg) 
-        azimuthBLOS = np.deg2rad(azimuthBLOSdeg)
-        ALARMOR = 1399612.2*magnetic_field_amplitude    ## Get Larmor frequency in units of s^-1 
-
-        ## scaling coefficent for the Stokes V emission coefficient 
-        wv_vac = self.wavelength_in_vacuum
-        wv_vac_cm = wv_vac * 1.e-8 
-        cc = 2.99792458e10 ## cm s^-1 (speed of light)
-        Vscl = - (wv_vac_cm)**2   / cc  * 1.e8  ## units of Angstrom * s 
-        
-        ## Common coefficent related to populations        
-        C_coeff = self.C_coeff
-        epsI = C_coeff * (1.  +   3./(2.*np.sqrt(2.))*self.Dcoeff*self.upper_level_alignment*(np.cos(thetaBLOS)**2 - (1./3.)))
-        epsQ = C_coeff * (3./(2.*np.sqrt(2.)))*(np.sin(thetaBLOS)**2)*self.Dcoeff*self.upper_level_alignment
-        epsU = 0
-        epsV = Vscl * C_coeff*np.cos(thetaBLOS)*ALARMOR*(self.geff + self.Ecoeff*self.upper_level_alignment)
-
-        ## rotate for the azimuthal direction 
-        epsQr =  np.cos(2.*azimuthBLOS)*epsQ+ np.sin(2.*azimuthBLOS)*epsU
-        epsUr = -np.sin(2.*azimuthBLOS)*epsQ + np.cos(2.*azimuthBLOS)*epsU
-        epsQ = epsQr
-        epsU = epsUr 
-        
-        ## convert to returned units 
-        sr2arcsec = (180./np.pi)**2.*3600.**2.
-        hh = 6.626176e-27  ## ergs sec (planck&#39;s constant);
-        phergs = hh*(3.e8)/(wv_vac * 1.e-10)
-        
-        epsI = epsI/sr2arcsec/phergs        
-        epsQ = epsQ/sr2arcsec/phergs        
-        epsU = epsU/sr2arcsec/phergs        
-        epsV = epsV/sr2arcsec/phergs        
-        
-        return epsI, epsQ, epsU, epsV 
-    
-    def calc_Iemiss(self,thetaBLOSdeg = np.rad2deg(np.arccos(1./np.sqrt(3.))) ):
-        &#34;&#34;&#34; returns the line-integrated intensity emission coefficent for a selected transition
-        
-        return units are photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Air wavelength of spectral line
-        thetaBLOS : float (unit: degrees)
-            inclination angle of the magnetic field relative to the line of sight
-            default is van vleck
-        &#34;&#34;&#34;
-        magnetic_field_amplitude = 0.
-        epsI, epsQ, epsU, epsV = self.calc_PolEmissCoeff(magnetic_field_amplitude,thetaBLOSdeg)
-        epsI_units = r&#39;photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$&#39;
-        return epsI,epsI_units
-
-    def calc_stokesSpec(self,magnetic_field_amplitude,thetaBLOSdeg,
-                       azimuthBLOSdeg=0., 
-                       doppler_velocity = 0.,
-                       non_thermal_turb_velocity = 0.,
-                       doppler_spectral_range = (-120,120),
-                       specRes_wv_over_dwv = 100000):        
-        
-        &#34;&#34;&#34; calculate Stokes spectra after the statistical equilibrium has been solved 
-        
-        Assumes current electron temperature dictates the thermal line width. 
-        
-        return units: 
-        I,Q,U ::  photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2} Angstrom^{-1}$
-        V     ::  photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2} Angstrom^{-1}$ 
-
-        Parameters
-        ----------
-        wv_air : float (unit: angstroms)
-            Rest air wavelength of spectral line (needs to be close to database value)
-        magnetic_field_amplitude: float (unit: gauss)
-            Total magnitude of the magnetic field 
-        thetaBLOS : float (unit: degrees)
-            inclination angle of the magnetic field relative to the line of sight
-        azimuthBLOS : float (unit: degrees) [default = 0] 
-            azimuth angle of magnetic field relative to coordinate frame aligned with 
-            the line-of-sight projected magnetic field orientation. 
-        doppler_velocity : float (unit: km/s)
-            Doppler velocity of the spectral line 
-        non_thermal_turb_velocity  : float (unit: km/s) 
-            Non-thermal velocity convolved with the thermal component of the line width 
-        doppler_spectral_range : float 2-tuple (unit : km/2) 
-            Range of the spectrum calculated in Doppler velocity space relative to the line rest wavelength
-        specRes_wv_over_dwv: float (unitless) 
-            The sampling resolution of the wavelength vector given as the ratio of the wavelength to the sampling. 
-            
-        &#34;&#34;&#34;
-   
-        ## Get polarized emission coefficients 
-        epsI, epsQ, epsU, epsV = self.calc_PolEmissCoeff(magnetic_field_amplitude,  thetaBLOSdeg, azimuthBLOSdeg)
-        
-        ## setup wavelength vector 
-        assert doppler_spectral_range[1]&gt;doppler_spectral_range[0]
-        dVel = 3e5 / specRes_wv_over_dwv
-        nwv = np.ceil((doppler_spectral_range[1] - doppler_spectral_range[0]) / dVel).astype(int)
-        velvec = np.linspace(*doppler_spectral_range,nwv)  ##;; velocity range used for the spectral axis
-        wvvec = (self.wavelength_in_air  *1.e-10)*(1. + velvec/3.e5)  ## in units of meters at this point 
-
-        ## Calculate Gaussian Line Width        
-        awgt = self.atomic_weight 
-        M = (awgt*1.6605655e-24)/1000.   ## kilogram
-        kb = 1.380648e-23  ## J K^-1 [ = kg m^2 s^-2 K^-1]
-        etemp = self.electron_temperature
-        turbv = non_thermal_turb_velocity
-        sig = (1./np.sqrt(2.))*(self.wavelength_in_air*1.e-10/3.e8)*np.sqrt(2.*kb*etemp/M + (turbv*1000.)**2.)
-
-        ## calculate line center position 
-        wv0 = (self.wavelength_in_air*1.e-10) + (doppler_velocity/3.e5)*(self.wavelength_in_air*1.e-10)    ## in meters 
-        wv0 = wv0*1.e10     ## convert to Angstrom 
-        sig = sig*1.e10      ## convert to Angstrom 
-        wvvec = wvvec*1.e10  ## convert to Angstrom 
-        
-        ## normalized Gaussian profile
-        wprof  = 1./(np.sqrt(2.*np.pi)*sig) * np.exp(-(wvvec-wv0)**2./(2.*sig**2.))
-        ## normalized Gaussian derivative profiles 
-        wprof_deriv = (- (wvvec-wv0) / sig**2)  * wprof 
-
-        stokes = np.zeros((nwv,4) )
-        stokes[:,0] = epsI*wprof
-        stokes[:,1] = epsQ*wprof
-        stokes[:,2] = epsU*wprof
-        stokes[:,3] = epsV*wprof_deriv
-
-        return wvvec,stokes</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -250,13 +41,20 @@ class emissionLine:
 <span>(</span><span>Ion, wv_air)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>The emissionLine object can obtained from a pycelp.Ion class object by calling Ion.emissionLine.<br>
+This class inherits the information from the Ion class pertaining to a particular atomic transition.
+It is used to calculate radiative quantities for that given transition.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class emissionLine:
-    
+    &#34;&#34;&#34;
+    The emissionLine object can obtained from a pycelp.Ion class object by calling Ion.emissionLine.  
+    This class inherits the information from the Ion class pertaining to a particular atomic transition. 
+    It is used to calculate radiative quantities for that given transition. 
+    &#34;&#34;&#34;
+
     def __init__(self,Ion,wv_air):  
         
         ww = np.argmin(np.abs(Ion.wv_air - wv_air))
@@ -281,6 +79,7 @@ class emissionLine:
         self.Dcoeff = Ion.Dcoeff[ww]
         self.Ecoeff = Ion.Ecoeff[ww]
         self.Jupp = Ion.qnj[self.upper_level_index]
+        self.Jlow = Ion.qnj[self.lower_level_index]
         hh = 6.626176e-27  ## ergs sec (planck&#39;s constant);
         cc = 2.99792458e10 ## cm s^-1 (speed of light)
         hnu = hh*cc / (self.wavelength_in_vacuum/1.e8)
@@ -460,7 +259,7 @@ class emissionLine:
 <h3>Methods</h3>
 <dl>
 <dt id="pycelp.emissionLine.emissionLine.calc_Iemiss"><code class="name flex">
-<span>def <span class="ident">calc_Iemiss</span></span>(<span>self, thetaBLOSdeg=54.735610317245346)</span>
+<span>def <span class="ident">calc_Iemiss</span></span>(<span>self, thetaBLOSdeg=np.float64(54.735610317245346))</span>
 </code></dt>
 <dd>
 <div class="desc"><p>returns the line-integrated intensity emission coefficent for a selected transition</p>
@@ -473,28 +272,6 @@ class emissionLine:
 <dd>inclination angle of the magnetic field relative to the line of sight
 default is van vleck</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def calc_Iemiss(self,thetaBLOSdeg = np.rad2deg(np.arccos(1./np.sqrt(3.))) ):
-    &#34;&#34;&#34; returns the line-integrated intensity emission coefficent for a selected transition
-    
-    return units are photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$
-
-    Parameters
-    ----------
-    wv_air : float (unit: angstroms)
-        Air wavelength of spectral line
-    thetaBLOS : float (unit: degrees)
-        inclination angle of the magnetic field relative to the line of sight
-        default is van vleck
-    &#34;&#34;&#34;
-    magnetic_field_amplitude = 0.
-    epsI, epsQ, epsU, epsV = self.calc_PolEmissCoeff(magnetic_field_amplitude,thetaBLOSdeg)
-    epsI_units = r&#39;photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$&#39;
-    return epsI,epsI_units</code></pre>
-</details>
 </dd>
 <dt id="pycelp.emissionLine.emissionLine.calc_PolEmissCoeff"><code class="name flex">
 <span>def <span class="ident">calc_PolEmissCoeff</span></span>(<span>self, magnetic_field_amplitude, thetaBLOSdeg, azimuthBLOSdeg=0.0)</span>
@@ -516,64 +293,6 @@ photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$ Angstrom^{-1}</p>
 <dd>azimuth angle of magnetic field relative to coordinate frame aligned with
 the line-of-sight projected magnetic field orientation.</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def calc_PolEmissCoeff(self,magnetic_field_amplitude,thetaBLOSdeg,azimuthBLOSdeg=0.): 
-    &#34;&#34;&#34; returns the polarized emission coefficent for the emission line
-    
-    return units: 
-    I,Q,U :: photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$
-    V     ::  photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2}$ Angstrom^{-1}
-
-    Parameters
-    ----------
-    magnetic_field_amplitude: float (unit: gauss)
-        Total magnitude of the magnetic field 
-    thetaBLOSdeg : float (unit: degrees)
-        inclination angle of the magnetic field relative to the line of sight
-    azimuthBLOSdeg : float (unit: degrees) [default = 0] 
-        azimuth angle of magnetic field relative to coordinate frame aligned with 
-        the line-of-sight projected magnetic field orientation. 
-    &#34;&#34;&#34;
-
-    ## convert to radians 
-    thetaBLOS = np.deg2rad(thetaBLOSdeg) 
-    azimuthBLOS = np.deg2rad(azimuthBLOSdeg)
-    ALARMOR = 1399612.2*magnetic_field_amplitude    ## Get Larmor frequency in units of s^-1 
-
-    ## scaling coefficent for the Stokes V emission coefficient 
-    wv_vac = self.wavelength_in_vacuum
-    wv_vac_cm = wv_vac * 1.e-8 
-    cc = 2.99792458e10 ## cm s^-1 (speed of light)
-    Vscl = - (wv_vac_cm)**2   / cc  * 1.e8  ## units of Angstrom * s 
-    
-    ## Common coefficent related to populations        
-    C_coeff = self.C_coeff
-    epsI = C_coeff * (1.  +   3./(2.*np.sqrt(2.))*self.Dcoeff*self.upper_level_alignment*(np.cos(thetaBLOS)**2 - (1./3.)))
-    epsQ = C_coeff * (3./(2.*np.sqrt(2.)))*(np.sin(thetaBLOS)**2)*self.Dcoeff*self.upper_level_alignment
-    epsU = 0
-    epsV = Vscl * C_coeff*np.cos(thetaBLOS)*ALARMOR*(self.geff + self.Ecoeff*self.upper_level_alignment)
-
-    ## rotate for the azimuthal direction 
-    epsQr =  np.cos(2.*azimuthBLOS)*epsQ+ np.sin(2.*azimuthBLOS)*epsU
-    epsUr = -np.sin(2.*azimuthBLOS)*epsQ + np.cos(2.*azimuthBLOS)*epsU
-    epsQ = epsQr
-    epsU = epsUr 
-    
-    ## convert to returned units 
-    sr2arcsec = (180./np.pi)**2.*3600.**2.
-    hh = 6.626176e-27  ## ergs sec (planck&#39;s constant);
-    phergs = hh*(3.e8)/(wv_vac * 1.e-10)
-    
-    epsI = epsI/sr2arcsec/phergs        
-    epsQ = epsQ/sr2arcsec/phergs        
-    epsU = epsU/sr2arcsec/phergs        
-    epsV = epsV/sr2arcsec/phergs        
-    
-    return epsI, epsQ, epsU, epsV </code></pre>
-</details>
 </dd>
 <dt id="pycelp.emissionLine.emissionLine.calc_stokesSpec"><code class="name flex">
 <span>def <span class="ident">calc_stokesSpec</span></span>(<span>self, magnetic_field_amplitude, thetaBLOSdeg, azimuthBLOSdeg=0.0, doppler_velocity=0.0, non_thermal_turb_velocity=0.0, doppler_spectral_range=(-120, 120), specRes_wv_over_dwv=100000)</span>
@@ -608,84 +327,6 @@ the line-of-sight projected magnetic field orientation.</dd>
 <dt><strong><code>specRes_wv_over_dwv</code></strong> :&ensp;<code>float (unitless) </code></dt>
 <dd>The sampling resolution of the wavelength vector given as the ratio of the wavelength to the sampling.</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def calc_stokesSpec(self,magnetic_field_amplitude,thetaBLOSdeg,
-                   azimuthBLOSdeg=0., 
-                   doppler_velocity = 0.,
-                   non_thermal_turb_velocity = 0.,
-                   doppler_spectral_range = (-120,120),
-                   specRes_wv_over_dwv = 100000):        
-    
-    &#34;&#34;&#34; calculate Stokes spectra after the statistical equilibrium has been solved 
-    
-    Assumes current electron temperature dictates the thermal line width. 
-    
-    return units: 
-    I,Q,U ::  photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2} Angstrom^{-1}$
-    V     ::  photons cm$^{-3}$ s$^{-1}$ arcsec$^{-2} Angstrom^{-1}$ 
-
-    Parameters
-    ----------
-    wv_air : float (unit: angstroms)
-        Rest air wavelength of spectral line (needs to be close to database value)
-    magnetic_field_amplitude: float (unit: gauss)
-        Total magnitude of the magnetic field 
-    thetaBLOS : float (unit: degrees)
-        inclination angle of the magnetic field relative to the line of sight
-    azimuthBLOS : float (unit: degrees) [default = 0] 
-        azimuth angle of magnetic field relative to coordinate frame aligned with 
-        the line-of-sight projected magnetic field orientation. 
-    doppler_velocity : float (unit: km/s)
-        Doppler velocity of the spectral line 
-    non_thermal_turb_velocity  : float (unit: km/s) 
-        Non-thermal velocity convolved with the thermal component of the line width 
-    doppler_spectral_range : float 2-tuple (unit : km/2) 
-        Range of the spectrum calculated in Doppler velocity space relative to the line rest wavelength
-    specRes_wv_over_dwv: float (unitless) 
-        The sampling resolution of the wavelength vector given as the ratio of the wavelength to the sampling. 
-        
-    &#34;&#34;&#34;
-
-    ## Get polarized emission coefficients 
-    epsI, epsQ, epsU, epsV = self.calc_PolEmissCoeff(magnetic_field_amplitude,  thetaBLOSdeg, azimuthBLOSdeg)
-    
-    ## setup wavelength vector 
-    assert doppler_spectral_range[1]&gt;doppler_spectral_range[0]
-    dVel = 3e5 / specRes_wv_over_dwv
-    nwv = np.ceil((doppler_spectral_range[1] - doppler_spectral_range[0]) / dVel).astype(int)
-    velvec = np.linspace(*doppler_spectral_range,nwv)  ##;; velocity range used for the spectral axis
-    wvvec = (self.wavelength_in_air  *1.e-10)*(1. + velvec/3.e5)  ## in units of meters at this point 
-
-    ## Calculate Gaussian Line Width        
-    awgt = self.atomic_weight 
-    M = (awgt*1.6605655e-24)/1000.   ## kilogram
-    kb = 1.380648e-23  ## J K^-1 [ = kg m^2 s^-2 K^-1]
-    etemp = self.electron_temperature
-    turbv = non_thermal_turb_velocity
-    sig = (1./np.sqrt(2.))*(self.wavelength_in_air*1.e-10/3.e8)*np.sqrt(2.*kb*etemp/M + (turbv*1000.)**2.)
-
-    ## calculate line center position 
-    wv0 = (self.wavelength_in_air*1.e-10) + (doppler_velocity/3.e5)*(self.wavelength_in_air*1.e-10)    ## in meters 
-    wv0 = wv0*1.e10     ## convert to Angstrom 
-    sig = sig*1.e10      ## convert to Angstrom 
-    wvvec = wvvec*1.e10  ## convert to Angstrom 
-    
-    ## normalized Gaussian profile
-    wprof  = 1./(np.sqrt(2.*np.pi)*sig) * np.exp(-(wvvec-wv0)**2./(2.*sig**2.))
-    ## normalized Gaussian derivative profiles 
-    wprof_deriv = (- (wvvec-wv0) / sig**2)  * wprof 
-
-    stokes = np.zeros((nwv,4) )
-    stokes[:,0] = epsI*wprof
-    stokes[:,1] = epsQ*wprof
-    stokes[:,2] = epsU*wprof
-    stokes[:,3] = epsV*wprof_deriv
-
-    return wvvec,stokes</code></pre>
-</details>
 </dd>
 </dl>
 </dd>
@@ -693,7 +334,6 @@ the line-of-sight projected magnetic field orientation.</dd>
 </section>
 </article>
 <nav id="sidebar">
-<h1>Index</h1>
 <div class="toc">
 <ul></ul>
 </div>
@@ -719,7 +359,7 @@ the line-of-sight projected magnetic field orientation.</dd>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.1</a>.</p>
 </footer>
 </body>
 </html>

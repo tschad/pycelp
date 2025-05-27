@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <meta name="generator" content="pdoc3 0.11.1">
-<title>pycelp.non_dipoles API documentation</title>
-<meta name="description" content="This module provides functions necessary for calculating radiative rate
-coefficients for non-dipole transitions.">
+<title>pycelp.allenSolRad API documentation</title>
+<meta name="description" content="Provides access to solar spectral distribution information available in Allen&#39;s
+Astrophysical Quantities 4th Edition (Section 14.6), including disk …">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
@@ -23,11 +23,12 @@ hljs.highlightAll();
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>pycelp.non_dipoles</code></h1>
+<h1 class="title">Module <code>pycelp.allenSolRad</code></h1>
 </header>
 <section id="section-intro">
-<p>This module provides functions necessary for calculating radiative rate
-coefficients for non-dipole transitions.</p>
+<p>Provides access to solar spectral distribution information available in Allen's
+Astrophysical Quantities 4th Edition (Section 14.6), including disk center
+spectral radiance and the center-to-limb behavior.</p>
 </section>
 <section>
 </section>
@@ -36,17 +37,113 @@ coefficients for non-dipole transitions.</p>
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="pycelp.non_dipoles.getNonDipoleSEE"><code class="name flex">
-<span>def <span class="ident">getNonDipoleSEE</span></span>(<span>tnD, tnD_indx, radj, nonDmat)</span>
+<dt id="pycelp.allenSolRad.J00_sym"><code class="name flex">
+<span>def <span class="ident">J00_sym</span></span>(<span>wvAng, height)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates the J00 component of the solar radiation
+field tensor assuming cylindrically symmetric limb darkened
+radiation.</p>
+<p>wavelength -
+Angstrom
+height - kilometers</p>
+<p>Output units are Unit("erg / (cm2 Hz s sr)")</p>
+<p>References:
+Degl'Innocenti &amp; Landolfi (2004) Section 12.3</p></div>
+</dd>
+<dt id="pycelp.allenSolRad.J02_sym"><code class="name flex">
+<span>def <span class="ident">J02_sym</span></span>(<span>wvAng, height)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="pycelp.non_dipoles.setup_nonDipoles"><code class="name flex">
-<span>def <span class="ident">setup_nonDipoles</span></span>(<span>lowlev, upplev, qnj, b_low2up, a_up2low, b_up2low, see_index, see_lev, see_k, see_dk)</span>
+<dt id="pycelp.allenSolRad.Knu_sym"><code class="name flex">
+<span>def <span class="ident">Knu_sym</span></span>(<span>wvAng, height)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates the J02 component of the solar radiation
+field tensor assuming cylindrically symmetric limb darkened
+radiation.</p>
+<p>wavelenght -
+Angstrom
+height - kilometers</p>
+<p>Output units are Unit("erg / (cm2 Hz s sr)")</p>
+<p>References:
+Degl'Innocenti &amp; Landolfi (2004) Section 12.3</p></div>
+</dd>
+<dt id="pycelp.allenSolRad.applyCLV"><code class="name flex">
+<span>def <span class="ident">applyCLV</span></span>(<span>i0, uc, vc, i0_unit, muAngle)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
+</dd>
+<dt id="pycelp.allenSolRad.bright_temp"><code class="name flex">
+<span>def <span class="ident">bright_temp</span></span>(<span>wvAng, muAngle)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the brightness temperature implied by intensity at wavelength</p></div>
+</dd>
+<dt id="pycelp.allenSolRad.get_omega"><code class="name flex">
+<span>def <span class="ident">get_omega</span></span>(<span>wvAng, height)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate omega
+Inputs:
+wvAng &ndash; wavelength in Angstroms
+height &ndash; kilometers</p></div>
+</dd>
+<dt id="pycelp.allenSolRad.i_lambda"><code class="name flex">
+<span>def <span class="ident">i_lambda</span></span>(<span>wvAng, muAngle)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns solar intensity in per wavelength units at a specific
+wavelength and heliocentric angle
+lambda:
+wavelength in angstrom
+muAngle:
+cosine of the heliocentric angle</p></div>
+</dd>
+<dt id="pycelp.allenSolRad.i_lambda_2_i_nu"><code class="name flex">
+<span>def <span class="ident">i_lambda_2_i_nu</span></span>(<span>i0, i0_unit, wvAng)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pycelp.allenSolRad.i_nu"><code class="name flex">
+<span>def <span class="ident">i_nu</span></span>(<span>wvAng, muAngle)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return the solar intensity in units per frequency units at a specific
+wavelength and heliocentric angle
+wavelength: wavelength in angstrom
+muAngle:
+cosine of the heliocentric angle</p></div>
+</dd>
+<dt id="pycelp.allenSolRad.interpData"><code class="name flex">
+<span>def <span class="ident">interpData</span></span>(<span>wvAng)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="inputs">Inputs</h2>
+<p>wvAng - wavelength in Angstrom</p>
+<h2 id="returns">Returns</h2>
+<p>i0 - disk center intensity at wvAng between spectrum lines
+uc - limb darkening u coefficient at wvAng
+vc - limb darkening v coefficient at wvAng
+i0_unit - units of i0</p></div>
+</dd>
+<dt id="pycelp.allenSolRad.mean_sun_lambda"><code class="name flex">
+<span>def <span class="ident">mean_sun_lambda</span></span>(<span>wvAng)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns mean solar intensity per wavelength units at a specific wavelength
+lambda:
+wavelength in angstrom</p></div>
+</dd>
+<dt id="pycelp.allenSolRad.nbar"><code class="name flex">
+<span>def <span class="ident">nbar</span></span>(<span>wvAng, height)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>photons per mode (units photons per sr)</p></div>
 </dd>
 </dl>
 </section>
@@ -64,9 +161,19 @@ coefficients for non-dipole transitions.</p>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="">
-<li><code><a title="pycelp.non_dipoles.getNonDipoleSEE" href="#pycelp.non_dipoles.getNonDipoleSEE">getNonDipoleSEE</a></code></li>
-<li><code><a title="pycelp.non_dipoles.setup_nonDipoles" href="#pycelp.non_dipoles.setup_nonDipoles">setup_nonDipoles</a></code></li>
+<ul class="two-column">
+<li><code><a title="pycelp.allenSolRad.J00_sym" href="#pycelp.allenSolRad.J00_sym">J00_sym</a></code></li>
+<li><code><a title="pycelp.allenSolRad.J02_sym" href="#pycelp.allenSolRad.J02_sym">J02_sym</a></code></li>
+<li><code><a title="pycelp.allenSolRad.Knu_sym" href="#pycelp.allenSolRad.Knu_sym">Knu_sym</a></code></li>
+<li><code><a title="pycelp.allenSolRad.applyCLV" href="#pycelp.allenSolRad.applyCLV">applyCLV</a></code></li>
+<li><code><a title="pycelp.allenSolRad.bright_temp" href="#pycelp.allenSolRad.bright_temp">bright_temp</a></code></li>
+<li><code><a title="pycelp.allenSolRad.get_omega" href="#pycelp.allenSolRad.get_omega">get_omega</a></code></li>
+<li><code><a title="pycelp.allenSolRad.i_lambda" href="#pycelp.allenSolRad.i_lambda">i_lambda</a></code></li>
+<li><code><a title="pycelp.allenSolRad.i_lambda_2_i_nu" href="#pycelp.allenSolRad.i_lambda_2_i_nu">i_lambda_2_i_nu</a></code></li>
+<li><code><a title="pycelp.allenSolRad.i_nu" href="#pycelp.allenSolRad.i_nu">i_nu</a></code></li>
+<li><code><a title="pycelp.allenSolRad.interpData" href="#pycelp.allenSolRad.interpData">interpData</a></code></li>
+<li><code><a title="pycelp.allenSolRad.mean_sun_lambda" href="#pycelp.allenSolRad.mean_sun_lambda">mean_sun_lambda</a></code></li>
+<li><code><a title="pycelp.allenSolRad.nbar" href="#pycelp.allenSolRad.nbar">nbar</a></code></li>
 </ul>
 </li>
 </ul>
