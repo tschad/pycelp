@@ -15,6 +15,6 @@ setup(
     long_description=long_description,
     author = "Tom Schad",
     author_email = "tschad@nso.edu",
-    packages=find_packages(where='pycelp'),
+    packages=find_packages(),
     install_requires=['numpy','numba'],
 )
